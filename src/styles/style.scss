@@ -1,0 +1,107 @@
+@import "~bootstrap/scss/bootstrap";
+
+$main_color: #2D4059;
+$sec_color : #ffb400;
+$blank : #f6f6f6;
+$accent : #ea5455;
+
+header {
+    background-color: $sec_color;
+    margin-bottom: 1.45rem;
+}
+header h1 a {
+    color: $main_color;
+    font-weight:bold;
+}
+
+footer {
+    background-color:$accent;
+    color:$main_color;
+}
+
+footer a {
+    color:$blank;
+}
+
+body {
+    background-color: $main_color;
+    font-family:'Roboto', sans-serif;
+    font-weight:400;
+}
+
+.border {
+    background-color: $blank;
+}
+
+.info {
+    color: $sec_color;
+}
+
+.text_options {
+    font-size:1.2rem;
+}
+
+// .uploader {
+//     background-color:$main_color;
+// }
+.uploader {
+    font-size:.8rem;
+}
+
+.algo h5 {
+    font-size: 1rem;
+    //font-family: 'Major Mono Display', monospace;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.result {
+    border: 1px solid $main_color;
+    padding: 1rem;
+
+    .anonymized {
+        background-color:#000;
+        color:#000;
+    }
+
+    .pseudonymized {
+        color:#000;
+        padding:0 .2rem;
+    }
+
+    .pseudonymized.person { background-color:#bffcc6; }
+    .pseudonymized.person_1 { background-color:#ffb5e8; }
+    .pseudonymized.person_4 { background-color:#ffc9de; }
+    .pseudonymized.person_3 { background-color:#dcd3ff; }
+    .pseudonymized.person_2 { background-color:#aff8db; }
+    .pseudonymized.person_5 { background-color:#ffc9de; }
+
+    .pseudonymized.country { background-color:#dbffd6; }
+    .pseudonymized.country_1 { background-color:#c4faf8; }
+    .pseudonymized.country_2 { background-color:#c5a3ff; }
+
+    .pseudonymized.place { background-color:#f3ffe3; }
+    .pseudonymized.place_1 { background-color:#b5b9ff; }
+    .pseudonymized.place_2 { background-color:#85e3ff; }
+    .pseudonymized.place_3 { background-color:#ffccf9; }
+    .pseudonymized.place_4 { background-color:#ffbebc; }
+
+    .pseudonymized.organization{ background-color:#ace7ff; }
+    .pseudonymized.organization_1{ background-color:#e7ffac; }
+    .pseudonymized.organization_2{ background-color:#ffcbc1; }
+    .pseudonymized.organization_3{ background-color:#ecd4ff; }
+    .pseudonymized.organization_4{ background-color:#97a2ff; }
+}
+
+.log {
+    background-color:#111;
+    color:#ccc;
+    font-family:'Lucida Console', monospace;
+    font-size:.6em;
+    padding-left:.3rem;
+    max-height:4rem;
+    overflow-y:scroll;
+}
+
+h2 {
+    font-size:1.3em;
+}
