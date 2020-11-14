@@ -6,7 +6,7 @@ export default ({ parentCallback }) => {
         var payload = new FormData();
         payload.append('rawFile', files[0]);
 
-        fetch(`${process.env.GATSBY_API_URL}/extract/`, {
+        fetch(`${process.env.GATSBY_UPLOAD_API}/extract/`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

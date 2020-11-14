@@ -9,6 +9,7 @@ header {
     background-color: $sec_color;
     margin-bottom: 1.45rem;
 }
+
 header h1 a {
     color: $main_color;
     font-weight:bold;
@@ -27,6 +28,11 @@ body {
     background-color: $main_color;
     font-family:'Roboto', sans-serif;
     font-weight:400;
+}
+
+.loadgif {
+    margin-top:auto;
+    margin-bottom:auto;
 }
 
 .border {
@@ -104,4 +110,9 @@ body {
 
 h2 {
     font-size:1.3em;
+}
+
+textarea#content_raw {
+    width:80%;
+    min-height:40rem;
 }

@@ -14,6 +14,7 @@
     "gatsby-plugin-react-helmet": "^3.3.10",
     "gatsby-plugin-sass": "^2.3.12",
     "gatsby-plugin-sharp": "^2.6.23",
+    "gatsby-plugin-use-query-params": "^1.0.1",
     "gatsby-source-filesystem": "^2.3.23",
     "gatsby-source-graphql": "^2.6.2",
     "gatsby-transformer-sharp": "^2.5.11",
@@ -27,7 +28,8 @@
     "react-dropzone": "^11.0.2",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.10.0",
-    "react-quill": "^2.0.0-beta.2"
+    "react-quill": "^2.0.0-beta.2",
+    "use-query-params": "^1.1.9"
   },
   "devDependencies": {
     "prettier": "2.0.5"
