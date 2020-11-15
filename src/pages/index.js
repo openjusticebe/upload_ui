@@ -36,6 +36,8 @@ class IndexPage extends React.Component {
             uploaded:  'Copier-coller / Copy-Paste',
             entities : {},
             res_text:  '(Zone résultat)',
+            final_text: '',
+            counts: 0,
             log_text: {__html: '' },
         };
 
@@ -44,10 +46,10 @@ class IndexPage extends React.Component {
 
     handleUpload(text, entities, log={}) {
         if (text) {
-            console.log('Entities :', entities);
             this.setState({
                 res_text: text,
-                entities: entities
+                entities: entities,
+                counts: this.state.counts + 1
             })
         }
         if ('log_text' in log) {
@@ -55,6 +57,13 @@ class IndexPage extends React.Component {
                 log_text: {__html: log['log_text'] }
             })
         }
+    }
+
+    handleFinal(text) {
+        console.log('updating final text', text);
+        // this.setState({
+        //     final_text: text
+        // });
     }
 
 
@@ -78,9 +87,9 @@ class IndexPage extends React.Component {
                 <div className="row mt-3">
                     <UploadUi TextHandler = { this.handleUpload } />    
 
-                    <AnonymiseUi uploadedText = { this.state.res_text } entities = { this.state.entities } />
+                    <AnonymiseUi key={this.state.counts } uploadedText = { this.state.res_text } entities = { this.state.entities } FinalHandler= { this.handleFinal } />
                     
-                    <SendUi uploadedText = {this.state.res_text }/>
+                    <SendUi uploadedText = {this.state.final_text }/>
 
                 </div>
           </div>

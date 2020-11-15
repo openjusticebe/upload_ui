@@ -4,10 +4,149 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 const placeholders = {
-    'organization' : ['Acme Inc.'],
-    'place': ['Aldebaran'],
-    'country': ['Gondwana'],
-    'person': ['Frodo'],
+    'organization' : [
+        'Acme Inc.',
+        'Camion Int.',
+        'Business Pro',
+        'Conseil et Fils',
+        'Morgen en Zoon',
+        'Evel&CO',
+        'Fly Air',
+        'Zv. Inc.',
+    ],
+    'place': [
+        'Beleriand',
+        'Eriador',
+        'Rhûn',
+        'Harad',
+        'Ered Luin',
+        'Fangorn',
+        'Gondor',
+        'Isengard',
+        'Mordor',
+        'Rohan',
+        'Amon Hen',
+        'Bruinen',
+        'Baranduin',
+        'Erebor',
+    ],
+    'country': [
+        'Agamar',
+        'Akiva',
+        'Alderaan',
+        'Ando',
+        'Corellia',
+        'Crait',
+        'Hoth',
+        'Sullust',
+        'Teht',
+        'Zeffo',
+        'Yavin',
+        'Eriadu',
+        'Exegol',
+        'Florrum',
+        'Fondor',
+    ],
+    'person': [
+        'A. Lydan',
+        'B. Syrin',
+        'C. Ptorik',
+        'D. Joz',
+        'E. Varog',
+        'F. Gethrod',
+        'G. Hezra',
+        'H. Feron',
+        'I. Ophni',
+        'J. Colborn',
+        'K. Fintis',
+        'L. Gatlin',
+        'M. Jinto',
+        'N. Hagalbar',
+        'O. Krinn',
+        'P. Lenox',
+        'K. Revvyn',
+        'R. Hodus',
+        'S. Dimian',
+        'T. Paskel',
+        'U. Kontas',
+        'V. Weston',
+        'W. Azamarr',
+        'X. Jather',
+        'Y. Tekren',
+        'Z. Jareth',
+        'A. Adon',
+        'B. Zaden',
+        'C. Eune',
+        'D. Graff',
+        'E. Tez',
+        'F. Jessop',
+        'G. Gunnar',
+        'H. Pike',
+        'I. Domnhar',
+        'J. Baske',
+        'K. Jerrick',
+        'L. Mavrek',
+        'M. Riordan',
+        'N. Wulfe',
+        'O. Straus',
+        'P. Tyvrik',
+        'K. Henndar',
+        'R. Favroe',
+        'S. Whit',
+        'T. Jaris',
+        'U. Renham',
+        'V. Kagran',
+        'W. Lassrin',
+        'X. Vadim',
+        'Y. Arlo',
+        'Z. Quintis',
+        'A. Vale',
+        'B. Caelan',
+        'C. Yorjan',
+        'D. Khron',
+        'E. Ishmael',
+        'F. Jakrin',
+        'G. Fangar',
+        'H. Roux',
+        'I. Baxar',
+        'J. Hawke',
+        'K. Gatlen',
+        'L. Barak',
+        'M. Nazim',
+        'N. Kadric',
+        'O. Paquin',
+        'P. Kent',
+        'K. Moki',
+        'R. Rankar',
+        'S. Lothe',
+        'T. Ryven',
+        'U. Clawsen',
+        'V. Pakker',
+        'W. Embre',
+        'X. Cassian',
+        'Y. Verssek',
+        'Z. Dagfinn',
+        'O. Ebraheim',
+        'P. Nesso',
+        'K. Eldermar',
+        'R. Rivik',
+        'S. Rourke',
+        'T. Barton',
+        'U. Hemm',
+        'V. Sarkin',
+        'W. Blaiz',
+        'X. Talon',
+        'Y. Agro',
+        'Z. Zagaroth',
+        'A. Turrek',
+        'B. Esdel',
+        'C. Lustros',
+        'D. Zenner',
+        'E. Baashar',
+        'F. Dagrod',
+        'G. Gentar',
+        'H. Feston',
+    ]
 }
 
 const PlaceholderManager = {
@@ -15,17 +154,14 @@ const PlaceholderManager = {
     get: function(type, id) {
         if (id in this.store)
             return this.store[id];
-        this.store[id] = placeholders[type];
+        let len = placeholders[type].length
+        this.store[id] = placeholders[type][Math.floor(Math.random() * len)];
         return this.store[id];
     }
     
 }
 
 const EntityRow = ({id, words, type, placeholder, onRemove, onChange}) => {
-    if (placeholder == '') {
-        placeholder = PlaceholderManager.get(type, id);
-    }
-
     return (
     <Form id={ id }>
         <div className="row">
@@ -58,7 +194,7 @@ const EntityForm = ({entities, onRemove, onChange}) => {
                         id={ id }
                         words={ entities[id]['text'].join('; ') }
                         type={ entities[id]['type'] }
-                        placeholder={ entities[id]['placeholder'] || PlaceholderManager.get( entities[id]['type'], id)}
+                        placeholder={ entities[id]['placeholder'] } 
                         onRemove={ onRemove }
                         onChange={ onChange }
                         />
@@ -73,12 +209,18 @@ class AnonymiseUi extends React.Component {
 
     constructor(props) {
         super(props);
+        let entities = Object.assign({}, props.entities);
+        Object.keys(entities).forEach( key => {
+            let e = entities[key];
+            entities[key]['placeholder'] = PlaceholderManager.get(e.type, key);
+        })
         this.state = {
-            raw_text : '',
+            raw_text : props.uploadedText,
             res_text : '',
-            entities : {},
+            entities : entities,
             log : false
         };
+        this.callback = props.FinalHandler;
         this.handleTextChange = this.handleTextChange.bind(this);
         this.parseText = this.parseText.bind(this);
         this.addEntity = this.addEntity.bind(this);
@@ -92,7 +234,7 @@ class AnonymiseUi extends React.Component {
         let len = Object.keys(this.state.entities).length + 1;
         let newkey = `entity#${len}`;
         let newEntities = this.state.entities;
-        newEntities[newkey] = {'text':[], 'type':'person', 'placeholder': ''}
+        newEntities[newkey] = {'text':[], 'type':'person', 'placeholder': PlaceholderManager.get('person', newkey)}
         this.setState({
             entities : newEntities
         });
@@ -117,12 +259,12 @@ class AnonymiseUi extends React.Component {
         let newEntities = this.state.entities;
         let field = event.target.name;
         if (id in newEntities) {
+            console.log('New value for', event.target.name, 'value:', event.target.value);
             if (field == 'text')
-                newEntities[id][event.target.name] = event.target.value.split('; ');
-            else
-                newEntities[id][event.target.name] = event.target.value;
-
-            console.log(newEntities);
+                newEntities[id][field] = event.target.value.split('; ');
+            else {
+                newEntities[id][field] = event.target.value;
+            }
         }
         this.setState({
             entities : newEntities
@@ -131,39 +273,36 @@ class AnonymiseUi extends React.Component {
     }
 
     handleTextChange(event) {
+        this.setState({
+            res_text : event.target.value
+        });
+        // this.callback(event.target.value);
     }
 
     parseText(raw) {
         console.log('Render text');
         for (let e_key in this.state.entities) {
-            console.log(e);
             let e = this.state.entities[e_key];
             e.text.forEach( w => {
-                console.log('cleaning:', w);
                 let re = new RegExp(w, "gi");
                 raw = raw
                     // .replaceAll(/`qu'(?=${w})`/g, 'que ')
                     // .replaceAll(`d'(?=${w})`, 'de ')
-                    .replace(re, `[ ${e.placeholder} ]`);
+                    .replace(re, `${e.placeholder}`);
                 });
         }
         return raw;
     }
 
-    static getDerivedStateFromProps(props, state) {
-        let entities = props.entities;
-        Object.keys(entities).forEach( key => {
-            let e = entities[key];
-            entities[key]['placeholder'] = PlaceholderManager.get(e.type, key);
-        })
-        return {
-            raw_text: props.uploadedText,
-            entities: props.entities,
-        };
-    }
-
     render() {
         // this.parseText()
+        Object.keys(this.state.entities).forEach( key => {
+            let e = this.state.entities[key];
+            if ( ! 'placeholder'  in e)
+                this.state.entities[key]['placeholder'] = PlaceholderManager(e.type, key);
+        })
+        const out_text = this.parseText(this.state.raw_text);
+        this.callback(out_text);
         return (
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
                 <h2>2) Vérifier anonimisation / Anonimisatie nakijken</h2>
@@ -181,7 +320,7 @@ class AnonymiseUi extends React.Component {
                         id="content_raw"
                         // update={ this.state.uploaded }
                         onChange={ this.handleTextChange }
-                        value ={ this.parseText(this.state.raw_text) }
+                        value ={ out_text }
                         />
                 </div>
             </div>
