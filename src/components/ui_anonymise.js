@@ -288,7 +288,7 @@ class AnonymiseUi extends React.Component {
                 raw = raw
                     // .replaceAll(/`qu'(?=${w})`/g, 'que ')
                     // .replaceAll(`d'(?=${w})`, 'de ')
-                    .replace(re, `${e.placeholder}`);
+                    .replace(re, `[ ${e.placeholder} ]`);
                 });
         }
         return raw;
