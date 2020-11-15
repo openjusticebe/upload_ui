@@ -24,12 +24,17 @@ class UploadUi extends React.Component {
         return loglines.join("\n<br />");
     }
 
-    handleTextExtract(text) {
-        console.log('extracted text', text);
-        this.setState({
-            text: text
-            //uploaded: text
-        });
+    handleTextExtract(success, text) {
+        if (success) {
+            this.setState({
+                text: text
+                //uploaded: text
+            });
+        } else {
+            this.setState({
+                error: text
+            });
+        }
     }
 
     handleTextChange(event) {
@@ -49,11 +54,13 @@ class UploadUi extends React.Component {
             'format': 'text',
             'encoding': 'utf8',
             'text': this.state.text,
+            'error': false,
+            'anon_log': false
         }
 
         // Get api response
         // fetch(`https://anon-api.openjustice.be/run`, {
-        fetch(`${process.env.GATSBY_UPLOAD_API}/run`, {
+        fetch(`${process.env.GATSBY_UPLOAD_API}/parse`, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -63,11 +70,15 @@ class UploadUi extends React.Component {
             }).then(response => response.json())
            .then(resultData => {
                 if ('error' in resultData.log)
-                    this.handleCallback(false, {log_text: resultData.log.error});
-                else if ('lines' in resultData.log)
-                    this.handleCallback(resultData.text, {log_text: this.logDisplay(resultData.log.lines)});
+                    {
+                    this.setState({'anon_log' : {__html: resultData.log.error}});
+                    this.handleCallback(false, '', {log_text: resultData.log.error});
+                    }
                 else
-                    this.handleCallback(resultData.text);
+                    {
+                    this.handleCallback(this.state.text, resultData.entities,  {log_text: this.logDisplay(resultData.log.lines)});
+                    this.setState({'anon_log' : {__html: this.logDisplay(resultData.log.lines)}});
+                    }
                 this.setState({waiting: false})
             });
     }
@@ -83,20 +94,33 @@ class UploadUi extends React.Component {
                     </div>
                 </div>
                 <div className="row justify-content-center">
+                    { this.state.error &&
+                        <div className="log col-10 bg-info">
+                            { this.state.error }
+                        </div>
+                    }
+                </div>
+                <div className="row justify-content-center">
                     <textarea
                         id="content_raw"
                         update={ this.state.uploaded }
                         onChange={ this.handleTextChange }
                         value ={ this.state.text }
+                        className="col-10"
                         />
                 </div>
                 <div className="row justify-content-center mt-3">
                     <Form onSubmit={ this.handleSubmit } className="pl-3">
                       <Button variant="primary" type="submit">
-                      {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
+                      { this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" /> }
                       anonymiser / anonimiseren
                       </Button>
                     </Form>
+                </div>
+                <div className="row justify-content-center">
+                    { this.state.anon_log &&
+                        <div className="log col-10" dangerouslySetInnerHTML={ this.state.anon_log } />
+                    }
                 </div>
             </div>
         );

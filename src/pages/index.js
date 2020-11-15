@@ -33,7 +33,8 @@ class IndexPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            uploaded :  'Copier-coller / Copy-Paste',
+            uploaded:  'Copier-coller / Copy-Paste',
+            entities : {},
             res_text:  '(Zone résultat)',
             log_text: {__html: '' },
         };
@@ -41,11 +42,12 @@ class IndexPage extends React.Component {
         this.handleUpload = this.handleUpload.bind(this);
     }
 
-    handleUpload(text, log={}) {
+    handleUpload(text, entities, log={}) {
         if (text) {
-            console.log('Uploaded text :', text);
+            console.log('Entities :', entities);
             this.setState({
-                res_text: text
+                res_text: text,
+                entities: entities
             })
         }
         if ('log_text' in log) {
@@ -76,7 +78,7 @@ class IndexPage extends React.Component {
                 <div className="row mt-3">
                     <UploadUi TextHandler = { this.handleUpload } />    
 
-                    <AnonymiseUi uploadedText = { this.state.res_text } />
+                    <AnonymiseUi uploadedText = { this.state.res_text } entities = { this.state.entities } />
                     
                     <SendUi uploadedText = {this.state.res_text }/>
 

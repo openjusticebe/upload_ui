@@ -99,12 +99,12 @@ body {
 }
 
 .log {
-    background-color:#111;
-    color:#ccc;
+    background-color: $info;
+    color: $light;
     font-family:'Lucida Console', monospace;
     font-size:.6em;
-    padding-left:.3rem;
-    max-height:4rem;
+    padding:.4rem 1rem;
+    max-height:10rem;
     overflow-y:scroll;
 }
 
@@ -115,4 +115,13 @@ h2 {
 textarea#content_raw {
     width:80%;
     min-height:40rem;
+}
+
+#anonOpts input {
+    width: 100%;
+}
+
+
+#anonWords {
+    font-size:.8em;
 }
