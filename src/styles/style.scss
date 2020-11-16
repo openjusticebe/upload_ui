@@ -112,9 +112,10 @@ h2 {
     font-size:1.3em;
 }
 
-textarea#content_raw {
+textarea {
     width:80%;
     min-height:40rem;
+    padding:1rem;
 }
 
 #anonOpts input {
