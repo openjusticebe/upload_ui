@@ -1,0 +1,52 @@
+version: "2.4"
+services:
+  data_api:
+    build:
+      context: https://github.com/openjusticebe/data_api.git
+      dockerfile: Dockerfile
+    environment:
+      PG_DSN: 'postgresql://demo:demo@db/demo'
+      HOST: 0.0.0.0
+      PORT: 5010
+    ports:
+    - "5010:5010"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image:  postgres:13
+    environment:
+      POSTGRES_USER: 'demo'
+      POSTGRES_PASSWORD: 'demo'
+    ports:
+    - "5030:5432"
+    volumes:
+      - ./schemas.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U demo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  anon_api:
+    build:
+      context: https://github.com/openjusticebe/anon_api.git
+      dockerfile: Dockerfile
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5011
+      log_level: debug
+      TIKA_HOST: tika_api
+    ports:
+    - "5011:5011"
+    depends_on:
+      - tika_api
+
+  tika_api:
+    build:
+      context: https://github.com/openjusticebe/service_tika.git
+      dockerfile: Dockerfile
+      args:
+       - TIKA_VERSION=1.24.1
+    ports:
+    - "9998:9998"

@@ -1,0 +1,2 @@
+export GATSBY_DATA_API=http://127.0.0.1:5010
+export GATSBY_UPLOAD_API=http://127.0.0.1:5011
