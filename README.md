@@ -1,18 +1,34 @@
-# Upload UI
-Interface web (IHM) pour charger des contenus et occulter les données.
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/betagouv/andi-matching/graphs/commit-activity)
+[![Generic badge](https://img.shields.io/badge/Open-Justice-green.svg)](https://shields.io/)
+<p align="center">
+  <a href="https://openjustice.be">
+    <img alt="logo Openjustice.be" src="https://openjustice.be/wp-content/uploads/2020/10/cropped-Open-Justice.png" width="90" />
+  </a>
+</p>
+<h1 align="center">
+  Openjustice.be
+</h1>
+[OpenJustice.be](https://openjustice.be) is a non-profit legaltech aiming to open up access to legal knowledge (court decisions, law, doctrine, ...) and instill a true digital-native culture in the world of belgian justice digitalisation.
 
-## Utilisation
-L'interface repose sur Gatsby/React, et après clonage peut être démarré comme suit:
+# Upload UI
+This component is part of our service to provide a public and free repository of anonymised belgian court decisions.
+
+## Stack
+This interface is a JAMstack [Gatsby](https://www.gatsbyjs.org/) application. Accessibility, in all its forms, is as essential to us as it is -or should be- to any digital public service. [React](https://fr.reactjs.org/) is second to none in its approach to maximum accessibility.
+
+## Deploy locally
+After cloning the repository, the application can be run directly or through docker :
 ```bash
-# Installer le CLI gatsby
+# Install gatsby if needed
 > npm install -g gatsby-cli
-# Lancer le serveur local
-> npm install
+# Install dependencies
+> yarn install
+# Run develop server
 > gatsby develop
 ```
-
-Il peut également être lancé sous docker:
 ```bash
-# Lancer en utilisant docker
+# Run using Docker
 > docker build -t "ui" ./  && docker run --rm -it -p 80:80 ui 
 ```
+
+## Full local environment

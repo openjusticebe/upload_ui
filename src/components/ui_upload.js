@@ -32,7 +32,7 @@ class UploadUi extends React.Component {
             });
         } else {
             this.setState({
-                error: text
+                error: `Erreur d'extraction, Extractiefout: ${text}`
             });
         }
     }
@@ -67,12 +67,13 @@ class UploadUi extends React.Component {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(query),
-            }).then(response => response.json())
-           .then(resultData => {
+        }).then(response => response.json()
+        ).then(resultData => {
                 if ('error' in resultData.log)
                     {
-                    this.setState({'anon_log' : {__html: resultData.log.error}});
-                    this.handleCallback(false, '', {log_text: resultData.log.error});
+                    const msg = `Erreur de traitement, Verwerkingsfout: ${resultData.log.error}`;
+                    this.setState({'anon_log' : {__html: msg}});
+                    this.handleCallback(false, '', {log_text: msg});
                     }
                 else
                     {
@@ -80,7 +81,12 @@ class UploadUi extends React.Component {
                     this.setState({'anon_log' : {__html: this.logDisplay(resultData.log.lines)}});
                     }
                 this.setState({waiting: false})
-            });
+        }).catch(error => {
+            const msg = `Erreur de serveur, Server fout: ${error.toString()}`;
+            this.setState({'anon_log' : {__html: msg}});
+            this.handleCallback(false, '', {log_text: msg});
+            this.setState({waiting: false});
+        });
     }
 
 

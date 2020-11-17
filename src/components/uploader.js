@@ -25,7 +25,6 @@ export default ({ parentCallback }) => {
             waiting = false;
         }).catch(
             error => {
-                console.log(error);
                 parentCallback(false, error.toString());
                 waiting = false;
                 }
