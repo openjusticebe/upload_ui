@@ -159,41 +159,35 @@ class IndexPage extends React.Component {
           <Layout>
             <SEO title="OJ / Upload Alpha" />
             <div className="container">
-                <div className="row justify-content-center info">
-                    <div className="col-5">
-                        <h2>Chargement</h2>
-                        Interface de chargement de décisions de justice. <br />
-                        Avant envoi définitif, aucune donnéé n'est enregistréé ni journalisée. 
-                    </div>
-                    <div className="col-5">
-                        <h2>Upload</h2>
-                        Upload interface voor rechtsbeslissingen. <br />
-                        Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.
-                    </div>
-                </div>
                 <div className="row">
-                <StepWizard nav={ <NavSteps /> }>
- 
-                <UploadUi TextHandler = { this.handleExtract } 
-                hashKey={'upload'} />    
-                
-                <AnonymiseUi
-                        preparedText = { this.state.text_parsed }
-                        entities = { this.state.entities }
-                        textChange = { this.handleFinalText }
-                        entityRemove = { this.remEntity }
-                        entityAdd = { this.addEntity }
-                        entityChange = { this.updEntity }
-                        hashKey={'anonymise'} />
-                    
-                <SendUi uploadedText = {this.state.text_parsed }
-                hashKey={'send'} />
-
-                </StepWizard>
-
-
-                   
-
+                    <StepWizard 
+                        isHashEnabled
+                        nav={ <NavSteps /> }>
+                        <div className="row justify-content-center info" hashkey={'intro'}>
+                            <div className="col-5">
+                                <h2>Chargement</h2>
+                                Interface de chargement de décisions de justice. <br />
+                                Avant envoi définitif, aucune donnéé n'est enregistréé ni journalisée. 
+                            </div>
+                            <div className="col-5">
+                                <h2>Upload</h2>
+                                Upload interface voor rechtsbeslissingen. <br />
+                                Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.
+                            </div>
+                        </div>
+                        <UploadUi TextHandler = { this.handleExtract } hashKey={'upload'} />    
+                        
+                        <AnonymiseUi
+                                preparedText = { this.state.text_parsed }
+                                entities = { this.state.entities }
+                                textChange = { this.handleFinalText }
+                                entityRemove = { this.remEntity }
+                                entityAdd = { this.addEntity }
+                                entityChange = { this.updEntity }
+                                hashKey={'anonymise'} />
+                            
+                        <SendUi uploadedText = {this.state.text_parsed } hashKey={'send'} />
+                    </StepWizard>
                 </div>
           </div>
           </Layout>

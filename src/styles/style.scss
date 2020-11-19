@@ -9,15 +9,56 @@ $accent : #ea5455;
 $primary: #4749f5;
 $secondary: #df3db2;
 
-header {
-    background-color: $sec_color;
-    margin-bottom: 1.45rem;
+/**************************** HEADER
+***********************************/
+header .hero {
+    margin: 1rem 0 0;
 }
 
-header h1 a {
-    color: $main_color;
-    font-weight:bold;
+header .hero img {
+    height:6rem;
+    float:left;
 }
+
+header .hero ul {
+    list-style-type:none;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    width:30rem;
+}
+
+header a {
+    color:#000;
+}
+
+header a:hover {
+    color:#566df2;
+}
+
+header .construction {
+    clear:both;
+    background-color:#111;
+    margin-bottom: 1.45rem;
+    box-shadow: 0px 3px 7px #aaa;
+    }
+
+header .construction > div {
+    margin: 0 auto;
+    max-width:960px;
+    padding: .45rem 1rem;
+    transform: skewX(-30deg);
+    background-color:$sec_color;
+}
+
+header .construction .content {
+    margin: 0;
+    font-size:.8em;
+    transform: skewX(30deg);
+    color:#111;
+}
+
+
 
 footer {
     background-color:$accent;
@@ -29,7 +70,7 @@ footer a {
 }
 
 body {
-    background-color: $main_color;
+    background-color: #fff;
     font-family:'Roboto', sans-serif;
     font-weight:400;
 }
