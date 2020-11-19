@@ -4,6 +4,28 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
 
+const FileInfo = ({ meta, degraded }) => (
+    <div>
+        { degraded &&
+        <div>
+            <h3 className="warning">Degraded</h3>
+            <p>PDF Image détecté : le traitement prendra plus de temps, le résultat peut en être dégradé</p>
+        </div>
+        }
+        <div>
+            <dl>
+                <dd>Caractères / Tekens</dd>
+                <dt>{ meta.charstotal || '0' }</dt>
+                <dd>Pages / Paginas</dd>
+                <dt>{ meta.pages || '0' }</dt>
+                <dd>Langue / Taal</dd>
+                <dt>{ meta.language || '0' }</dt>
+            </dl>
+        </div>
+    </div>
+);
+
+
 class UploadUi extends React.Component {
     constructor(props) {
         super(props);
@@ -12,16 +34,26 @@ class UploadUi extends React.Component {
             uploaded :  'Copier-coller / Copy-Paste',
             res_text: {__html: '(Zone résultat)' },
             log_text: {__html: '' },
+            file_meta: false,
+            isDegraded: false,
             waiting: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleTextExtract = this.handleTextExtract.bind(this);
+        this.handleTextMeta = this.handleTextMeta.bind(this);
         this.handleCallback = props.TextHandler;
     }
 
     logDisplay(loglines) {
         return loglines.join("\n<br />");
+    }
+
+    handleTextMeta(meta, degraded=false) {
+        this.setState({
+            file_meta: meta,
+            isDegraded: degraded
+        });
     }
 
     handleTextExtract(success, text) {
@@ -96,9 +128,19 @@ class UploadUi extends React.Component {
                 <h2>1) Charger le contenu / Inhoud uploaden</h2>
                 <div className="row justify-content-center">
                     <div className="col-4">
-                        <Uploader parentCallback={ this.handleTextExtract } />
+                        <Uploader
+                            parentCallback={ this.handleTextExtract }
+                            metaCallback={ this.handleTextMeta }
+                        />
                     </div>
                 </div>
+                { this.state.file_meta && 
+                <div className="row justify-content-center">
+                    <div className="col-8">
+                        <FileInfo meta={ this.state.file_meta } degraded={ this.state.isDegraded } />
+                    </div>
+                </div>
+                }
 
                 
                 <div className="row justify-content-center">

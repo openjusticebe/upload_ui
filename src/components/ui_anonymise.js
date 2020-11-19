@@ -68,7 +68,7 @@ const AnonymiseUi = (props) => {
                     // update={ this.state.uploaded }
                     onChange={ props.textChange }
                     value ={ props.preparedText }
-                    disabled = "true"
+                    disabled = { true } 
                     />
             </div>
         </div>

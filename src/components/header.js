@@ -7,7 +7,7 @@ import OJLogo from "../images/openjustice.png"
 const Header = ({ siteTitle }) => (
     <header>
       <div className="hero">
-        <Link>
+        <Link to="https://openjustice.be">
           <img src={ OJLogo } />
         </Link>
         <ul>

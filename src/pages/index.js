@@ -57,6 +57,9 @@ class IndexPage extends React.Component {
 
     /////////////////////////////////////////////////////////// Text management
     ///////////////////////////////////////////////////////////////////////////
+
+
+
     handleExtract(text, entities_in, log={}) {
         let entities = {...entities_in};
         const keys = Object.keys(entities);
@@ -160,9 +163,6 @@ class IndexPage extends React.Component {
             <SEO title="OJ / Upload Alpha" />
             <div className="container">
                 <div className="row">
-                    <StepWizard 
-                        isHashEnabled
-                        nav={ <NavSteps /> }>
                         <div className="row justify-content-center info" hashkey={'intro'}>
                             <div className="col-5">
                                 <h2>Chargement</h2>
@@ -175,7 +175,10 @@ class IndexPage extends React.Component {
                                 Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.
                             </div>
                         </div>
-                        <UploadUi TextHandler = { this.handleExtract } hashKey={'upload'} />    
+                        <UploadUi 
+                            extHandler = { this.handleExtract }
+                            hashKey={'upload'}
+                            />    
                         
                         <AnonymiseUi
                                 preparedText = { this.state.text_parsed }
@@ -187,7 +190,6 @@ class IndexPage extends React.Component {
                                 hashKey={'anonymise'} />
                             
                         <SendUi uploadedText = {this.state.text_parsed } hashKey={'send'} />
-                    </StepWizard>
                 </div>
           </div>
           </Layout>

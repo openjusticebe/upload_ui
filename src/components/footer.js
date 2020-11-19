@@ -3,9 +3,9 @@ import PropTypes from "prop-types"
 import React from "react"
 
 const Footer = ({ siteTitle }) => (
-    <footer class="footer">
-             <div class="container">
-               <small class="text-muted text-center">
+    <footer className="footer">
+             <div className="container">
+               <small className="text-center">
                  Developed with ❤️ by
                  <em>
              {` `}
@@ -14,16 +14,12 @@ const Footer = ({ siteTitle }) => (
              </em>
              {` | `} {new Date().getFullYear()} {` – `} now.
              <br />
-            Source code available at
-            <a
+            Source code available at <a
                 href="https://github.com/openjusticebe/"
                 target="_blank"
-            >
-            GitHub
-            </a>
+            >GitHub</a>
             — 
-            Licensed with
-            <a
+            Licensed with <a
                 href="https://raw.githubusercontent.com/openjusticebe/ui-assets/main/LICENSE"
             >
             GPLv3
