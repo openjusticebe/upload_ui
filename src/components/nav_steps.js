@@ -19,24 +19,30 @@ class NavSteps extends React.Component {
 
       <nav aria-label="wizard-nav">
       <ul class="pagination">        
+      
       <li className="page-item"><button 
         onClick={this.props.firstStep} 
         className="btn btn-secondary page-link"
         >First Step</button></li>
 
-        <li className="page-item"> <button 
+      <li className="page-item"> <button 
         onClick={this.props.previousStep} 
         className="btn btn-primary page-link"
-        ><span aria-hidden="true">&laquo;</span> Previous Step</button></li>
-        <li className="page-item"><button 
+        ><span aria-hidden="true">&laquo;</span> Previous Step</button>
+      </li>
+      
+      <li className="page-item"><button 
         onClick={this.props.nextStep} 
         className="btn btn-primary page-link"
-        >Next Step <span aria-hidden="true">&raquo;</span></button></li>
+        >Next Step <span aria-hidden="true">&raquo;</span></button>
+      </li>
   
-        <li className="page-item"><button 
+      <li className="page-item"><button 
         onClick={this.props.lastStep} 
         className="btn btn-secondary page-link"
-        >Last Step</button> </li>
+        >Last Step</button>
+      </li>
+      
       </ul>
       </nav>
 

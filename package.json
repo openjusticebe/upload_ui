@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
-  "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "name": "openjustice-upload_ui",
+  "private": false,
+  "description": "This component is part of our service to provide a public and free repository of anonymised belgian court decisions.",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "OpenJustice.be <team@openjustice.be>",
   "dependencies": {
     "bootstrap": "^4.5.0",
     "gatsby": "^2.24.12",
@@ -38,7 +38,7 @@
   "keywords": [
     "gatsby"
   ],
-  "license": "MIT",
+  "license": "GPLv3",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
