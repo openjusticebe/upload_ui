@@ -99,6 +99,8 @@ class UploadUi extends React.Component {
                         <Uploader parentCallback={ this.handleTextExtract } />
                     </div>
                 </div>
+
+                
                 <div className="row justify-content-center">
                     { this.state.error &&
                         <div className="log col-10 bg-info">

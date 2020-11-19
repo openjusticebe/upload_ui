@@ -8,14 +8,15 @@ import SEO from "../components/seo";
 import "../styles/style.scss";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import StepWizard from 'react-step-wizard';
 
 import UploadUi from "../components/ui_upload";
 import AnonymiseUi from "../components/ui_anonymise";
 import SendUi from "../components/ui_send";
+import NavSteps from "../components/nav_steps";
 
 import PlaceholderManager from "../misc/placeholder.js";
 import parseText from "../misc/parser.js";
-
 
 // v1
 export const query = graphql`
@@ -170,19 +171,28 @@ class IndexPage extends React.Component {
                         Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.
                     </div>
                 </div>
-                <div className="row mt-3">
-                    <UploadUi TextHandler = { this.handleExtract } />    
-
-                    <AnonymiseUi
+                <div className="row">
+                <StepWizard nav={ <NavSteps /> }>
+ 
+                <UploadUi TextHandler = { this.handleExtract } 
+                hashKey={'upload'} />    
+                
+                <AnonymiseUi
                         preparedText = { this.state.text_parsed }
                         entities = { this.state.entities }
                         textChange = { this.handleFinalText }
                         entityRemove = { this.remEntity }
                         entityAdd = { this.addEntity }
                         entityChange = { this.updEntity }
-                    />
+                        hashKey={'anonymise'} />
                     
-                    <SendUi uploadedText = {this.state.text_parsed }/>
+                <SendUi uploadedText = {this.state.text_parsed }
+                hashKey={'send'} />
+
+                </StepWizard>
+
+
+                   
 
                 </div>
           </div>
