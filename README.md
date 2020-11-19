@@ -1,8 +1,8 @@
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/betagouv/andi-matching/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/openjusticebe)
 [![Generic badge](https://img.shields.io/badge/Open-Justice-green.svg)](https://shields.io/)
 <p align="center">
   <a href="https://openjustice.be">
-    <img alt="logo Openjustice.be" src="https://openjustice.be/wp-content/uploads/2020/10/cropped-Open-Justice.png" width="90" />
+    <img alt="logo Openjustice.be" src="https://raw.githubusercontent.com/openjusticebe/ui-assets/main/svg/OpenJustice.be_clear.svg" width="120" />
   </a>
 </p>
 <h1 align="center">
