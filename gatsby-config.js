@@ -45,24 +45,24 @@ module.exports = {
     // `gatsby-plugin-offline`,
     "gatsby-plugin-use-query-params",
     `gatsby-plugin-sass`,
-    {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
-      options: {
-        fonts: [
-          {
-            family: `Major Mono Display`,
-            variants: [`400`]
-          },
-          {
-            family: `Roboto Mono`,
-            variants: [`400`, `700`]
-          },
-          {
-            family: `Roboto`,
-            variants: [`thin`, `light`]
-          },
-        ],
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-prefetch-google-fonts`,
+    //   options: {
+    //     fonts: [
+    //       {
+    //         family: `Major Mono Display`,
+    //         variants: [`400`]
+    //       },
+    //       {
+    //         family: `Roboto Mono`,
+    //         variants: [`400`, `700`]
+    //       },
+    //       {
+    //         family: `Roboto`,
+    //         variants: [`thin`, `light`]
+    //       },
+    //     ],
+    //   },
+    // },
   ],
 }
