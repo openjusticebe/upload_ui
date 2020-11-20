@@ -56,9 +56,9 @@ typings/
 
 # gatsby files
 .cache/
-public
+public/*
+!public/assets
 
-!public/assets/i18n/translations/*.json
 
 # Mac files
 .DS_Store
