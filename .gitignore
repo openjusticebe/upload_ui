@@ -58,6 +58,8 @@ typings/
 .cache/
 public
 
+!public/assets/i18n/translations/*.json
+
 # Mac files
 .DS_Store
 
