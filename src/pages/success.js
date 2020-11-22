@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 
 import Layout from "../components/layout";
 import Editor from "../components/editor";
@@ -30,6 +30,9 @@ class SuccessPage extends React.Component {
                     </div>
                     <div className="row mt-3">
                         <PreviewUi />
+                    </div>
+                    <div className="row mt-3">
+                        <Link to="/">&lt; Retour / Terug</Link> 
                     </div>
                 </div>
             </Layout>
