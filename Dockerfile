@@ -9,6 +9,11 @@ RUN npm install -g gatsby-cli
 RUN mkdir /workdir
 WORKDIR /workdir
 
+ARG GATSBY_UPLOAD_API="http://localhost:5000"
+ARG GATSBY_DATA_API="http://localhost:5000"
+ENV GATSBY_UPLOAD_API=${GATSBY_UPLOAD_API} \
+    GATSBY_DATA_API=${GATSBY_UPLOAD_API}
+
 COPY package.json yarn.lock ./
 RUN yarn
 
