@@ -3,7 +3,7 @@ import Uploader from "../components/uploader";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
-import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 const FileInfo = ({ meta, degraded }) => (
     <div>
@@ -124,10 +124,10 @@ class UploadUi extends React.Component {
 
 
     render() {
-        
+        const { t } = this.props;
         return (
             <div className="col-12 shadow rounded border py-3 my-3">
-                <h2>1) Charger le contenu / Inhoud uploaden</h2>
+                <h2>1) {t('form_title.upload_content')} </h2>
                 <div className="row justify-content-center">
                     <div className="col-4">
                         <Uploader
@@ -165,7 +165,7 @@ class UploadUi extends React.Component {
                     <Form onSubmit={ this.handleSubmit } className="pl-3">
                       <Button variant="primary" type="submit">
                       { this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" /> }
-                      anonymiser / anonimiseren
+                      {t('form_btn.anonymization')}
                       </Button>
                     </Form>
                 </div>
@@ -179,4 +179,4 @@ class UploadUi extends React.Component {
     }
 }
 
-export default UploadUi
+export default withTranslation()(UploadUi)
