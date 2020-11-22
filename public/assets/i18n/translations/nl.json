@@ -1,6 +1,15 @@
 {
     "main.disclaimer": "DISCLAIMER",
+    "main.intro_title": "Upload",
+    "main.intro_text": "Upload interface voor rechtsbeslissingen. Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.",
     "form_title.upload_content": "Inhoud uploaden",
     "form_title.check_anonymizaton": "Anonimisatie nakijken",
-    "form_title.add_metadata": "Gegevens invullen en versturen"
+    "form_title.add_metadata": "Gegevens invullen en versturen",
+    "form.preview_final_document": "Voorbeeld van het definitieve document",
+    "form.copy_paste": "Copy-Paste the content",
+    "form.country": "Land",
+    "form.source": "Bron",
+    "form.year": "Jaar",
+    "form.identifier": "Identifier",
+    "form.user_key": "Gebruiker sleutel"
   }
