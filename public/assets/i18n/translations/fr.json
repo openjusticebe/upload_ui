@@ -1,6 +1,6 @@
 {
-    "main.disclaimer": "DISCLAIM",
+    "main.disclaimer": "DISCLAIMER",
     "form_title.upload_content": "Charger le contenu",
     "form_title.check_anonymizaton": "Vérifier anonymisation",
-    "form_title.add_metadata": "Définir données et envoyer",
+    "form_title.add_metadata": "Définir données et envoyer"
   }
