@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Layout from "../components/layout";
 import Editor from "../components/editor";
@@ -161,22 +161,19 @@ class IndexPage extends React.Component {
     ///////////////////////////////////////////////////////// Entity management
     ///////////////////////////////////////////////////////////////////////////
     render() {
+        const { t } = this.props;
+
         return (
           <Layout>
             <SEO title="OJ / Upload Alpha" />
             <div className="container">
                 <div className="row">
                         <div className="row justify-content-center info" hashkey={'intro'}>
-                            <div className="col-5">
-                                <h2>Chargement</h2>
-                                Interface de chargement de décisions de justice. <br />
-                                Avant envoi définitif, aucune donnéé n'est enregistréé ni journalisée. 
+                            <div className="col-10">
+                                <h2>{t('main.intro_title')}</h2>
+                                <p>{t('main.intro_text')}</p> 
                             </div>
-                            <div className="col-5">
-                                <h2>Upload</h2>
-                                Upload interface voor rechtsbeslissingen. <br />
-                                Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.
-                            </div>
+                      
                         </div>
                         <UploadUi 
                             extHandler = { this.handleExtract }
@@ -201,4 +198,4 @@ class IndexPage extends React.Component {
 }
 
 
-export default IndexPage;
+export default withTranslation()(IndexPage);
