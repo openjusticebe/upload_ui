@@ -3,13 +3,14 @@ import Uploader from "../components/uploader";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
+import { useTranslation } from 'react-i18next';
 
 const FileInfo = ({ meta, degraded }) => (
     <div>
         { degraded &&
         <div>
             <h3 className="warning">Degraded</h3>
-            <p>PDF Image détecté : le traitement prendra plus de temps, le résultat peut en être dégradé</p>
+            <p>PDF Image détecté : le traitement prendra plus de temps, le résultat peut en être dégradé.</p>
         </div>
         }
         <div>
@@ -123,6 +124,7 @@ class UploadUi extends React.Component {
 
 
     render() {
+        
         return (
             <div className="col-12 shadow rounded border py-3 my-3">
                 <h2>1) Charger le contenu / Inhoud uploaden</h2>

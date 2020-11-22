@@ -1,6 +1,18 @@
 {
     "main.disclaimer": "DISCLAIMER",
+    "main.intro_title": "Chargement",
+    "main.intro_text": "Interface de chargement de décisions de justice. Avant envoi définitif, aucune donnée est enregistrée ni journalisée.",
     "form_title.upload_content": "Charger le contenu",
     "form_title.check_anonymizaton": "Vérifier anonymisation",
-    "form_title.add_metadata": "Définir données et envoyer"
+    "form_title.add_metadata": "Définir données et envoyer",
+    "form.preview_final_document": "Aperçu du document final",
+    "form.copy_paste": "Copier-coller le contenu",
+    "form.country": "Pays",
+    "form.source": "Source",
+    "form.year": "Année",
+    "form.identifier": "Identifiant",
+    "form.user_key": "Clé utilisateur"
   }
+
+
+
