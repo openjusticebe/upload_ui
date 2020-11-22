@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
+import { useTranslation } from 'react-i18next';
 
 import Layout from "../components/layout";
 import Editor from "../components/editor";
@@ -17,6 +18,8 @@ import NavSteps from "../components/nav_steps";
 
 import PlaceholderManager from "../misc/placeholder.js";
 import parseText from "../misc/parser.js";
+import '../misc/i18n.js'
+
 
 // v1
 export const query = graphql`
