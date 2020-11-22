@@ -11,7 +11,9 @@
     "form.source": "Source",
     "form.year": "Année",
     "form.identifier": "Identifiant",
-    "form.user_key": "Clé utilisateur"
+    "form.user_key": "Clé utilisateur",
+    "form.btn_anonymization": "Anonymiser"
+
   }
 
 

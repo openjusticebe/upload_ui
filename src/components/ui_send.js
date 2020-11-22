@@ -3,6 +3,7 @@ import { navigate } from "gatsby"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
+import { withTranslation } from 'react-i18next';
 
 class SendUi extends React.Component {
 
@@ -74,27 +75,28 @@ class SendUi extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
         return (
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
-                <h2>3) Définir données et envoyer / Gegevens invullen en versturen</h2>
+                <h2>3) {t('form_title.add_metadata')}</h2>
                 <div className="row">
                     <Form onSubmit={ this.handleSubmit } onChange={ this.handleChange } className="pl-3">
                       <Form.Group controlId="myform.country">
-                          <Form.Label>Pays / Land</Form.Label>
+                          <Form.Label> {t('form.country')}</Form.Label>
                           <Form.Control name="country" as="select">
                             <option>BE</option>
                           </Form.Control>
                       </Form.Group>
 
                       <Form.Group controlId="myform.court">
-                          <Form.Label>Source / Bron</Form.Label>
+                          <Form.Label> {t('form.source')}</Form.Label>
                           <Form.Control name="court" as="select">
                             <option>RSCE</option>
                           </Form.Control>
                       </Form.Group>
 
                       <Form.Group controlId="myform.year">
-                          <Form.Label>Année / Jaar</Form.Label>
+                          <Form.Label> {t('form.year')}</Form.Label>
                           <Form.Control name="year" as="select">
                             <option>2020</option>
                             <option>2019</option>
@@ -111,12 +113,12 @@ class SendUi extends React.Component {
                       </Form.Group>
 
                       <Form.Group controlId="myform.identifier">
-                        <Form.Label>Identifiant / Identifier</Form.Label>
+                        <Form.Label> {t('form.identifier')}</Form.Label>
                         <Form.Control type="text" name="identifier" placeholder="ARR.XXXXXX" />
                       </Form.Group>
 
                       <Form.Group controlId="myform.userkey">
-                        <Form.Label>Clé Utilisateur / Gebruiker sleutel</Form.Label>
+                        <Form.Label> {t('form.user_key')}</Form.Label>
                         <Form.Control type="text" name="userkey" placeholder="XXXXX" />
                       </Form.Group>
 
@@ -126,7 +128,7 @@ class SendUi extends React.Component {
 
                       <Button variant="primary" type="submit">
                       {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                      envoyer / doorsturen
+                      {t('form_btn.send')}
                       </Button>
                     </Form>
                 </div>
@@ -134,5 +136,5 @@ class SendUi extends React.Component {
         );
     }
 }
-export default SendUi
 
+export default withTranslation()(SendUi)

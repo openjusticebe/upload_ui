@@ -3,6 +3,7 @@
     "form_title.upload_content": "upload_content",
     "form_title.check_anonymizaton": "check_anonymizaton",
     "form_title.add_metadata": "add_metadata",
-    "form.preview_final_document": "Preview final document"
+    "form.preview_final_document": "Preview final document",
+    "form_btn.anonymization": "Anonymization"
 
 }

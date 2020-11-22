@@ -11,5 +11,6 @@
     "form.source": "Bron",
     "form.year": "Jaar",
     "form.identifier": "Identifier",
-    "form.user_key": "Gebruiker sleutel"
+    "form.user_key": "Gebruiker sleutel",
+    "form_btn.anonymization": "Anonimiseren"
   }
