@@ -3,6 +3,7 @@ import { navigate } from "gatsby"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
+import {YEARS, COURTS, CATEGORIES} from '../misc/data';
 
 class SendUi extends React.Component {
 
@@ -14,8 +15,11 @@ class SendUi extends React.Component {
             year: 1990,
             identifier: '',
             text: '',
+            lang: 'NL',
             userkey: '',
-            waiting: false
+            category: 'other',
+            waiting: false,
+            error:false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -48,6 +52,8 @@ class SendUi extends React.Component {
             'year' : this.state.year,
             'identifier' : this.state.identifier,
             'text' : this.state.text,
+            'lang' : this.state.lang,
+            'category' : this.state.category,
             'user_key' : this.state.userkey,
         }
         // Get api response
@@ -69,7 +75,9 @@ class SendUi extends React.Component {
                 this.setState({waiting: false})
                 if (resultData.result == 'ok')
                     navigate(`/success?hash=${resultData.hash}`)
-                    
+            }).catch(error => {
+                const msg = `Erreur de serveur, Server fout: ${error.toString()}`;
+                this.setState({waiting: false, error:{__html: msg}});
             });
     }
 
@@ -89,24 +97,34 @@ class SendUi extends React.Component {
                       <Form.Group controlId="myform.court">
                           <Form.Label>Source / Bron</Form.Label>
                           <Form.Control name="court" as="select">
-                            <option>RSCE</option>
+                            { COURTS.map( (court) => (
+                                <option value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>
+                            ))}
+                          </Form.Control>
+                      </Form.Group>
+
+                      <Form.Group controlId="myform.category">
+                          <Form.Label>Catégorie / Categorie</Form.Label>
+                          <Form.Control name="category" as="select">
+                            { CATEGORIES.map( (cat) => (
+                                <option value={ cat.id }>{cat.name_fr} - {cat.name_nl}</option>
+                            ))}
+                          </Form.Control>
+                      </Form.Group>
+
+                      <Form.Group controlId="myform.lang">
+                          <Form.Label>Langue / Taal</Form.Label>
+                          <Form.Control name="lang" as="select">
+                            <option value="NL">NL</option>
+                            <option value="FR">FR</option>
+                            <option value="DE">DE</option>
                           </Form.Control>
                       </Form.Group>
 
                       <Form.Group controlId="myform.year">
                           <Form.Label>Année / Jaar</Form.Label>
                           <Form.Control name="year" as="select">
-                            <option>2020</option>
-                            <option>2019</option>
-                            <option>2018</option>
-                            <option>2017</option>
-                            <option>2016</option>
-                            <option>2015</option>
-                            <option>2014</option>
-                            <option>2013</option>
-                            <option>2012</option>
-                            <option>2011</option>
-                            <option>2010</option>
+                            { YEARS.map( year => (<option>{ year }</option>) ) }
                           </Form.Control>
                       </Form.Group>
 
@@ -124,6 +142,9 @@ class SendUi extends React.Component {
                         ECLI:{this.state.country}:{this.state.court}:{this.state.year}:{this.state.identifier}
                       </pre>
 
+                      { this.state.error &&
+                          <div className="log col-10" dangerouslySetInnerHTML={ this.state.error } />
+                      }
                       <Button variant="primary" type="submit">
                       {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
                       envoyer / doorsturen

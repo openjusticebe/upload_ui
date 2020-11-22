@@ -73,7 +73,6 @@ class IndexPage extends React.Component {
                 placeholder: PlaceholderManager.get(e.type, key)
             };
         });
-        console.log(entities);
         const parsed = parseText(entities, text)
 
         if (text) {
@@ -117,7 +116,6 @@ class IndexPage extends React.Component {
 
 
     remEntity(event) {
-        console.log('remove entity', event.target);
         let newEntities = this.state.entities;
         const id = event.currentTarget.parentNode.parentNode.parentNode.id;
         if (id in newEntities)
@@ -130,13 +128,11 @@ class IndexPage extends React.Component {
 
 
     updEntity(event) {
-        console.log('update entity', event.target);
         // FIXME: refactor this
         const id = event.currentTarget.parentNode.parentNode.parentNode.id;
         let newEntities = this.state.entities;
         let field = event.target.name;
         if (id in newEntities) {
-            console.log('New value for', event.target.name, 'value:', event.target.value);
             if (field == 'text')
                 newEntities[id][field] = event.target.value.split('; ');
             else {

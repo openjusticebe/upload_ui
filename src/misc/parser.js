@@ -1,5 +1,4 @@
 const parseText = (entities, raw) => {
-    console.log('Render text', entities);
     for (let e_key in entities) {
         let e = entities[e_key];
         e.text.forEach( w => {
