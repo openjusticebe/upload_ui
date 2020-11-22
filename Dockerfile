@@ -14,7 +14,6 @@ RUN yarn
 
 COPY ./src ./src
 COPY gatsby* ./
-COPY .env.* ./
 RUN yarn build
 
 
