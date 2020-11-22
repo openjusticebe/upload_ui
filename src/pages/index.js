@@ -176,7 +176,7 @@ class IndexPage extends React.Component {
                             </div>
                         </div>
                         <UploadUi 
-                            extHandler = { this.handleExtract }
+                            TextHandler = { this.handleExtract }
                             hashKey={'upload'}
                             />    
                         
