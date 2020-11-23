@@ -22,7 +22,6 @@ const Header = ({ siteTitle }) => (
         
         <LanguageSelector />
 
-
       </div>
       <div className="construction" >
         <div>
