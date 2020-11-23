@@ -4,17 +4,19 @@ import { useTranslation } from 'react-i18next'
 const LanguageSelector = () => {
   const { t, i18n } = useTranslation()
 
-  const changeLanguage = (event) => {
-    i18n.changeLanguage(event.target.value)
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
   }
 
   return (
-    <div onChange={changeLanguage}>
-      <input type="radio" value="en" name="language" defaultChecked /> en
-      <input type="radio" value="fr" name="language"/> fr
-      <input type="radio" value="nl" name="language"/> nl
-      <input type="radio" value="de" name="language"/> de
-    </div>
+    <ul className="float-right col-2">
+    <li><button onClick={() => changeLanguage('nl')} className="btn btn-sm btn-default text-primary">nl</button></li>
+    <li><button onClick={() => changeLanguage('fr')} className="btn btn-sm btn-default text-primary">fr</button></li>
+    <li><button onClick={() => changeLanguage('en')} className="btn btn-sm btn-default text-primary">en</button></li>
+    {/* <li><button onClick={() => changeLanguage('de')} className="btn btn-sm btn-default text-primary">de</button></li> */}
+    </ul>
+
+
   )
 }
 

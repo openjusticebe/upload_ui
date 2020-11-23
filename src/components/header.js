@@ -22,11 +22,12 @@ const Header = ({ siteTitle }) => (
         
         <LanguageSelector />
 
+
       </div>
       <div className="construction" >
         <div>
           <div className="content">
-            <span> version 0.1 - early release</span>
+            <span>Version 0.1 - early release</span>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { graphql, Link } from "gatsby";
+import { withTranslation } from 'react-i18next';
 
 import Layout from "../components/layout";
 import Editor from "../components/editor";
@@ -14,6 +15,8 @@ class SuccessPage extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
+
         return (
             <Layout>
                 <SEO title="OJ / Upload Alpha" />
@@ -40,5 +43,5 @@ class SuccessPage extends React.Component {
     }
 }
 
-export default SuccessPage
+export default withTranslation()(SuccessPage)
             
