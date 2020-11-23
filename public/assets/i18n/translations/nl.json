@@ -17,5 +17,13 @@
     "form_btn.anonymization": "Anonimiseren",
     "form.btn_send": "Send",
     "thanks": "Danke!",
-    "result": "Uw document wacht nu op verificatie voordat het wordt gepubliceerd."
+    "result": "Uw document wacht nu op verificatie voordat het wordt gepubliceerd.",
+    "back": "Terug",
+    "form.select_file": "Klik hier om een bestand te uploaden",
+    "pages": "Paginas",
+    "characters": "Tekens",
+    "languages": "Taal",
+    "form.image_pdf_detected": "PDF Detected"
+
+
   }

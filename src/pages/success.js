@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from "react";
 import { graphql, Link } from "gatsby";
-import { withTranslation } from 'react-i18next';
 
 import Layout from "../components/layout";
 import Editor from "../components/editor";
@@ -17,7 +16,7 @@ class SuccessPage extends React.Component {
     }
 
     render() {
-        const { t } = this.props;
+        const { t, i18n } = useTranslation()
 
         return (
             <Layout>
@@ -35,7 +34,7 @@ class SuccessPage extends React.Component {
                         <PreviewUi />
                     </div>
                     <div className="row mt-3">
-                        <Link to="/">&lt; Retour / Terug</Link> 
+                        <Link to="/">&lt; {t('back')}</Link> 
                     </div>
                 </div>
             </Layout>

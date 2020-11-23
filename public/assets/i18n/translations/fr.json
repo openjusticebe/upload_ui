@@ -21,7 +21,15 @@
     "nav.next_step": "Étape suivante",
     "nav.last_step": "Dernière étape",
     "thanks": "Merci!",
-    "result": "Votre document attend désormais vérification avant d'être publié."
+    "result": "Votre document attend désormais vérification avant d'être publié.",
+    "back": "Retour",
+    "form.select_file": "Cliquez ici pour charger un fichier",
+    "pages": "Pages",
+    "characters": "Caractères",
+    "languages": "Langues",
+    "form.image_pdf_detected": "PDF de type Image a été détecté. Le traitement prendra plus de temps et le résultat peut en être dégradé."
+
+
 
   }
 

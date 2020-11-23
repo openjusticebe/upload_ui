@@ -3,37 +3,40 @@ import Uploader from "../components/uploader";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
-const FileInfo = ({ meta, degraded }) => (
+const FileInfo = ({ meta, degraded }) => {
+    const { t } = useTranslation()
+    return (
     <div>
         { degraded &&
         <div>
             <h3 className="warning">Degraded</h3>
-            <p>PDF Image détecté : le traitement prendra plus de temps, le résultat peut en être dégradé.</p>
+            <p>{ t('form.image_pdf_detected') }</p>
         </div>
         }
         <div>
             <dl>
-                <dd>Caractères / Tekens</dd>
+                <dd>{ t('characters') }</dd>
                 <dt>{ meta.charstotal || '0' }</dt>
-                <dd>Pages / Paginas</dd>
+                <dd>{ t('pages') }</dd>
                 <dt>{ meta.pages || '0' }</dt>
-                <dd>Langue / Taal</dd>
+                <dd>{ t('languages') }</dd>
                 <dt>{ meta.language || '0' }</dt>
             </dl>
         </div>
     </div>
-);
+    )
+    };
 
 
 class UploadUi extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: 'Copier-coller / Copy-Paste',
-            uploaded :  'Copier-coller / Copy-Paste',
-            res_text: {__html: '(Zone résultat)' },
+            text: 'Copy-Paste',
+            uploaded :  'Copy-Paste',
+            res_text: {__html: '(Result zone)' },
             log_text: {__html: '' },
             file_meta: false,
             isDegraded: false,

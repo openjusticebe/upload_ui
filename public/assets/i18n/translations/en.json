@@ -21,7 +21,13 @@
     "nav.next_step": "Next step",
     "nav.last_step": "Last step",
     "thanks": "Thank you!",
-    "result": "Your upload is now waiting for peer review validation before publication."
+    "result": "Your upload is now waiting for peer review validation before publication.",
+    "back": "Back",
+    "form.select_file": "Click here to select file from your computer",
+    "pages": "Pages",
+    "characters": "Characters",
+    "languages": "Languages",
+    "form.image_pdf_detected": "PDF Image detected : le traitement prendra plus de temps, le résultat peut en être dégradé."
   }
 
 
