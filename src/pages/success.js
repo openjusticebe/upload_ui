@@ -7,6 +7,8 @@ import Editor from "../components/editor";
 import SEO from "../components/seo";
 import "../styles/style.scss";
 import PreviewUi from "../components/ui_preview";
+import { useTranslation } from 'react-i18next';
+
 
 class SuccessPage extends React.Component {
     constructor(props) {
@@ -14,25 +16,25 @@ class SuccessPage extends React.Component {
     }
 
     render() {
+        const { t, i18n } = useTranslation()
+
         return (
             <Layout>
                 <SEO title="OJ / Upload Alpha" />
                 <div className="container">
                     <div className="row justify-content-center info">
-                        <div className="col-5">
-                            <h2>Merci !</h2>
-                            Votre document attend désormais vérification avant d'être publié
+                        <div className="col-10">
+                            <h2>{t('thanks')}</h2>
+                            <p>{t('result.info')}</p>
+                            
                         </div>
-                        <div className="col-5">
-                            <h2>Bedankt !</h2>
-                            Uw document wacht nu op verificatie voordat het wordt gepubliceerd
-                        </div>
+                
                     </div>
                     <div className="row mt-3">
                         <PreviewUi />
                     </div>
                     <div className="row mt-3">
-                        <Link to="/">&lt; Retour / Terug</Link> 
+                        <Link to="/">&lt; {t('back')}</Link> 
                     </div>
                 </div>
             </Layout>

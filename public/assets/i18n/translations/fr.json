@@ -1,0 +1,37 @@
+{
+    "main.disclaimer": "DISCLAIMER",
+    "main.intro_title": "Chargement",
+    "main.intro_text": "Interface de chargement de décisions de justice. Avant envoi définitif, aucune donnée est enregistrée ni journalisée.",
+    "form_title.upload_content": "Charger le contenu",
+    "form_title.check_anonymizaton": "Vérifier anonymisation",
+    "form_title.add_metadata": "Définir données et envoyer",
+    "form.preview_final_document": "Aperçu du document final",
+    "form.copy_paste": "Copier-coller le contenu",
+    "form.country": "Pays",
+    "form.source": "Source",
+    "form.year": "Année",
+    "form.language": "Langue",
+    "form.categorie": "Catégorie",
+    "form.identifier": "Identifiant",
+    "form.user_key": "Clé utilisateur",
+    "form.btn_anonymization": "Anonymiser",
+    "form.btn_send": "Envoyer",
+    "nav.first_step": "Première étape",
+    "nav.previous_step": "Étape précédente",
+    "nav.next_step": "Étape suivante",
+    "nav.last_step": "Dernière étape",
+    "thanks": "Merci!",
+    "result": "Votre document attend désormais vérification avant d'être publié.",
+    "back": "Retour",
+    "form.select_file": "Cliquez ici pour charger un fichier",
+    "pages": "Pages",
+    "characters": "Caractères",
+    "languages": "Langues",
+    "form.image_pdf_detected": "PDF de type Image a été détecté. Le traitement prendra plus de temps et le résultat peut en être dégradé."
+
+
+
+  }
+
+
+

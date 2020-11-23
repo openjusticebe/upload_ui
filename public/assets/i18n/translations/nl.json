@@ -1,0 +1,29 @@
+{
+    "main.disclaimer": "DISCLAIMER",
+    "main.intro_title": "Upload",
+    "main.intro_text": "Upload interface voor rechtsbeslissingen. Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.",
+    "form_title.upload_content": "Inhoud uploaden",
+    "form_title.check_anonymizaton": "Anonimisatie nakijken",
+    "form_title.add_metadata": "Gegevens invullen en versturen",
+    "form.preview_final_document": "Voorbeeld van het definitieve document",
+    "form.copy_paste": "Copy-Paste the content",
+    "form.country": "Land",
+    "form.source": "Bron",
+    "form.year": "Jaar",
+    "form.language": "Taal",
+    "form.categorie": "Categorie",
+    "form.identifier": "Identifier",
+    "form.user_key": "Gebruiker sleutel",
+    "form_btn.anonymization": "Anonimiseren",
+    "form.btn_send": "Send",
+    "thanks": "Danke!",
+    "result": "Uw document wacht nu op verificatie voordat het wordt gepubliceerd.",
+    "back": "Terug",
+    "form.select_file": "Klik hier om een bestand te uploaden",
+    "pages": "Paginas",
+    "characters": "Tekens",
+    "languages": "Taal",
+    "form.image_pdf_detected": "PDF Detected"
+
+
+  }

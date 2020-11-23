@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
 import {YEARS, COURTS, CATEGORIES} from '../misc/data';
+import { withTranslation } from 'react-i18next';
 
 class SendUi extends React.Component {
 
@@ -82,20 +83,21 @@ class SendUi extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
         return (
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
-                <h2>3) Définir données et envoyer / Gegevens invullen en versturen</h2>
+                <h2>3) {t('form_title.add_metadata')}</h2>
                 <div className="row">
                     <Form onSubmit={ this.handleSubmit } onChange={ this.handleChange } className="pl-3">
                       <Form.Group controlId="myform.country">
-                          <Form.Label>Pays / Land</Form.Label>
+                          <Form.Label> {t('form.country')}</Form.Label>
                           <Form.Control name="country" as="select">
                             <option>BE</option>
                           </Form.Control>
                       </Form.Group>
 
                       <Form.Group controlId="myform.court">
-                          <Form.Label>Source / Bron</Form.Label>
+                          <Form.Label> {t('form.source')}</Form.Label>
                           <Form.Control name="court" as="select">
                             { COURTS.map( (court) => (
                                 <option value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>
@@ -104,7 +106,7 @@ class SendUi extends React.Component {
                       </Form.Group>
 
                       <Form.Group controlId="myform.category">
-                          <Form.Label>Catégorie / Categorie</Form.Label>
+                          <Form.Label> {t('form.categorie')}</Form.Label>
                           <Form.Control name="category" as="select">
                             { CATEGORIES.map( (cat) => (
                                 <option value={ cat.id }>{cat.name_fr} - {cat.name_nl}</option>
@@ -113,7 +115,7 @@ class SendUi extends React.Component {
                       </Form.Group>
 
                       <Form.Group controlId="myform.lang">
-                          <Form.Label>Langue / Taal</Form.Label>
+                          <Form.Label>{t('form.language')}</Form.Label>
                           <Form.Control name="lang" as="select">
                             <option value="NL">NL</option>
                             <option value="FR">FR</option>
@@ -122,19 +124,19 @@ class SendUi extends React.Component {
                       </Form.Group>
 
                       <Form.Group controlId="myform.year">
-                          <Form.Label>Année / Jaar</Form.Label>
+                          <Form.Label> {t('form.year')}</Form.Label>
                           <Form.Control name="year" as="select">
                             { YEARS.map( year => (<option>{ year }</option>) ) }
                           </Form.Control>
                       </Form.Group>
 
                       <Form.Group controlId="myform.identifier">
-                        <Form.Label>Identifiant / Identifier</Form.Label>
+                        <Form.Label> {t('form.identifier')}</Form.Label>
                         <Form.Control type="text" name="identifier" placeholder="ARR.XXXXXX" />
                       </Form.Group>
 
                       <Form.Group controlId="myform.userkey">
-                        <Form.Label>Clé Utilisateur / Gebruiker sleutel</Form.Label>
+                        <Form.Label> {t('form.user_key')}</Form.Label>
                         <Form.Control type="text" name="userkey" placeholder="XXXXX" />
                       </Form.Group>
 
@@ -145,9 +147,9 @@ class SendUi extends React.Component {
                       { this.state.error &&
                           <div className="log col-10" dangerouslySetInnerHTML={ this.state.error } />
                       }
-                      <Button variant="primary" type="submit">
+                      <Button variant="success" type="submit">
                       {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                      envoyer / doorsturen
+                      {t('form.btn_send')}
                       </Button>
                     </Form>
                 </div>
@@ -155,5 +157,5 @@ class SendUi extends React.Component {
         );
     }
 }
-export default SendUi
 
+export default withTranslation()(SendUi)

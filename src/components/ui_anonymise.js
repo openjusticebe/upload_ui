@@ -3,6 +3,7 @@ import Uploader from "../components/uploader";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PlaceholderManager from "../misc/placeholder.js";
+import { useTranslation } from 'react-i18next';
 
 const EntityRow = ({id, words, type, placeholder, onRemove, onChange}) => (
     <Form id={ id }>
@@ -48,9 +49,10 @@ const EntityForm = ({entities, onRemove, onChange}) => (
 
 
 const AnonymiseUi = (props) => {
+    const { t, i18n } = useTranslation()
     return (
         <div className="col-12 mb-5 shadow rounded border py-3 my-3">
-            <h2>2) Vérifier anonimisation / Anonimisatie nakijken</h2>
+            <h2>2) {t('form_title.check_anonymizaton')} </h2>
             <div className="row justify-content-center">
                 <EntityForm
                     entities={ props.entities }
@@ -60,7 +62,7 @@ const AnonymiseUi = (props) => {
             </div>
                 <hr/>
             <div className="row justify-content-center">
-                <p>Aperçu du document final / Voorbeeld van het definitieve document</p>
+                <p>{t('form.preview_final_document')}</p>
             </div>
             <div className="row justify-content-center">
                 <textarea

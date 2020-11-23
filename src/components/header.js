@@ -4,6 +4,9 @@ import React from "react"
 
 import OJLogo from "../images/openjustice.png"
 
+import LanguageSelector from '../components/languageSelector'
+
+
 const Header = ({ siteTitle }) => (
     <header>
       <div className="hero">
@@ -11,19 +14,21 @@ const Header = ({ siteTitle }) => (
           <img src={ OJLogo } />
         </Link>
         <ul>
-          <li><Link to="https://openjustice.be">Information</Link></li>
+          <li><Link to="https://openjustice.be/2020/05/23/open-justice/">Information</Link></li>
           <li><Link to="https://openjustice.be">Subscribe</Link></li>
-          <li><Link to="https://openjustice.be">Support</Link></li>
-          <li><Link to="https://openjustice.be">Contact</Link></li>
+          <li><Link to="https://openjustice.be/contact/">Contact</Link></li>
         </ul>
+        
+        <LanguageSelector />
       </div>
       <div className="construction" >
         <div>
           <div className="content">
-            <span> version 0.1 - early release</span>
+            <span>Version 0.1 - early release</span>
           </div>
         </div>
       </div>
+
     </header>
 )
 

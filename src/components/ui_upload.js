@@ -3,36 +3,40 @@ import Uploader from "../components/uploader";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
+import { withTranslation, useTranslation } from 'react-i18next';
 
-const FileInfo = ({ meta, degraded }) => (
+const FileInfo = ({ meta, degraded }) => {
+    const { t } = useTranslation()
+    return (
     <div>
         { degraded &&
         <div>
             <h3 className="warning">Degraded</h3>
-            <p>PDF Image détecté : le traitement prendra plus de temps, le résultat peut en être dégradé</p>
+            <p>{ t('form.image_pdf_detected') }</p>
         </div>
         }
         <div>
             <dl>
-                <dd>Caractères / Tekens</dd>
+                <dd>{ t('characters') }</dd>
                 <dt>{ meta.charstotal || '0' }</dt>
-                <dd>Pages / Paginas</dd>
+                <dd>{ t('pages') }</dd>
                 <dt>{ meta.pages || '0' }</dt>
-                <dd>Langue / Taal</dd>
+                <dd>{ t('languages') }</dd>
                 <dt>{ meta.language || '0' }</dt>
             </dl>
         </div>
     </div>
-);
+    )
+    };
 
 
 class UploadUi extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: 'Copier-coller / Copy-Paste',
-            uploaded :  'Copier-coller / Copy-Paste',
-            res_text: {__html: '(Zone résultat)' },
+            text: 'Copy-Paste',
+            uploaded :  'Copy-Paste',
+            res_text: {__html: '(Result zone)' },
             log_text: {__html: '' },
             file_meta: false,
             isDegraded: false,
@@ -123,9 +127,10 @@ class UploadUi extends React.Component {
 
 
     render() {
+        const { t } = this.props;
         return (
             <div className="col-12 shadow rounded border py-3 my-3">
-                <h2>1) Charger le contenu / Inhoud uploaden</h2>
+                <h2>1) {t('form_title.upload_content')} </h2>
                 <div className="row justify-content-center">
                     <div className="col-4">
                         <Uploader
@@ -163,7 +168,7 @@ class UploadUi extends React.Component {
                     <Form onSubmit={ this.handleSubmit } className="pl-3">
                       <Button variant="primary" type="submit">
                       { this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" /> }
-                      anonymiser / anonimiseren
+                      {t('form_btn.anonymization')}
                       </Button>
                     </Form>
                 </div>
@@ -177,4 +182,4 @@ class UploadUi extends React.Component {
     }
 }
 
-export default UploadUi
+export default withTranslation()(UploadUi)

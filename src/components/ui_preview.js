@@ -14,7 +14,7 @@ const PreviewUi = ()  => {
       hash: StringParam,
     });
     const { hash: hash} = query;
-
+    
     return (
         <div className="col-12 mb-5 shadow rounded border py-3 my-3">
             <p>Lien temporaire non public / Tijdelijke, niet openbare link :</p>

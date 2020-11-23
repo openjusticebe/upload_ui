@@ -1,9 +1,10 @@
 import React from "react";
 import Dropzone from 'react-dropzone'
 import LoadGif from '../images/hourglass.gif';
+import { useTranslation } from 'react-i18next';
 
 export default ({ parentCallback, metaCallback }) => {
-
+    const { t, i18n } = useTranslation()
     let waiting = false;
 
     const handleFiles = (files) => {
@@ -59,7 +60,7 @@ export default ({ parentCallback, metaCallback }) => {
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                       { waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                    <p>Cliquez ici pour charger un fichier<br/>Klik hier om een bestand te uploaden</p>
+                        { t('form.select_file')}
                   </div>
                 </section>
               )}
