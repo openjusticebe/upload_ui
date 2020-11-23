@@ -12,7 +12,7 @@ WORKDIR /workdir
 ARG GATSBY_UPLOAD_API="http://localhost:5000"
 ARG GATSBY_DATA_API="http://localhost:5000"
 ENV GATSBY_UPLOAD_API=${GATSBY_UPLOAD_API} \
-    GATSBY_DATA_API=${GATSBY_UPLOAD_API}
+    GATSBY_DATA_API=${GATSBY_DATA_API}
 
 COPY package.json yarn.lock ./
 RUN yarn
