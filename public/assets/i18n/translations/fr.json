@@ -10,9 +10,18 @@
     "form.country": "Pays",
     "form.source": "Source",
     "form.year": "Année",
+    "form.language": "Langue",
+    "form.categorie": "Catégorie",
     "form.identifier": "Identifiant",
     "form.user_key": "Clé utilisateur",
-    "form.btn_anonymization": "Anonymiser"
+    "form.btn_anonymization": "Anonymiser",
+    "form.btn_send": "Envoyer",
+    "nav.first_step": "Première étape",
+    "nav.previous_step": "Étape précédente",
+    "nav.next_step": "Étape suivante",
+    "nav.last_step": "Dernière étape",
+    "thanks": "Merci!",
+    "result": "Votre document attend désormais vérification avant d'être publié."
 
   }
 

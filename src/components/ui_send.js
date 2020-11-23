@@ -106,7 +106,7 @@ class SendUi extends React.Component {
                       </Form.Group>
 
                       <Form.Group controlId="myform.category">
-                          <Form.Label>Catégorie / Categorie</Form.Label>
+                          <Form.Label> {t('form.categorie')}</Form.Label>
                           <Form.Control name="category" as="select">
                             { CATEGORIES.map( (cat) => (
                                 <option value={ cat.id }>{cat.name_fr} - {cat.name_nl}</option>
@@ -115,7 +115,7 @@ class SendUi extends React.Component {
                       </Form.Group>
 
                       <Form.Group controlId="myform.lang">
-                          <Form.Label>Langue / Taal</Form.Label>
+                          <Form.Label>{t('form.language')}</Form.Label>
                           <Form.Control name="lang" as="select">
                             <option value="NL">NL</option>
                             <option value="FR">FR</option>
@@ -147,9 +147,9 @@ class SendUi extends React.Component {
                       { this.state.error &&
                           <div className="log col-10" dangerouslySetInnerHTML={ this.state.error } />
                       }
-                      <Button variant="primary" type="submit">
+                      <Button variant="success" type="submit">
                       {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                      {t('form_btn.send')}
+                      {t('form.btn_send')}
                       </Button>
                     </Form>
                 </div>

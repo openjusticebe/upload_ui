@@ -15,9 +15,9 @@ const Header = ({ siteTitle }) => (
         </Link>
         <ul>
           <li><Link to="https://openjustice.be">Information</Link></li>
-          <li><Link to="https://openjustice.be">Subscribe</Link></li>
+          {/* <li><Link to="https://openjustice.be">Subscribe</Link></li>
           <li><Link to="https://openjustice.be">Support</Link></li>
-          <li><Link to="https://openjustice.be">Contact</Link></li>
+          <li><Link to="https://openjustice.be">Contact</Link></li> */}
         </ul>
         
         <LanguageSelector />

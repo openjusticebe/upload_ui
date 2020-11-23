@@ -1,8 +1,10 @@
 {
     "main.disclaimer": "DISCLAIMER",
+    "main.intro_title": "Upload",
+    "main.intro_text": "Tool to upload court decisions. Before final sending, no data is recorded or logged.",
     "form_title.upload_content": "Upload content",
-    "form_title.check_anonymizaton": "check_anonymizaton",
-    "form_title.add_metadata": "add_metadata",
+    "form_title.check_anonymizaton": "Check anonymizaton",
+    "form_title.add_metadata": "Add metadata",
     "form.preview_final_document": "Preview final document",
     "form.copy_paste": "Copy-Paste the content",
     "form.country": "Country",
@@ -10,7 +12,16 @@
     "form.year": "Year",
     "form.identifier": "Identifier",
     "form.user_key": "User key",
-    "form_btn.anonymization": "Anonymization"
+    "form.language": "Language",
+    "form.categorie": "Category",
+    "form_btn.anonymization": "Anonymization",
+    "form.btn_send": "Send",
+    "nav.first_step": "First step",
+    "nav.previous_step": "Previous step",
+    "nav.next_step": "Next step",
+    "nav.last_step": "Last step",
+    "thanks": "Thank you!",
+    "result": "Your upload is now waiting for peer review validation before publication."
   }
 
 
