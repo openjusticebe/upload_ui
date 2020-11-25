@@ -147,6 +147,7 @@ const placeholders = {
 const PlaceholderManager = {
     store: {},
     get: function(type, id) {
+        return `${type}_${id}`;
         if (id in this.store)
             return this.store[id];
         let len = placeholders[type].length

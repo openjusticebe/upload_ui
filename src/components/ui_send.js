@@ -75,7 +75,7 @@ class SendUi extends React.Component {
                 this.setState({waiting: false})
                 if (resultData.result == 'ok')
                     navigate(`/success?hash=${resultData.hash}`)
-                else if resultData.detail
+                else if (resultData.detail)
                     this.setState({error:{__html: resultData.detail}});
                 else
                     this.setState({error:{__html: resultData}});
