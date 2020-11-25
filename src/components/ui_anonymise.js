@@ -61,6 +61,10 @@ const AnonymiseUi = (props) => {
                 <hr/>
             <div className="row justify-content-center">
                 <p>Aperçu du document final / Voorbeeld van het definitieve document</p>
+                <div className="bg-info text-white p-2 m-3">
+                    Le texte anonymisé apparaît entre crochets : ceci facilite les traitements ultérieurs.<br />
+                    De geanonimiseerde tekst wordt tussen vierkante haken weergegeven: dit vergemakkelijkt de latere verwerking.
+                </div>
             </div>
             <div className="row justify-content-center">
                 <textarea
