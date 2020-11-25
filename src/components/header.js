@@ -12,9 +12,9 @@ const Header = ({ siteTitle }) => (
         </Link>
         <ul>
           <li><Link to="https://openjustice.be">Information</Link></li>
-          <li><Link to="https://openjustice.be">Subscribe</Link></li>
+          <li><Link to="https://airtable.com/shrLQOPwbu7IclErU">Participate</Link></li>
           <li><Link to="https://openjustice.be">Support</Link></li>
-          <li><Link to="https://openjustice.be">Contact</Link></li>
+          <li><Link to="mailto:team@openjustice.be">Contact</Link></li>
         </ul>
       </div>
       <div className="construction" >

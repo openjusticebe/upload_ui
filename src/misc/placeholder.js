@@ -150,11 +150,12 @@ const PlaceholderManager = {
     get: function(type, id) {
         if (id in this.store)
             return this.store[id];
+        var len = 0;
         if (type in this.list) {
-            let len = this.list[type];
+            len = this.list[type];
             this.list[type] = len + 1;
         } else {
-            let len = 1;
+            len = 1;
             this.list[type] = len;
         }
 
