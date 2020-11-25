@@ -146,10 +146,17 @@ const placeholders = {
 
 const PlaceholderManager = {
     store: {},
+    list: {},
     get: function(type, id) {
         if (id in this.store)
             return this.store[id];
-        let len = placeholders[type].length
+        if (type in this.list) {
+            let len = this.list[type];
+            this.list[type] = len + 1;
+        else
+            let len = 1;
+            this.list[type] = len;
+
         this.store[id] = `${type}_${len}`;
         // this.store[id] = placeholders[type][Math.floor(Math.random() * len)];
         return this.store[id];
