@@ -97,8 +97,12 @@ class SendUi extends React.Component {
                       <Form.Group controlId="myform.court">
                           <Form.Label>Source / Bron</Form.Label>
                           <Form.Control name="court" as="select">
-                            { COURTS.map( (court) => (
-                                <option value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>
+                            { COURTS.map( (group) => (
+                                <optgroup label={ group.label_fr + " / " + group.label_nl }>
+                                    { group.list.map((court) =>
+                                        <option value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>)
+                                    }
+                                </optgroup>
                             ))}
                           </Form.Control>
                       </Form.Group>
