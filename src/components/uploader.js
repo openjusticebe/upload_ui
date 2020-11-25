@@ -59,7 +59,7 @@ export default ({ parentCallback, metaCallback }) => {
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                       { waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                    <p>Cliquez ici pour charger un fichier<br/>Klik hier om een bestand te uploaden</p>
+                    <p>Cliquez ici pour choisir un fichier<br/>Klik hier om een bestand te kiezen</p>
                   </div>
                 </section>
               )}

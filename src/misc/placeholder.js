@@ -153,7 +153,7 @@ const PlaceholderManager = {
         if (type in this.list) {
             let len = this.list[type];
             this.list[type] = len + 1;
-        else {
+        } else {
             let len = 1;
             this.list[type] = len;
         }

@@ -131,7 +131,7 @@ class UploadUi extends React.Component {
     render() {
         return (
             <div className="col-12 shadow rounded border py-3 my-3 private">
-                <h2>1) Charger le contenu / Inhoud uploaden</h2>
+                <h2>1) Préparer le contenu / Inhoud voorbereiden</h2>
                 <h3>Le contenu dans se cadre ne sera pas enregistré
                 / Inhoud in dit kader wordt niet opgeslagen</h3>
                 <div className="row justify-content-center">
