@@ -153,9 +153,10 @@ const PlaceholderManager = {
         if (type in this.list) {
             let len = this.list[type];
             this.list[type] = len + 1;
-        else
+        else {
             let len = 1;
             this.list[type] = len;
+        }
 
         this.store[id] = `${type}_${len}`;
         // this.store[id] = placeholders[type][Math.floor(Math.random() * len)];
