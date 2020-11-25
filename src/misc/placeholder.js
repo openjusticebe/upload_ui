@@ -146,11 +146,19 @@ const placeholders = {
 
 const PlaceholderManager = {
     store: {},
+    list: {},
     get: function(type, id) {
         if (id in this.store)
             return this.store[id];
-        let len = placeholders[type].length
-        this.store[id] = placeholders[type][Math.floor(Math.random() * len)];
+
+        var len = type in this.list
+            ? this.list[type] + 1
+            : 1;
+
+        this.list[type] = len;
+
+        this.store[id] = `${type}_${len}`;
+        // this.store[id] = placeholders[type][Math.floor(Math.random() * len)];
         return this.store[id];
     },
     types: function() {

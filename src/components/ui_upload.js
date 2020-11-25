@@ -39,6 +39,7 @@ class UploadUi extends React.Component {
             waiting: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTransfer = this.handleTransfer.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleTextExtract = this.handleTextExtract.bind(this);
         this.handleTextMeta = this.handleTextMeta.bind(this);
@@ -73,6 +74,11 @@ class UploadUi extends React.Component {
         this.setState({
             text: event.target.value
         });
+    }
+
+    handleTransfer(event) {
+        event.preventDefault();
+        this.handleCallback(this.state.text, [],  {log_text: "Contenu sans anonymisation / Inhoud zonder anonymisatie"});
     }
 
     handleSubmit(event) {
@@ -124,8 +130,10 @@ class UploadUi extends React.Component {
 
     render() {
         return (
-            <div className="col-12 shadow rounded border py-3 my-3">
-                <h2>1) Charger le contenu / Inhoud uploaden</h2>
+            <div className="col-12 shadow rounded border py-3 my-3 private">
+                <h2>1) Préparer le contenu / Inhoud voorbereiden</h2>
+                <h3>Le contenu dans se cadre ne sera pas enregistré
+                / Inhoud in dit kader wordt niet opgeslagen</h3>
                 <div className="row justify-content-center">
                     <div className="col-4">
                         <Uploader
@@ -164,6 +172,11 @@ class UploadUi extends React.Component {
                       <Button variant="primary" type="submit">
                       { this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" /> }
                       anonymiser / anonimiseren
+                      </Button>
+                    </Form>
+                    <Form onSubmit={ this.handleTransfer} className="pl-3">
+                      <Button variant="outline-primary" type="submit">
+                      déjà anonymisé / al geanonimiseerd
                       </Button>
                     </Form>
                 </div>

@@ -157,6 +157,10 @@ h2 {
     font-size:1.3em;
 }
 
+h3 {
+    font-size:0.8em;
+}
+
 textarea {
     width:80%;
     min-height:40rem;
@@ -170,4 +174,14 @@ textarea {
 
 #anonWords {
     font-size:.8em;
+}
+
+.private {
+  background: repeating-linear-gradient(
+    -55deg,
+    #e9e9e9,
+    #e9e9e9 10px,
+    #eee 10px,
+    #eee 20px
+  );
 }

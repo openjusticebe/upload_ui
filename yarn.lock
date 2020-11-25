@@ -2680,6 +2680,11 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
+axe-core@^3.5.0:
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
+  integrity sha512-5P0QZ6J5xGikH780pghEdbEKijCTrruK9KxtPZCFWUpef0f6GipO+xEZ5GKCb020mmqgbiNO6TcA55CriL784Q==
+
 axe-core@^4.0.2:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.1.1.tgz#70a7855888e287f7add66002211a423937063eaf"
@@ -6330,6 +6335,11 @@ gatsby-plugin-manifest@^2.4.21:
     semver "^7.3.2"
     sharp "^0.26.3"
 
+gatsby-plugin-matomo@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-matomo/-/gatsby-plugin-matomo-0.8.3.tgz#e0e9cc9e60f7e4b157c9964dfc9d444d73bc46ee"
+  integrity sha512-fv6TgD+WsxziZrtmz6sNF4m9FgSyV+8y3R1sobA5hB5OxJyhs/Y4HVo9jCPRHu5VLKQsg4i7LJhWL0ocJiqEWQ==
+
 gatsby-plugin-offline@^3.2.21:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-3.5.0.tgz#92de9fa56f1cd564205dbd8139afa3226903997f"
@@ -6356,6 +6366,13 @@ gatsby-plugin-page-creator@^2.5.0:
     globby "^11.0.1"
     graphql "^14.7.0"
     lodash "^4.17.20"
+
+gatsby-plugin-react-axe@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-react-axe/-/gatsby-plugin-react-axe-0.5.0.tgz#22821af29b2bfbacd55041143d8e1815e3a83e95"
+  integrity sha512-l7bz7/0t/GnmER3WBoEjux39HNY/9+BYqC6TgpqkySW671RNVg6zmOAvVZ9qqMbeSeWY9U5AypHpdQAqkRpghw==
+  dependencies:
+    react-axe "^3.4.1"
 
 gatsby-plugin-react-helmet@^3.3.10:
   version "3.5.0"
@@ -11263,6 +11280,14 @@ rc@^1.2.7, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-axe@^3.4.1:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/react-axe/-/react-axe-3.5.4.tgz#f59b9ea08eb82341f53cb26c5c53724417bc8c8f"
+  integrity sha512-5xNO0QVCCEZnJiyhAGox0MGFyclgU3XL8se+5H+whdxV1VTtA9/uux9BSCF5mGNSgtSZkb+tQtrOaF+zGf/oWw==
+  dependencies:
+    axe-core "^3.5.0"
+    requestidlecallback "^0.3.0"
+
 react-bootstrap@^1.3.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.4.0.tgz#806a8b48b065cedfb28c6c5c7b0c0e3c3b53445d"
@@ -11789,6 +11814,11 @@ request@^2.83.0, request@^2.87.0, request@^2.88.0:
     tough-cookie "~2.5.0"
     tunnel-agent "^0.6.0"
     uuid "^3.3.2"
+
+requestidlecallback@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/requestidlecallback/-/requestidlecallback-0.3.0.tgz#6fb74e0733f90df3faa4838f9f6a2a5f9b742ac5"
+  integrity sha1-b7dOBzP5DfP6pIOPn2oqX5t0KsU=
 
 require-directory@^2.1.1:
   version "2.1.1"

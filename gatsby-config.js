@@ -40,6 +40,28 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: 'gatsby-plugin-matomo',
+      options: {
+        // siteId: process.env.MATOMO_SITE_ID,
+        siteId: process.env.GATSBY_SITE_ID,
+        matomoUrl: 'https://stats.openjustice.lltl.be',
+        siteUrl: process.env.GATSBY_SITE_URL,
+        // siteUrl: process.env.MATOMO_SITE_URL
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-react-axe',
+      options: {
+        showInProduction: false,
+
+        // Options to pass to axe-core.
+        // See: https://github.com/dequelabs/axe-core/blob/master/doc/API.md#api-name-axeconfigure
+        axeOptions: {
+          // Your axe-core options.
+        },
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

@@ -75,6 +75,10 @@ class SendUi extends React.Component {
                 this.setState({waiting: false})
                 if (resultData.result == 'ok')
                     navigate(`/success?hash=${resultData.hash}`)
+                else if (resultData.detail)
+                    this.setState({error:{__html: resultData.detail}});
+                else
+                    this.setState({error:{__html: resultData}});
             }).catch(error => {
                 const msg = `Erreur de serveur, Server fout: ${error.toString()}`;
                 this.setState({waiting: false, error:{__html: msg}});
@@ -97,8 +101,12 @@ class SendUi extends React.Component {
                       <Form.Group controlId="myform.court">
                           <Form.Label>Source / Bron</Form.Label>
                           <Form.Control name="court" as="select">
-                            { COURTS.map( (court) => (
-                                <option value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>
+                            { COURTS.map( (group) => (
+                                <optgroup label={ group.label_fr + " / " + group.label_nl }>
+                                    { group.list.map((court) =>
+                                        <option value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>)
+                                    }
+                                </optgroup>
                             ))}
                           </Form.Control>
                       </Form.Group>
@@ -142,13 +150,21 @@ class SendUi extends React.Component {
                         ECLI:{this.state.country}:{this.state.court}:{this.state.year}:{this.state.identifier}
                       </pre>
 
+                      { !this.state.error &&
+                      <p>La dernière étape / de laatste stap : </p>
+                      }
+
                       { this.state.error &&
                           <div className="log col-10" dangerouslySetInnerHTML={ this.state.error } />
                       }
-                      <Button variant="primary" type="submit">
-                      {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                      envoyer / doorsturen
-                      </Button>
+                      <div className="row justify-content-center mt-4">
+                      <div>
+                          <Button variant="warning" type="submit" className="p-3">
+                          {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
+                          envoyer / doorsturen
+                          </Button>
+                      </div>
+                      </div>
                     </Form>
                 </div>
             </div>

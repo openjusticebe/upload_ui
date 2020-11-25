@@ -11,13 +11,18 @@ WORKDIR /workdir
 
 ARG GATSBY_UPLOAD_API="http://localhost:5000"
 ARG GATSBY_DATA_API="http://localhost:5000"
+ARG GATSBY_SITE_ID="0"
+ARG GATSBY_SITE_URL="http://localhost"
 ENV GATSBY_UPLOAD_API=${GATSBY_UPLOAD_API} \
-    GATSBY_DATA_API=${GATSBY_DATA_API}
+    GATSBY_DATA_API=${GATSBY_DATA_API} \
+    GATSBY_SITE_ID=${GATSBY_SITE_ID} \
+    GATSBY_SITE_URL=${GATSBY_SITE_URL}
 
 COPY package.json yarn.lock ./
 RUN yarn
 
 COPY ./src ./src
+COPY .env* ./
 COPY gatsby* ./
 RUN yarn build
 
