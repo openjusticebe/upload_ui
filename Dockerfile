@@ -18,6 +18,7 @@ COPY package.json yarn.lock ./
 RUN yarn
 
 COPY ./src ./src
+COPY .env* ./
 COPY gatsby* ./
 RUN yarn build
 

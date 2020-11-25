@@ -44,9 +44,9 @@ module.exports = {
       resolve: 'gatsby-plugin-matomo',
       options: {
         // siteId: process.env.MATOMO_SITE_ID,
-        siteId: `.env.${process.env.GATSBY_SITE_ID}`,
+        siteId: process.env.GATSBY_SITE_ID,
         matomoUrl: 'https://stats.openjustice.lltl.be',
-        siteUrl: `.env.${process.env.GATSBY_SITE_URL}`
+        siteUrl: process.env.GATSBY_SITE_URL,
         // siteUrl: process.env.MATOMO_SITE_URL
       }
     },
