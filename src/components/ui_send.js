@@ -150,13 +150,21 @@ class SendUi extends React.Component {
                         ECLI:{this.state.country}:{this.state.court}:{this.state.year}:{this.state.identifier}
                       </pre>
 
+                      { !this.state.error &&
+                      <p>La dernière étape / de laatste stap : </p>
+                      }
+
                       { this.state.error &&
                           <div className="log col-10" dangerouslySetInnerHTML={ this.state.error } />
                       }
-                      <Button variant="primary" type="submit">
-                      {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                      envoyer / doorsturen
-                      </Button>
+                      <div className="row justify-content-center mt-4">
+                      <div>
+                          <Button variant="warning" type="submit" className="p-3">
+                          {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
+                          envoyer / doorsturen
+                          </Button>
+                      </div>
+                      </div>
                     </Form>
                 </div>
             </div>

@@ -17,7 +17,7 @@ const PreviewUi = ()  => {
 
     return (
         <div className="col-12 mb-5 shadow rounded border py-3 my-3">
-            <p>Lien temporaire non public / Tijdelijke, niet openbare link :</p>
+            <p>Lien personnel / Persoonlijke link :</p>
             <a href={ `${process.env.GATSBY_DATA_API}/hash/${hash}` } rel="no-follow">
                 { `${process.env.GATSBY_DATA_API}/hash/${hash}` }
             </a>
