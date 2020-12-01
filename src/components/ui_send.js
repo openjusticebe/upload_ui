@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
-import {YEARS, COURTS, CATEGORIES} from '../misc/data';
+import {YEARS, COURTS} from '../misc/data';
 
 class SendUi extends React.Component {
 
@@ -17,12 +17,18 @@ class SendUi extends React.Component {
             text: '',
             lang: 'NL',
             userkey: '',
-            category: 'other',
             waiting: false,
             error:false,
+            tags:[],
+            tagSuggestions: [],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.tagsKeyDown = this.tagsKeyDown.bind(this);
+        this.tagRemove = this.tagRemove.bind(this);
+        this.tagSelect = this.tagSelect.bind(this);
+        this.tagInput = '';
+        this.tagController = new AbortController();
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -34,7 +40,7 @@ class SendUi extends React.Component {
     handleChange(event) {
         let change = {}
         const name = event.target.name;
-        change[name] = name == 'identifier' ? event.target.value + '.OJ' : event.target.value
+        change[name] = name === 'identifier' ? event.target.value + '.OJ' : event.target.value
 
         this.setState(change);
     }
@@ -53,9 +59,10 @@ class SendUi extends React.Component {
             'identifier' : this.state.identifier,
             'text' : this.state.text,
             'lang' : this.state.lang,
-            'category' : this.state.category,
+            'tags' : this.state.tags,
             'user_key' : this.state.userkey,
         }
+
         // Get api response
         // fetch(`https://anon-api.openjustice.be/run`, {
         fetch(`${process.env.GATSBY_DATA_API}/create`, {
@@ -73,7 +80,7 @@ class SendUi extends React.Component {
                 //else if ('lines' in resultData.log)
                     // this.handleCallback(resultData.text, {log_text: this.logDisplay(resultData.log.lines)});
                 this.setState({waiting: false})
-                if (resultData.result == 'ok')
+                if (resultData.result === 'ok')
                     navigate(`/success?hash=${resultData.hash}`)
                 else if (resultData.detail)
                     this.setState({error:{__html: resultData.detail}});
@@ -83,6 +90,68 @@ class SendUi extends React.Component {
                 const msg = `Erreur de serveur, Server fout: ${error.toString()}`;
                 this.setState({waiting: false, error:{__html: msg}});
             });
+    }
+
+    tagsKeyDown(event) {
+        // Abort running query, if any
+
+        this.tagController.abort();
+        this.tagController = new AbortController();
+        const val = event.target.value;
+        console.log(event.key);
+        if ((event.key === 'Enter' || event.key === ' ') && val) {
+          event.preventDefault();
+          if (this.state.tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
+            return;
+          }
+          const newTags = [ ...this.state.tags, val]
+          this.setState({ tags:  newTags });
+          this.tagInput.value = null;
+        } else if (event.key === 'Backspace' && !val) {
+          this.tagRemove(this.state.tags.length - 1);
+        }
+
+        const { signal } = this.tagController;
+        const str = val + event.key;
+
+        //FIXME: Suboptimal, check websockets or another protocol
+        fetch(`${process.env.GATSBY_DATA_API}/tags/${str}`, {
+            method: 'get',
+            signal: signal,
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }})
+            .then(response => response.json())
+            .then(tagList => {
+                if (Array.isArray(tagList)) {
+                    this.setState({ tagSuggestions : tagList });
+                } else {
+                    console.log('Failed recovering suggestions : ', tagList);
+                }
+            })
+            .catch(error => console.log(error) );
+    }
+
+    tagRemove(index) {
+        const newTags = [ ...this.state.tags ];
+        newTags.splice(index, 1);
+
+        // Call the defined function setTags which will replace tags with the new value.
+        this.setState({ tags: newTags });
+    }
+
+    tagSelect(event) {
+        const val = event.target.innerText;
+
+        if (this.state.tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
+            this.setState({ tagSuggestions: [] });
+        } else {
+            const newTags = [ ...this.state.tags, val]
+            this.setState({ tags:  newTags, tagSuggestions: [] });
+        }
+
+        this.tagInput.value = null;
     }
 
     render() {
@@ -101,23 +170,39 @@ class SendUi extends React.Component {
                       <Form.Group controlId="myform.court">
                           <Form.Label>Source / Bron</Form.Label>
                           <Form.Control name="court" as="select">
-                            { COURTS.map( (group) => (
-                                <optgroup label={ group.label_fr + " / " + group.label_nl }>
-                                    { group.list.map((court) =>
-                                        <option value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>)
+                            { COURTS.map( (group, i) => (
+                                <optgroup key={ i } label={ group.label_fr + " / " + group.label_nl }>
+                                    { group.list.map((court, j) =>
+                                        <option key={ j } value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>)
                                     }
                                 </optgroup>
                             ))}
                           </Form.Control>
                       </Form.Group>
 
-                      <Form.Group controlId="myform.category">
-                          <Form.Label>Catégorie / Categorie</Form.Label>
-                          <Form.Control name="category" as="select">
-                            { CATEGORIES.map( (cat) => (
-                                <option value={ cat.id }>{cat.name_fr} - {cat.name_nl}</option>
+                      <Form.Group controlId="myform.tags">
+                          <Form.Label>Tags (catégories / categorieën)</Form.Label>
+                          <div className="text-muted">COVID-19, anatocisme, ...</div>
+                          <ul className="tags-list">
+                            { this.state.tags.map((tag, i) => (
+                                <li key={i} className="bg-dark text-white">
+                                    #{tag}
+                                    <button type="button" onClick={ () => { this.tagRemove(i);} }>+</button>
+                                </li>
                             ))}
-                          </Form.Control>
+                            <li className="tags-input">
+                                <input type="text" onKeyDown={ this.tagsKeyDown } ref={c => { this.tagInput = c; }} />
+                                { this.state.tagSuggestions.length > 0 &&
+                                <ul className="subtags">
+                                    { this.state.tagSuggestions.map((tag, i) => (
+                                        <li key={i} className="bg-light" onClick={ this.tagSelect }>
+                                            {tag}
+                                        </li>
+                                    ))}
+                                </ul>
+                                }
+                            </li>
+                          </ul>
                       </Form.Group>
 
                       <Form.Group controlId="myform.lang">
@@ -132,7 +217,7 @@ class SendUi extends React.Component {
                       <Form.Group controlId="myform.year">
                           <Form.Label>Année / Jaar</Form.Label>
                           <Form.Control name="year" as="select">
-                            { YEARS.map( year => (<option>{ year }</option>) ) }
+                            { YEARS.map( year => (<option key={ year }>{ year }</option>) ) }
                           </Form.Control>
                       </Form.Group>
 
