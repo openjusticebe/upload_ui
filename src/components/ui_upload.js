@@ -1,29 +1,9 @@
 import React from "react";
 import Uploader from "../components/uploader";
+import FileData from "../components/filedata";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
-
-const FileInfo = ({ meta, degraded }) => (
-    <div>
-        { degraded &&
-        <div>
-            <h3 className="warning">Degraded</h3>
-            <p>PDF Image détecté : le traitement prendra plus de temps, le résultat peut en être dégradé</p>
-        </div>
-        }
-        <div>
-            <dl>
-                <dd>Caractères / Tekens</dd>
-                <dt>{ meta.charstotal || '0' }</dt>
-                <dd>Pages / Paginas</dd>
-                <dt>{ meta.pages || '0' }</dt>
-                <dd>Langue / Taal</dd>
-                <dt>{ meta.language || '0' }</dt>
-            </dl>
-        </div>
-    </div>
-);
 
 
 class UploadUi extends React.Component {
@@ -32,22 +12,65 @@ class UploadUi extends React.Component {
         this.state = {
             text: 'Copier-coller / Copy-Paste',
             uploaded :  'Copier-coller / Copy-Paste',
+            upload_ref: false,
             res_text: {__html: '(Zone résultat)' },
             log_text: {__html: '' },
             file_meta: false,
             isDegraded: false,
+            parse_waiting: false,
             waiting: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTransfer = this.handleTransfer.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleTextExtract = this.handleTextExtract.bind(this);
-        this.handleTextMeta = this.handleTextMeta.bind(this);
+        this.handleReference = this.handleReference.bind(this);
+        // this.handleTextMeta = this.handleTextMeta.bind(this);
         this.handleCallback = props.TextHandler;
     }
 
     logDisplay(loglines) {
         return loglines.join("\n<br />");
+    }
+
+    // 1. Get reference
+    // 2. Wait for meta
+    // 3. Wait for text results
+    
+    handleReference(ref) {
+        this.setState({
+            upload_ref: ref,
+            parse_waiting: true,
+        })
+
+        const obj = this;
+        const fun = (F) => {
+            console.log('Iteration');
+            const url = `${process.env.GATSBY_UPLOAD_API}/extract/status?ref=${ref}`;
+            fetch(url)
+                .then( response => response.json() )
+                .then( data => {
+                    console.log(data);
+                    if (data['status'] == 'empty') {
+                        setTimeout(() => F(F), 1000);
+                        return
+                    }
+                    if (data['status'] == 'error') {
+                        console.log('Abandoning');
+                        obj.handleTextExtract(false, '');
+                        return
+                    }
+                    if (data['status'] == 'meta') {
+                        obj.handleTextMeta(data['value'], data['value']['doOcr'])
+                        setTimeout(() => F(F), 1000);
+                    }
+                    if (data['status'] == 'text') {
+                        obj.handleTextExtract(true, data['value'])
+                        obj.setState({ parse_waiting: false });
+                    }
+                })
+            }
+        setTimeout(() => fun(fun), 1000);
     }
 
     handleTextMeta(meta, degraded=false) {
@@ -60,7 +83,7 @@ class UploadUi extends React.Component {
     handleTextExtract(success, text) {
         if (success) {
             this.setState({
-                text: text
+                text: text,
                 //uploaded: text
             });
         } else {
@@ -137,18 +160,15 @@ class UploadUi extends React.Component {
                 <div className="row justify-content-center">
                     <div className="col-4">
                         <Uploader
-                            parentCallback={ this.handleTextExtract }
-                            metaCallback={ this.handleTextMeta }
+                            parentCallback={ this.handleReference }
+                            waiting={ this.state.parse_waiting }
                         />
                     </div>
                 </div>
-                { this.state.file_meta && 
-                <div className="row justify-content-center">
-                    <div className="col-8">
-                        <FileInfo meta={ this.state.file_meta } degraded={ this.state.isDegraded } />
-                    </div>
-                </div>
-                }
+                <FileData
+                    degraded={ this.state.isDegraded }
+                    meta={ this.state.file_meta }
+                />
 
                 
                 <div className="row justify-content-center">

@@ -2,16 +2,14 @@ import React from "react";
 import Dropzone from 'react-dropzone'
 import LoadGif from '../images/hourglass.gif';
 
-export default ({ parentCallback, metaCallback }) => {
-
-    let waiting = false;
+export default ({ parentCallback, waiting }) => {
 
     const handleFiles = (files) => {
         var payload = new FormData();
         waiting = true;
         payload.append('rawFile', files[0]);
 
-        fetch(`${process.env.GATSBY_UPLOAD_API}/fileinfo/`, {
+        fetch(`${process.env.GATSBY_UPLOAD_API}/extract/`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -20,33 +18,10 @@ export default ({ parentCallback, metaCallback }) => {
         }).then(
             response => response.json()
         ).then( data => {
-            // check if content is good
-            const hasLang = data.language != '';
-            const hasText = data.charstotal > 10;
-            let doOCR = 0;
-
-            if (!hasLang || !hasText) {
-                doOCR = 1;
-            }
-
-            metaCallback(data, doOCR == 0 ? false : true);
-
-            return fetch(`${process.env.GATSBY_UPLOAD_API}/extract/?ocr=${doOCR}`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'text/plain',
-                },
-                body: payload
-            });
-        }).then(
-            response => response.text()
-        ).then( response => {
-            parentCallback(true, response);
-            waiting = false;
+            parentCallback(data['ref'])
         }).catch(
             error => {
                 parentCallback(false, error.toString());
-                waiting = false;
                 }
         );
     }
