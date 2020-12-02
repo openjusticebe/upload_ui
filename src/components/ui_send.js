@@ -186,7 +186,7 @@ class SendUi extends React.Component {
                       </Form.Group>
 
                       <Form.Group controlId="myform.labels">
-                          <Form.Label>labels (catégories / categorieën)</Form.Label>
+                          <Form.Label>Labels / Etiketten (catégories / categorieën)</Form.Label>
                           <div className="text-muted">COVID-19, anatocisme, ...</div>
                           <ul className="labels-list">
                             { this.state.labels.map((label, i) => (
