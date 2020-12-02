@@ -19,16 +19,16 @@ class SendUi extends React.Component {
             userkey: '',
             waiting: false,
             error:false,
-            tags:[],
-            tagSuggestions: [],
+            labels:[],
+            labelSuggestions: [],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.tagsKeyDown = this.tagsKeyDown.bind(this);
-        this.tagRemove = this.tagRemove.bind(this);
-        this.tagSelect = this.tagSelect.bind(this);
-        this.tagInput = '';
-        this.tagController = new AbortController();
+        this.labelsKeyDown = this.labelsKeyDown.bind(this);
+        this.labelRemove = this.labelRemove.bind(this);
+        this.labelSelect = this.labelSelect.bind(this);
+        this.labelInput = '';
+        this.labelController = new AbortController();
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -59,7 +59,7 @@ class SendUi extends React.Component {
             'identifier' : this.state.identifier,
             'text' : this.state.text,
             'lang' : this.state.lang,
-            'tags' : this.state.tags,
+            'labels' : this.state.labels,
             'user_key' : this.state.userkey,
         }
 
@@ -92,30 +92,30 @@ class SendUi extends React.Component {
             });
     }
 
-    tagsKeyDown(event) {
+    labelsKeyDown(event) {
         // Abort running query, if any
 
-        this.tagController.abort();
-        this.tagController = new AbortController();
+        this.labelController.abort();
+        this.labelController = new AbortController();
         const val = event.target.value;
         console.log(event.key);
         if ((event.key === 'Enter' || event.key === ' ') && val) {
           event.preventDefault();
-          if (this.state.tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
+          if (this.state.labels.find(label => label.toLowerCase() === val.toLowerCase())) {
             return;
           }
-          const newTags = [ ...this.state.tags, val]
-          this.setState({ tags:  newTags });
-          this.tagInput.value = null;
+          const newlabels = [ ...this.state.labels, val]
+          this.setState({ labels:  newlabels });
+          this.labelInput.value = null;
         } else if (event.key === 'Backspace' && !val) {
-          this.tagRemove(this.state.tags.length - 1);
+          this.labelRemove(this.state.labels.length - 1);
         }
 
-        const { signal } = this.tagController;
+        const { signal } = this.labelController;
         const str = val + event.key;
 
         //FIXME: Suboptimal, check websockets or another protocol
-        fetch(`${process.env.GATSBY_DATA_API}/tags/${str}`, {
+        fetch(`${process.env.GATSBY_DATA_API}/labels/${str}`, {
             method: 'get',
             signal: signal,
             headers: {
@@ -123,35 +123,35 @@ class SendUi extends React.Component {
               'Content-Type': 'application/json'
             }})
             .then(response => response.json())
-            .then(tagList => {
-                if (Array.isArray(tagList)) {
-                    this.setState({ tagSuggestions : tagList });
+            .then(labelList => {
+                if (Array.isArray(labelList)) {
+                    this.setState({ labelSuggestions : labelList });
                 } else {
-                    console.log('Failed recovering suggestions : ', tagList);
+                    console.log('Failed recovering suggestions : ', labelList);
                 }
             })
             .catch(error => console.log(error) );
     }
 
-    tagRemove(index) {
-        const newTags = [ ...this.state.tags ];
-        newTags.splice(index, 1);
+    labelRemove(index) {
+        const newlabels = [ ...this.state.labels ];
+        newlabels.splice(index, 1);
 
-        // Call the defined function setTags which will replace tags with the new value.
-        this.setState({ tags: newTags });
+        // Call the defined function setlabels which will replace labels with the new value.
+        this.setState({ labels: newlabels });
     }
 
-    tagSelect(event) {
+    labelSelect(event) {
         const val = event.target.innerText;
 
-        if (this.state.tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
-            this.setState({ tagSuggestions: [] });
+        if (this.state.labels.find(label => label.toLowerCase() === val.toLowerCase())) {
+            this.setState({ labelSuggestions: [] });
         } else {
-            const newTags = [ ...this.state.tags, val]
-            this.setState({ tags:  newTags, tagSuggestions: [] });
+            const newlabels = [ ...this.state.labels, val]
+            this.setState({ labels:  newlabels, labelSuggestions: [] });
         }
 
-        this.tagInput.value = null;
+        this.labelInput.value = null;
     }
 
     render() {
@@ -180,23 +180,23 @@ class SendUi extends React.Component {
                           </Form.Control>
                       </Form.Group>
 
-                      <Form.Group controlId="myform.tags">
-                          <Form.Label>Tags (catégories / categorieën)</Form.Label>
+                      <Form.Group controlId="myform.labels">
+                          <Form.Label>labels (catégories / categorieën)</Form.Label>
                           <div className="text-muted">COVID-19, anatocisme, ...</div>
-                          <ul className="tags-list">
-                            { this.state.tags.map((tag, i) => (
+                          <ul className="labels-list">
+                            { this.state.labels.map((label, i) => (
                                 <li key={i} className="bg-dark text-white">
-                                    #{tag}
-                                    <button type="button" onClick={ () => { this.tagRemove(i);} }>+</button>
+                                    #{label}
+                                    <button type="button" onClick={ () => { this.labelRemove(i);} }>+</button>
                                 </li>
                             ))}
-                            <li className="tags-input">
-                                <input type="text" onKeyDown={ this.tagsKeyDown } ref={c => { this.tagInput = c; }} />
-                                { this.state.tagSuggestions.length > 0 &&
-                                <ul className="subtags">
-                                    { this.state.tagSuggestions.map((tag, i) => (
-                                        <li key={i} className="bg-light" onClick={ this.tagSelect }>
-                                            {tag}
+                            <li className="labels-input">
+                                <input type="text" onKeyDown={ this.labelsKeyDown } ref={c => { this.labelInput = c; }} />
+                                { this.state.labelSuggestions.length > 0 &&
+                                <ul className="sublabels">
+                                    { this.state.labelSuggestions.map((label, i) => (
+                                        <li key={i} className="bg-light" onClick={ this.labelSelect }>
+                                            {label}
                                         </li>
                                     ))}
                                 </ul>

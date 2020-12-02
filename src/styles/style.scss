@@ -186,9 +186,9 @@ textarea {
   );
 }
 
-/************************ Tags Style
+/************************ labels Style
 ***********************************/
-.tags-list {
+.labels-list {
     display: inline-flex;
     flex-wrap: wrap;
     margin: 0;
@@ -197,7 +197,7 @@ textarea {
     margin-top:1rem;
 }
 
-.tags-list button {
+.labels-list button {
     align-items: center;
     appearance: none;
     background: #fff;
@@ -216,7 +216,7 @@ textarea {
     width: 15px;
 }
 
-.tags-list > li {
+.labels-list > li {
     align-items: center;
     border-radius: 2px;
     display: flex;
@@ -227,16 +227,16 @@ textarea {
     padding: 5px 10px;
 }
 
-.tags-list li {
+.labels-list li {
     position:relative;
 }
 
-.tags-list input {
+.labels-list input {
     height:2rem;
     width:20rem;
 }
 
-.subtags {
+.sublabels {
     display: flex; 
     position:absolute;
     top:2rem;
@@ -252,13 +252,13 @@ textarea {
     width:20rem;
 }
 
-.subtags li {
+.sublabels li {
     padding: .3rem 1rem;
     width:80%;
     cursor: pointer; 
     border: 1px solid #fff;
 }
 
-.subtags li:hover {
+.sublabels li:hover {
     border-color:black;
 }
