@@ -1,4 +1,5 @@
 import React from "react";
+import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 import { navigate } from "gatsby"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -28,13 +29,17 @@ class SendUi extends React.Component {
         this.labelRemove = this.labelRemove.bind(this);
         this.labelSelect = this.labelSelect.bind(this);
         this.labelInput = '';
-        this.labelController = new AbortController();
+        this.labelController = false;
     }
 
     static getDerivedStateFromProps(props, state) {
         return {
             text : props.uploadedText
         };
+    }
+
+    componentDidMount() {
+        this.labelController = new AbortController();
     }
 
     handleChange(event) {
@@ -95,7 +100,8 @@ class SendUi extends React.Component {
     labelsKeyDown(event) {
         // Abort running query, if any
 
-        this.labelController.abort();
+        if (this.labelController != false)
+            this.labelController.abort();
         this.labelController = new AbortController();
         const val = event.target.value;
         console.log(event.key);
