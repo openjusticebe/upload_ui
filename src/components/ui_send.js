@@ -187,7 +187,7 @@ class SendUi extends React.Component {
 
                       <Form.Group controlId="myform.labels">
                           <Form.Label>Labels / Etiketten (catégories / categorieën)</Form.Label>
-                          <div className="text-muted">COVID-19, anatocisme, ...</div>
+                          <div className="text-muted mb-1">COVID-19, anatocisme, ...</div>
                           <ul className="labels-list">
                             { this.state.labels.map((label, i) => (
                                 <li key={i} className="bg-dark text-white">
@@ -228,6 +228,7 @@ class SendUi extends React.Component {
 
                       <Form.Group controlId="myform.identifier">
                         <Form.Label>Identifiant / Identifier</Form.Label>
+                        <div className="text-muted mb-1">ARR.20200912 , ...</div>
                         <Form.Control type="text" name="identifier" placeholder="ARR.XXXXXX" />
                       </Form.Group>
 
