@@ -20,7 +20,7 @@ const Header = ({ siteTitle }) => (
       <div className="construction" >
         <div>
           <div className="content">
-            <span> version 0.2 - early release</span>
+            <span> version 0.3 - early release</span>
           </div>
         </div>
       </div>
