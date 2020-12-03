@@ -44,25 +44,32 @@ class UploadUi extends React.Component {
         })
 
         const obj = this;
-        const fun = (F) => {
+        const fun = (F, I) => {
             console.log('Iteration');
+            if (I <= 0) {
+                obj.handleTextExtract(false, 'No server response')
+                obj.setState({ parse_waiting: false });
+                return
+            }
+            I = I - 1;
+                
             const url = `${process.env.GATSBY_UPLOAD_API}/extract/status?ref=${ref}`;
             fetch(url)
                 .then( response => response.json() )
                 .then( data => {
                     console.log(data);
                     if (data['status'] == 'empty') {
-                        setTimeout(() => F(F), 1000);
+                        setTimeout(() => F(F,I), 2000);
                         return
                     }
                     if (data['status'] == 'error') {
-                        console.log('Abandoning');
-                        obj.handleTextExtract(false, '');
+                        obj.handleTextExtract(false, data['value'])
+                        obj.setState({ parse_waiting: false });
                         return
                     }
                     if (data['status'] == 'meta') {
                         obj.handleTextMeta(data['value'], data['value']['doOcr'])
-                        setTimeout(() => F(F), 1000);
+                        setTimeout(() => F(F, I), 1000);
                     }
                     if (data['status'] == 'text') {
                         obj.handleTextExtract(true, data['value'])
@@ -70,7 +77,7 @@ class UploadUi extends React.Component {
                     }
                 })
             }
-        setTimeout(() => fun(fun), 1000);
+        setTimeout(() => fun(fun, 1000), 1000);
     }
 
     handleTextMeta(meta, degraded=false) {
