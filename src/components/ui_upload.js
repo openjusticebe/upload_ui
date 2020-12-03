@@ -18,6 +18,7 @@ class UploadUi extends React.Component {
             file_meta: false,
             isDegraded: false,
             parse_waiting: false,
+            parse_state: [],
             waiting: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,11 +42,11 @@ class UploadUi extends React.Component {
         this.setState({
             upload_ref: ref,
             parse_waiting: true,
+            parse_state:['Chargé / Opgeladen']
         })
 
         const obj = this;
         const fun = (F, I) => {
-            console.log('Iteration');
             if (I <= 0) {
                 obj.handleTextExtract(false, 'No server response')
                 obj.setState({ parse_waiting: false });
@@ -64,7 +65,10 @@ class UploadUi extends React.Component {
                     }
                     if (data['status'] == 'error') {
                         obj.handleTextExtract(false, data['value'])
-                        obj.setState({ parse_waiting: false });
+                        obj.setState({
+                            parse_waiting: false,
+                            parse_status: [...obj.state.parse_status, 'Error'],
+                        });
                         return
                     }
                     if (data['status'] == 'meta') {
@@ -81,16 +85,20 @@ class UploadUi extends React.Component {
     }
 
     handleTextMeta(meta, degraded=false) {
+        const pstate = [ ...this.state.parse_state, 'Meta données reçues / Metadata ontvangen']
         this.setState({
             file_meta: meta,
-            isDegraded: degraded
+            isDegraded: degraded,
+            parse_state: pstate,
         });
     }
 
     handleTextExtract(success, text) {
         if (success) {
+            const pstate = [...this.state.parse_state, 'Texte reçu / Tekst ontvangen']
             this.setState({
                 text: text,
+                parse_state: pstate,
                 //uploaded: text
             });
         } else {
@@ -169,10 +177,12 @@ class UploadUi extends React.Component {
                         <Uploader
                             parentCallback={ this.handleReference }
                             waiting={ this.state.parse_waiting }
+                            state={ this.state.parse_state }
                         />
                     </div>
                 </div>
                 <FileData
+                    state={ this.state.parse_state }
                     degraded={ this.state.isDegraded }
                     meta={ this.state.file_meta }
                 />

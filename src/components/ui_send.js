@@ -12,7 +12,7 @@ class SendUi extends React.Component {
         this.state = {
             country : 'BE',
             court: 'RSCE',
-            year: 1990,
+            year: 2020,
             identifier: '',
             text: '',
             lang: 'NL',
@@ -78,11 +78,6 @@ class SendUi extends React.Component {
             body: JSON.stringify(query),
             }).then(response => response.json())
            .then(resultData => {
-                // FIXME: Add some log
-                //if ('error' in resultData.log)
-                //    this.handleCallback(false, {log_text: resultData.log.error});
-                //else if ('lines' in resultData.log)
-                    // this.handleCallback(resultData.text, {log_text: this.logDisplay(resultData.log.lines)});
                 this.setState({waiting: false})
                 if (resultData.result === 'ok')
                     navigate(`/success?hash=${resultData.hash}`)
