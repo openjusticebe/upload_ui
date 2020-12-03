@@ -65,9 +65,10 @@ class UploadUi extends React.Component {
                     }
                     if (data['status'] == 'error') {
                         obj.handleTextExtract(false, data['value'])
+                        const pstate = [...obj.state.parse_state, 'Error :('];
                         obj.setState({
                             parse_waiting: false,
-                            parse_status: [...obj.state.parse_status, 'Error'],
+                            parse_state: pstate,
                         });
                         return
                     }
