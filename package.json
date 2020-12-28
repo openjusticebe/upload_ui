@@ -39,7 +39,7 @@
   "keywords": [
     "gatsby"
   ],
-  "license": "GPLv3",
+  "license": "GPL-3.0-only",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
