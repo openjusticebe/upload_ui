@@ -66,7 +66,12 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
     "gatsby-plugin-use-query-params",
-    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        implementation: require("sass"),
+      },
+    },
     // {
     //   resolve: `gatsby-plugin-prefetch-google-fonts`,
     //   options: {
