@@ -98,7 +98,6 @@ class SendUi extends React.Component {
             this.labelController.abort();
         this.labelController = new AbortController();
         const val = event.target.value;
-        console.log(event.key);
         if ((event.key === 'Enter' || event.key === ' ') && val) {
           event.preventDefault();
           if (this.state.labels.find(label => label.toLowerCase() === val.toLowerCase())) {

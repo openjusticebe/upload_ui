@@ -1,4 +1,3 @@
-
 import React from "react";
 
 export default ({ degraded, meta, state }) => {
@@ -14,7 +13,7 @@ export default ({ degraded, meta, state }) => {
                     </div>
                     }
                     <div className="row">
-                        <div className="col-6 text-muted">
+                        <div className="col-6 text-muted text-log">
                             <ol>
                             { state && state.map( st  => (
                                 <li>{ st }</li>
