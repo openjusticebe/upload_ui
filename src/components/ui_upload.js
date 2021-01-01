@@ -19,12 +19,17 @@ class UploadUi extends React.Component {
             isDegraded: false,
             parse_waiting: false,
             parse_state: [],
+            pages_buffer: [],
+            pages_total: 0,
+            page_current: 0,
+            ocr_streaming: true,
             waiting: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTransfer = this.handleTransfer.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleTextExtract = this.handleTextExtract.bind(this);
+        this.handleTextPage = this.handleTextPage.bind(this);
         this.handleReference = this.handleReference.bind(this);
         // this.handleTextMeta = this.handleTextMeta.bind(this);
         this.handleCallback = props.TextHandler;
@@ -42,14 +47,22 @@ class UploadUi extends React.Component {
         this.setState({
             upload_ref: ref,
             parse_waiting: true,
-            parse_state:['Chargé / Opgeladen']
+            parse_state:['Chargé / Opgeladen'],
+            res_text: {__html: '(Zone résultat)' },
+            text: '',
+            pages_buffer: [],
+            pages_total: 0,
+            page_current: 0,
+            file_meta: false,
         })
 
         const obj = this;
         const fun = (F, I) => {
             if (I <= 0) {
                 obj.handleTextExtract(false, 'No server response')
-                obj.setState({ parse_waiting: false });
+                obj.setState({
+                    parse_waiting: false,
+                });
                 return
             }
             I = I - 1;
@@ -58,28 +71,37 @@ class UploadUi extends React.Component {
             fetch(url)
                 .then( response => response.json() )
                 .then( data => {
-                    console.log(data);
-                    if (data['status'] == 'empty') {
+                    if (data['status'] === 'empty') {
+                        if (obj.state.page_current === obj.state.pages_total) {
+                            obj.setState({ parse_waiting: false });
+                            // No more pages expected, just quit !
+                            return;
+                        }
                         setTimeout(() => F(F,I), 2000);
-                        return
                     }
-                    if (data['status'] == 'error') {
+                    else if (data['status'] === 'error') {
                         obj.handleTextExtract(false, data['value'])
                         const pstate = [...obj.state.parse_state, 'Error :('];
                         obj.setState({
                             parse_waiting: false,
                             parse_state: pstate,
                         });
-                        return
                     }
-                    if (data['status'] == 'meta') {
+                    else if (data['status'] === 'meta') {
                         obj.handleTextMeta(data['value'], data['value']['doOcr'])
                         setTimeout(() => F(F, I), 1000);
                     }
-                    if (data['status'] == 'text') {
+                    // Receive the text in full
+                    else if (data['status'] === 'text') {
                         obj.handleTextExtract(true, data['value'])
                         obj.setState({ parse_waiting: false });
                     }
+                    // Receive the text page by page
+                    else if (data['status'] === 'page') {
+                        obj.handleTextPage(data['value']['page'], data['value']['text'])
+                        setTimeout(() => F(F, I), 1000);
+                    }
+                    return
                 })
             }
         setTimeout(() => fun(fun, 1000), 1000);
@@ -91,6 +113,7 @@ class UploadUi extends React.Component {
             file_meta: meta,
             isDegraded: degraded,
             parse_state: pstate,
+            pages_total: meta['pages'],
         });
     }
 
@@ -99,6 +122,7 @@ class UploadUi extends React.Component {
             const pstate = [...this.state.parse_state, 'Texte reçu / Tekst ontvangen']
             this.setState({
                 text: text,
+                page_current: this.state.pages_total,
                 parse_state: pstate,
                 //uploaded: text
             });
@@ -107,6 +131,46 @@ class UploadUi extends React.Component {
                 error: `Erreur d'extraction, Extractiefout: ${text}`
             });
         }
+    }
+
+    handleTextPage(page, content) {
+        const curPage = this.state.page_current;
+        const pstate = [...this.state.parse_state, `Page ${page} reçue / Pagina ${page} ontvangen`]
+        if (page == curPage + 1) {
+            // All good, this is the next page
+            let newTextArray = [this.state.text, content];
+            let newPage = page;
+            const buffer = [...this.state.pages_buffer];
+            let newBuffer = [];
+
+            if (buffer.length > 0) {
+                buffer.sort((a, b) => a.p - b.p);
+                buffer.forEach(el => {
+                    if (el.p == newPage + 1) {
+                        newTextArray.push(el.t);
+                        newPage = el.p;
+                    } else {
+                        newBuffer.push(el);
+                    }
+                });
+            }
+
+            this.setState({
+                page_current: newPage,
+                text: newTextArray.join(''),
+                parse_state: pstate,
+                pages_buffer: newBuffer,
+            });
+
+        } else {
+            // Ok, not the page we expected, but let's keep it anyway
+            const newBuffer = [...this.state.pages_buffer, {'p': page, 't': content}];
+            this.setState({
+                pages_buffer: newBuffer,
+                parse_state: pstate,
+            });
+        }
+        // TODO: check buffer for other pages to join to text
     }
 
     handleTextChange(event) {
@@ -187,8 +251,11 @@ class UploadUi extends React.Component {
                     degraded={ this.state.isDegraded }
                     meta={ this.state.file_meta }
                 />
-
-                
+                { this.state.ocr_streaming &&
+                    <div className="row justify-content-center">
+                        <div className="stream_info col-10 bg-secondary text-white">Pages / Pagina's : { this.state.page_current } / { this.state.pages_total }</div>
+                    </div>
+                }
                 <div className="row justify-content-center">
                     { this.state.error &&
                         <div className="log col-10 bg-info">
