@@ -6,6 +6,41 @@ import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
 import {YEARS, COURTS} from '../misc/data';
 
+// Link : https://itnext.io/building-a-dynamic-controlled-form-in-react-together-794a44ee552c
+const DocLink = ( { idx } ) => {
+    let typeId = `typ-${idx}`, identifierId = `id-${idx}`, labelId =`lab-${idx}`;
+    let typeCtrl = `myform.doctype_{idx}`, identifierCtrl = `myform.docidentifier_${idx}`, labelCtrl =`myform.doclabel_${idx}`;
+
+    return (
+    <li key={ idx }>
+        <Form.Group controlId={ typeCtrl }>
+            <Form.Label>Type :</Form.Label>
+            <Form.Control name={ typeId } id={ typeId } data-id={ idx } as="select">
+                <option value="eli">ELI (legislation)</option>
+                <option value="ecli">ECLI (jurisprudence)</option>
+            </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId={ identifierCtrl }>
+            <Form.Label>Lien / Identifiant :</Form.Label>
+            <Form.Control type="text" name={ identifierId } id={ identifierId } data-id={ idx } />
+        </Form.Group>
+
+        <Form.Group controlId={ labelCtrl }>
+            <Form.Label>Label / Description :</Form.Label>
+            <Form.Control type="text" name={ labelId } id={ labelId } data-id={ idx } />
+        </Form.Group>
+    </li>
+    )
+};
+
+//      type    identifier                                                                  label
+// 12	"eli"	"http://www.ejustice.just.fgov.be/eli/arrete/2020/03/23/2020030347/justel"	"23 Mars 2020. - Arrêté ministériel portant des mesures d'urgence pour limiter la propagation du coronavirus COVID-19"
+// 12	"eli"	"http://www.ejustice.just.fgov.be/eli/constitution/1994/02/17/1994021048/justel"	"17 février 1994. La constitution coordonnée"
+// 12	"eli"	"http://www.ejustice.just.fgov.be/eli/loi/2007/05/15/2007000663/justel"	"15 MAI 2007. - Loi relative à la sécurité civile."
+// 12	"ecli"	"BE/RSCE/2020/ARR.248819"	"C.E., 30 octobre 2020, n°248.819"
+// 12	"ecli"	"BE/GHCC/2018/2018.153f"	"C. const., 8 novembre 2018, n°153/18"
+
 class SendUi extends React.Component {
 
     constructor(props) {
@@ -54,7 +89,6 @@ class SendUi extends React.Component {
     handleSubmit(event) {
         this.setState({ waiting: true });
         event.preventDefault();
-
 
         const query = {
             '_v' : 1,
@@ -243,8 +277,14 @@ class SendUi extends React.Component {
 
                         <fieldset className="border border-secondary p-3 mt-4 mb-4">
                             <legend className="text-muted">Liens et références vers d'autres textes</legend>
-                            <Form.Group controlId="myform.labels">
+                            <Form.Group controlId="myform.docs">
                                 <Form.Label></Form.Label>
+                                <ul className="docs-list">
+                                    { this.state.docLinks.map((doc, i) => (
+                                        
+                                            
+                                    ))}
+                                </ul>
                             </Form.Group>
                         </fieldset>
 
