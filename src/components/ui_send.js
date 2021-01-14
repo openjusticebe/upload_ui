@@ -7,31 +7,42 @@ import LoadGif from '../images/hourglass.gif';
 import {YEARS, COURTS} from '../misc/data';
 
 // Link : https://itnext.io/building-a-dynamic-controlled-form-in-react-together-794a44ee552c
-const DocLink = ( { idx } ) => {
-    let typeId = `typ-${idx}`, identifierId = `id-${idx}`, labelId =`lab-${idx}`;
-    let typeCtrl = `myform.doctype_{idx}`, identifierCtrl = `myform.docidentifier_${idx}`, labelCtrl =`myform.doclabel_${idx}`;
+// https://itnext.io/how-to-build-a-dynamic-controlled-form-with-react-hooks-2019-b39840f75c4f
+const DocLinks = ( { docs } ) => {
+    return docs.map((doc, idx) => {
+        const typeId = `typ-${idx}`, identifierId = `id-${idx}`, labelId =`lab-${idx}`;
+        const typeCtrl = `myform.doctype_{idx}`, identifierCtrl = `myform.docidentifier_${idx}`, labelCtrl =`myform.doclabel_${idx}`;
 
-    return (
-    <li key={ idx }>
-        <Form.Group controlId={ typeCtrl }>
-            <Form.Label>Type :</Form.Label>
-            <Form.Control name={ typeId } id={ typeId } data-id={ idx } as="select">
-                <option value="eli">ELI (legislation)</option>
-                <option value="ecli">ECLI (jurisprudence)</option>
-            </Form.Control>
-        </Form.Group>
-
-        <Form.Group controlId={ identifierCtrl }>
-            <Form.Label>Lien / Identifiant :</Form.Label>
-            <Form.Control type="text" name={ identifierId } id={ identifierId } data-id={ idx } />
-        </Form.Group>
-
-        <Form.Group controlId={ labelCtrl }>
-            <Form.Label>Label / Description :</Form.Label>
-            <Form.Control type="text" name={ labelId } id={ labelId } data-id={ idx } />
-        </Form.Group>
-    </li>
-    )
+        return (
+        <li key={ idx }>
+            <Row>
+                <Col className="col-4">
+                    <Form.Group controlId={ typeCtrl }>
+                        <Form.Label>Type :</Form.Label>
+                        <Form.Control name={ typeId } id={ typeId } data-id={ idx } as="select">
+                            <option value="eli">ELI (legislation)</option>
+                            <option value="ecli">ECLI (jurisprudence)</option>
+                        </Form.Control>
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group controlId={ identifierCtrl }>
+                        <Form.Label>Lien / Identifiant :</Form.Label>
+                        <Form.Control type="text" name={ identifierId } id={ identifierId } data-id={ idx } />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="mt-3">
+                    <Form.Group controlId={ labelCtrl }>
+                        <Form.Label>Label / Description :</Form.Label>
+                        <Form.Control type="text" name={ labelId } id={ labelId } data-id={ idx } />
+                    </Form.Group>
+                </Col>
+            </Row>
+        </li>
+        );
+    });
 };
 
 //      type    identifier                                                                  label
@@ -45,6 +56,7 @@ class SendUi extends React.Component {
 
     constructor(props) {
         super(props);
+        this.docBlank = {type:'', idt:'', label:''};
         this.state = {
             country : 'BE',
             court: 'RSCE',
@@ -58,12 +70,14 @@ class SendUi extends React.Component {
             error:false,
             labels:[],
             labelSuggestions: [],
+            docLinks: [{...this.docBlank}],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.labelsKeyDown = this.labelsKeyDown.bind(this);
         this.labelRemove = this.labelRemove.bind(this);
         this.labelSelect = this.labelSelect.bind(this);
+        this.docAdd = this.docAdd.bind(this);
         this.labelInput = '';
         this.labelController = false;
     }
@@ -190,6 +204,10 @@ class SendUi extends React.Component {
         this.labelInput.value = null;
     }
 
+    docAdd() {
+        this.setState({ docLinks: [...this.state.docLinks, {...this.docBlank}]});
+    }
+
     render() {
         return (
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
@@ -280,11 +298,9 @@ class SendUi extends React.Component {
                             <Form.Group controlId="myform.docs">
                                 <Form.Label></Form.Label>
                                 <ul className="docs-list">
-                                    { this.state.docLinks.map((doc, i) => (
-                                        
-                                            
-                                    ))}
+                                    <DocLinks docs={ this.state.docLinks } />
                                 </ul>
+                                <button type="button" onClick={ () => this.docAdd() }>+</button>
                             </Form.Group>
                         </fieldset>
 
