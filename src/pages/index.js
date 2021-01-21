@@ -18,6 +18,8 @@ import NavSteps from "../components/nav_steps";
 import PlaceholderManager from "../misc/placeholder.js";
 import parseText from "../misc/parser.js";
 
+import "../fontello/css/fontello2.css"
+
 // v1
 export const query = graphql`
 {

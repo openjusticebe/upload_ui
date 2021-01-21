@@ -1,62 +1,17 @@
 import React from "react";
-import { navigate } from "gatsby"
+import { navigate } from "gatsby";
+import DocLinks from "./doclink";
 import Form from 'react-bootstrap/Form';
 import { Row, Col} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
 import {YEARS, COURTS} from '../misc/data';
 
-// Link : https://itnext.io/building-a-dynamic-controlled-form-in-react-together-794a44ee552c
-// https://itnext.io/how-to-build-a-dynamic-controlled-form-with-react-hooks-2019-b39840f75c4f
-const DocLinks = ( { docs } ) => {
-    return docs.map((doc, idx) => {
-        const typeId = `typ-${idx}`, identifierId = `id-${idx}`, labelId =`lab-${idx}`;
-        const typeCtrl = `myform.doctype_{idx}`, identifierCtrl = `myform.docidentifier_${idx}`, labelCtrl =`myform.doclabel_${idx}`;
-
-        return (
-        <li key={ idx }>
-            <Row>
-                <Col className="col-4">
-                    <Form.Group controlId={ typeCtrl }>
-                        <Form.Label>Type :</Form.Label>
-                        <Form.Control name={ typeId } id={ typeId } data-id={ idx } as="select">
-                            <option value="eli">ELI (legislation)</option>
-                            <option value="ecli">ECLI (jurisprudence)</option>
-                        </Form.Control>
-                    </Form.Group>
-                </Col>
-                <Col>
-                    <Form.Group controlId={ identifierCtrl }>
-                        <Form.Label>Lien / Identifiant :</Form.Label>
-                        <Form.Control type="text" name={ identifierId } id={ identifierId } data-id={ idx } />
-                    </Form.Group>
-                </Col>
-            </Row>
-            <Row>
-                <Col className="mt-3">
-                    <Form.Group controlId={ labelCtrl }>
-                        <Form.Label>Label / Description :</Form.Label>
-                        <Form.Control type="text" name={ labelId } id={ labelId } data-id={ idx } />
-                    </Form.Group>
-                </Col>
-            </Row>
-        </li>
-        );
-    });
-};
-
-//      type    identifier                                                                  label
-// 12	"eli"	"http://www.ejustice.just.fgov.be/eli/arrete/2020/03/23/2020030347/justel"	"23 Mars 2020. - Arrêté ministériel portant des mesures d'urgence pour limiter la propagation du coronavirus COVID-19"
-// 12	"eli"	"http://www.ejustice.just.fgov.be/eli/constitution/1994/02/17/1994021048/justel"	"17 février 1994. La constitution coordonnée"
-// 12	"eli"	"http://www.ejustice.just.fgov.be/eli/loi/2007/05/15/2007000663/justel"	"15 MAI 2007. - Loi relative à la sécurité civile."
-// 12	"ecli"	"BE/RSCE/2020/ARR.248819"	"C.E., 30 octobre 2020, n°248.819"
-// 12	"ecli"	"BE/GHCC/2018/2018.153f"	"C. const., 8 novembre 2018, n°153/18"
-
 class SendUi extends React.Component {
 
     constructor(props) {
         super(props);
-        this.docBlank = {type:'', idt:'', label:''};
+        this.docBlank = {kind:'eli', link:'', label:''};
         this.state = {
             country : 'BE',
             court: 'RSCE',
@@ -78,6 +33,7 @@ class SendUi extends React.Component {
         this.labelRemove = this.labelRemove.bind(this);
         this.labelSelect = this.labelSelect.bind(this);
         this.docAdd = this.docAdd.bind(this);
+        this.docDel = this.docDel.bind(this);
         this.labelInput = '';
         this.labelController = false;
     }
@@ -95,7 +51,18 @@ class SendUi extends React.Component {
     handleChange(event) {
         let change = {}
         const name = event.target.name;
-        change[name] = name === 'identifier' ? event.target.value + '.OJ' : event.target.value
+        const cname = event.target.className.split(' ')[0]; 
+        if (name === 'identifier') {
+            change[name] = event.target.value + '.OJ';
+        } else if ( ['kind', 'link', 'label'].includes(cname) ) {
+            let docLinks = [...this.state.docLinks];
+            docLinks[event.target.dataset.id][cname] = event.target.value;
+            change['docLinks'] = docLinks;
+        } else {
+            change[name] = event.target.value;
+        }
+
+        console.log(change);
 
         this.setState(change);
     }
@@ -116,6 +83,7 @@ class SendUi extends React.Component {
             'labels' : this.state.labels,
             'appeal' : this.state.appeal, 
             'user_key' : this.state.userkey,
+            'doc_links' : this.state.docLinks,
         }
 
         // Get api response
@@ -208,6 +176,12 @@ class SendUi extends React.Component {
         this.setState({ docLinks: [...this.state.docLinks, {...this.docBlank}]});
     }
 
+    docDel(index) {
+        const newDocs = [ ...this.state.docLinks ];
+        newDocs.splice(index, 1);
+        this.setState({ docLinks: newDocs });
+    }
+
     render() {
         return (
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
@@ -297,10 +271,20 @@ class SendUi extends React.Component {
                             <legend className="text-muted">Liens et références vers d'autres textes</legend>
                             <Form.Group controlId="myform.docs">
                                 <Form.Label></Form.Label>
-                                <ul className="docs-list">
-                                    <DocLinks docs={ this.state.docLinks } />
+                                <ul className="doclinks list-group">
+                                    <DocLinks
+                                        docs={ this.state.docLinks }
+                                        docDel={ this.docDel }
+                                    />
                                 </ul>
-                                <button type="button" onClick={ () => this.docAdd() }>+</button>
+                                <div className="d-flex justify-content-center">
+                                    <button
+                                        type="button"
+                                        onClick={ () => this.docAdd() }
+                                        className="btn btn-primary" >
+                                        Ajouter / Toevoegen
+                                    </button>
+                                </div>
                             </Form.Group>
                         </fieldset>
 
