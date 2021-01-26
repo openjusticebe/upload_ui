@@ -15,11 +15,11 @@ class SendUi extends React.Component {
         this.state = {
             country : 'BE',
             court: 'RSCE',
-            year: 2020,
+            year: 2021,
             identifier: '',
             text: '',
             lang: 'NL',
-            appeal: '',
+            appeal: 'nodata',
             userkey: '',
             waiting: false,
             error:false,
