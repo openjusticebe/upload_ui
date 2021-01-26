@@ -25,7 +25,8 @@ class SendUi extends React.Component {
             error:false,
             labels:[],
             labelSuggestions: [],
-            docLinks: [{...this.docBlank}],
+            docLinks: [],
+            // docLinks: [{...this.docBlank}],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
