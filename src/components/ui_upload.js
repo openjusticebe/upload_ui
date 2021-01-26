@@ -234,7 +234,7 @@ class UploadUi extends React.Component {
     render() {
         return (
             <div className="col-12 shadow rounded border py-3 my-3 private">
-                <h2>1) Préparer le contenu / Inhoud voorbereiden</h2>
+                <h2><i className="icon-inbox" /> Préparer le contenu / Inhoud voorbereiden</h2>
                 <h3>Le contenu dans se cadre ne sera pas enregistré
                 / Inhoud in dit kader wordt niet opgeslagen</h3>
                 <div className="row justify-content-center">
@@ -253,7 +253,10 @@ class UploadUi extends React.Component {
                 />
                 { this.state.ocr_streaming &&
                     <div className="row justify-content-center">
-                        <div className="stream_info col-10 bg-secondary text-white">Pages / Pagina's : { this.state.page_current } / { this.state.pages_total }</div>
+                        <div className="stream_info col-10 bg-secondary text-white">
+                            <i className="icon-wallet" />
+                            Pages / Pagina's : { this.state.page_current } / { this.state.pages_total }
+                        </div>
                     </div>
                 }
                 <div className="row justify-content-center">

@@ -35,3 +35,8 @@
 .icon-calendar:before { content: '\e821'; } /* '' */
 .icon-sound:before { content: '\e822'; } /* '' */
 .icon-megaphone:before { content: '\e823'; } /* '' */
+.icon-eye:before { content: '\e824'; } /* '' */
+.icon-lock:before { content: '\e825'; } /* '' */
+.icon-cd:before { content: '\e826'; } /* '' */
+.icon-videocam:before { content: '\e827'; } /* '' */
+.icon-photo:before { content: '\e828'; } /* '' */

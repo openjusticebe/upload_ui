@@ -185,11 +185,14 @@ class SendUi extends React.Component {
     render() {
         return (
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
-                <h2>3) Définir données et envoyer / Gegevens invullen en versturen</h2>
+                <h2><i className="icon-params" /> Définir données et envoyer / Gegevens invullen en versturen</h2>
                 <div className="row px-4 mt-4">
                     <Form onSubmit={ this.handleSubmit } onChange={ this.handleChange } className="pl-3">
                         <fieldset className="border border-secondary p-3">
-                            <legend className="text-muted">Propriétés du document / document eigenschappen</legend>
+                            <legend className="text-muted">
+                                <i className="icon-pencil pr-2" />
+                                Propriétés du document / document eigenschappen
+                            </legend>
                             <Row>
                                 <Col className="px-4">
                                     <Form.Group controlId="myform.country">
@@ -268,7 +271,10 @@ class SendUi extends React.Component {
                         </fieldset>
 
                         <fieldset className="border border-secondary p-3 mt-4 mb-4">
-                            <legend className="text-muted">Liens et références vers d'autres textes</legend>
+                            <legend className="text-muted">
+                                <i className="icon-attach pr-2" />
+                                Liens et références vers d'autres textes
+                            </legend>
                             <Form.Group controlId="myform.docs">
                                 <Form.Label></Form.Label>
                                 <ul className="doclinks list-group">
@@ -289,7 +295,10 @@ class SendUi extends React.Component {
                         </fieldset>
 
                         <fieldset className="border border-secondary p-3 mt-4 mb-4">
-                            <legend className="text-muted">Données de téléchargement / Upload gegevens</legend>
+                            <legend className="text-muted">
+                                <i className="icon-cog pr-2" />
+                                Données de téléchargement / Upload gegevens
+                            </legend>
                             <Form.Group controlId="myform.identifier">
                               <Form.Label>Identifiant du document / Document Identificatie nummer</Form.Label>
                               <div className="text-muted mb-1">
@@ -320,6 +329,7 @@ class SendUi extends React.Component {
                         <div>
                             <Button variant="warning" type="submit" className="p-3">
                             {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
+                            <i className="icon-paper-plane" />&nbsp;
                             envoyer / doorsturen
                             </Button>
                         </div>

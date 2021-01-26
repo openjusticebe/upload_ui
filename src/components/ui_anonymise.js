@@ -50,13 +50,13 @@ const EntityForm = ({entities, onRemove, onChange}) => (
 const AnonymiseUi = (props) => {
     return (
         <div className="col-12 mb-5 shadow rounded border py-3 my-3">
-            <h2>2) Vérifier anonimisation / Anonimisatie nakijken</h2>
+            <h2><i className="icon-eye" /> Vérifier anonimisation / Anonimisatie nakijken</h2>
             <div className="row justify-content-center">
                 <EntityForm
                     entities={ props.entities }
                     onRemove={ props.entityRemove }
                     onChange={ props.entityChange }/>
-                <Button onClick={ props.entityAdd } >+</Button>
+                <Button onClick={ props.entityAdd } >Ajouter un terme / Term toevoegen</Button>
             </div>
                 <hr/>
             <div className="row justify-content-center">
