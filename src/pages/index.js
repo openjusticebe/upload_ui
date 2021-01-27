@@ -191,7 +191,7 @@ class IndexPage extends React.Component {
                                 <p>
                                 Het uploaden van documenten kan enkel na registratie en ontvangst van een persoonlijke sleutel,
                                 onder voorbehoud van acceptatie door de VZW en afhankelijk van de evolutie van het proefproject.
-                                <br/><a href="https://airtable.com/shrLQOPwbu7IclErU"><i className="icon-user" />Piloot project inschrijving</a>
+                                <br/><a href="https://airtable.com/shrLQOPwbu7IclErU"><i className="icon-user" />Proefproject inschrijving</a>
                                 </p>
                                 <h2><i className="icon-database" />Upload</h2>
                                 Na verzending ontvang je direct een persoonlijke link om het document te delen.

@@ -26,6 +26,7 @@ class SendUi extends React.Component {
             labels:[],
             labelSuggestions: [],
             docLinks: [],
+            validated: false,
             // docLinks: [{...this.docBlank}],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,13 +64,19 @@ class SendUi extends React.Component {
             change[name] = event.target.value;
         }
 
-        console.log(change);
-
         this.setState(change);
     }
 
     handleSubmit(event) {
-        this.setState({ waiting: true });
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            this.setState({ validated: true });
+            return;
+        }
+
+        this.setState({ waiting: true, validated: true });
         event.preventDefault();
 
         const query = {
@@ -188,7 +195,7 @@ class SendUi extends React.Component {
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
                 <h2><i className="icon-params" /> Définir données et envoyer / Gegevens invullen en versturen</h2>
                 <div className="row px-4 mt-4">
-                    <Form onSubmit={ this.handleSubmit } onChange={ this.handleChange } className="pl-3">
+                    <Form noValidate validated={ this.state.validated } onSubmit={ this.handleSubmit } onChange={ this.handleChange } className="pl-3">
                         <fieldset className="border border-secondary p-3">
                             <legend className="text-muted">
                                 <i className="icon-pencil pr-2" />
@@ -269,6 +276,7 @@ class SendUi extends React.Component {
                                   </li>
                                 </ul>
                             </Form.Group>
+
                         </fieldset>
 
                         <fieldset className="border border-secondary p-3 mt-4 mb-4">
@@ -300,6 +308,7 @@ class SendUi extends React.Component {
                                 <i className="icon-cog pr-2" />
                                 Données de téléchargement / Upload gegevens
                             </legend>
+                            {/*
                             <Form.Group controlId="myform.identifier">
                               <Form.Label>Identifiant du document / Document Identificatie nummer</Form.Label>
                               <div className="text-muted mb-1">
@@ -309,14 +318,29 @@ class SendUi extends React.Component {
                               <Form.Control type="text" name="identifier" placeholder="ARR.XXXXXX" />
                             </Form.Group>
 
-                            <Form.Group controlId="myform.userkey">
-                              <Form.Label>Clé Utilisateur / Gebruiker sleutel</Form.Label>
-                              <Form.Control type="text" name="userkey" placeholder="XXXXX" />
-                            </Form.Group>
-
+                            <Form.Label>Aperçu ECLI / ECLI voorbeeld</Form.Label>
                             <pre>
                               ECLI:{this.state.country}:{this.state.court}:{this.state.year}:{this.state.identifier}
                             </pre>
+                            */}
+
+                            <Form.Group controlId="myform.userkey">
+                                <Form.Label>
+                                    <i className="icon-key pr-2" />
+                                    Clé Utilisateur / Gebruiker sleutel
+                                </Form.Label>
+                                    <Form.Control
+                                        required
+                                        type="text"
+                                        name="userkey"
+                                        placeholder="XXXXX"
+                                    />
+                                <Form.Control.Feedback type="invalid">
+                                    Veuillez saisir votre clé personnelle / 
+                                    Voer uw persoonlijke sleutel in
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
 
                         </fieldset>
                         { !this.state.error &&
@@ -330,7 +354,7 @@ class SendUi extends React.Component {
                         <div>
                             <Button variant="warning" type="submit" className="p-3">
                             {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
-                            <i className="icon-paper-plane" />&nbsp;
+                            <i className="icon-paper-plane pr-2" />
                             envoyer / doorsturen
                             </Button>
                         </div>

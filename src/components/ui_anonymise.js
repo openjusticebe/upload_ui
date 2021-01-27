@@ -21,7 +21,9 @@ const EntityRow = ({id, words, type, placeholder, onRemove, onChange}) => (
                 <Form.Control type="text" name="placeholder" value={ placeholder } onChange={ onChange }/>
             </div>
             <div className="col-2">
-                <Button onClick={ onRemove }>X</Button>
+                <Button onClick={ onRemove } className="btn btn-danger">
+                    <i className="icon-trash" />
+                </Button>
             </div>
         </div>
     </Form>

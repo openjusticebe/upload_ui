@@ -30,7 +30,13 @@ const DocLinks = ( { docs, docDel } ) => {
                 <Col>
                     <Form.Group controlId={ identifierCtrl }>
                         <Form.Label>Lien / Identifiant :</Form.Label>
-                        <Form.Control type="text" name={ identifierId } data-id={ idx } className="link"/>
+                        <Form.Control
+                            type="text"
+                            name={ identifierId }
+                            data-id={ idx }
+                            className="link"
+                            placeholder="ECLI:2012:(...)"
+                        />
                     </Form.Group>
                 </Col>
             </Row>
@@ -38,7 +44,13 @@ const DocLinks = ( { docs, docDel } ) => {
                 <Col className="col-10">
                     <Form.Group controlId={ labelCtrl }>
                         <Form.Label>Label / Description :</Form.Label>
-                        <Form.Control type="text" name={ labelId } data-id={ idx } className="label"/>
+                        <Form.Control
+                            type="text"
+                            name={ labelId }
+                            data-id={ idx }
+                            className="label"
+                            placeholder="Décision du 31 février (...)"
+                        />
                     </Form.Group>
                 </Col>
                 <Col className="col-2 d-flex">
