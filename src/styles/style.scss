@@ -195,6 +195,11 @@ textarea {
 
 }
 
+fieldset legend {
+    font-size:1.2rem;
+    padding-left:.3rem;
+}
+
 /************************ labels Style
 ***********************************/
 .labels-list {
@@ -269,4 +274,12 @@ textarea {
 
 .sublabels li:hover {
     border-color:black;
+}
+
+
+/********************* Doclink Style
+***********************************/
+
+.doclinks {
+    
 }

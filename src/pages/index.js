@@ -18,6 +18,8 @@ import NavSteps from "../components/nav_steps";
 import PlaceholderManager from "../misc/placeholder.js";
 import parseText from "../misc/parser.js";
 
+import "../fontello/css/fontello2.css"
+
 // v1
 export const query = graphql`
 {
@@ -159,16 +161,42 @@ class IndexPage extends React.Component {
             <SEO title="OJ / Upload Alpha" />
             <div className="container">
                 <div className="row">
-                        <div className="row justify-content-center info" hashkey={'intro'}>
-                            <div className="col-5">
-                                <h2>Chargement</h2>
-                                Interface de chargement de décisions de justice. <br />
-                                Avant envoi définitif, aucune donnéé n'est enregistréé ni journalisée. 
+                        <div className="row justify-content-center info pb-5" hashkey={'intro'}>
+                            <div className="col-6">
+                                <h2><i className="icon-thumbs-up" />Partage d'arrêts et jugements</h2>
+                                <p>
+                                Cet assistant permet le partage et la publication de décisions de justice,
+                                dans le cadre du projet pilote mené par l'ASBL <a href="http://openjustice.be">OpenJustice.be</a>.
+                                </p>
+                                
+                                <h2><i className="icon-key" />Inscription</h2>
+                                <p>
+                                Le dépôt de documents ne peut se faire qu'après inscription et réception
+                                d'une clé personelle, sous réserve d'acceptation par l'ASBL et en fonction
+                                de l'avancement de l'expérimentation.
+                                <br/><a href="https://airtable.com/shrLQOPwbu7IclErU"><i className="icon-user" />Inscription au projet pilote</a>
+                                </p>
+                                <h2><i className="icon-database" />Chargement</h2>
+                                Une fois envoyé, vous recevez immédiatement un lien personnel permettant le partage
+                                du document.
+                                <br/>Après validation par OpenJustice.be, le document sera accessible publiquement.
+                                <br/><b>Avant envoi, aucune donnéé n'est enregistréé ni journalisée. </b>
                             </div>
-                            <div className="col-5">
-                                <h2>Upload</h2>
-                                Upload interface voor rechtsbeslissingen. <br />
-                                Voor het ultieme versturen, wordt er geen data opgeslaan of gelogd.
+                            <div className="col-6">
+                                <h2><i className="icon-thumbs-up" />Delen van oordelen en uitspraken</h2>
+                                <p>Deze assistent maakt het mogelijk om gerechtelijke beslissingen te delen en te publiceren, als onderdeel van het pilootproject geleid door de VZW <a href="http://openjustice.be">OpenJustice.be</a>.
+                                </p>
+                                
+                                <h2><i className="icon-key" />Inschrijving</h2>
+                                <p>
+                                Het uploaden van documenten kan enkel na registratie en ontvangst van een persoonlijke sleutel,
+                                onder voorbehoud van acceptatie door de VZW en afhankelijk van de evolutie van het proefproject.
+                                <br/><a href="https://airtable.com/shrLQOPwbu7IclErU"><i className="icon-user" />Proefproject inschrijving</a>
+                                </p>
+                                <h2><i className="icon-database" />Upload</h2>
+                                Na verzending ontvang je direct een persoonlijke link om het document te delen.
+                                <br/>Na validatie door OpenJustice.be zal het document openbaar toegankelijk zijn.
+                                <br/><b>Voor het verzenden worden er geen gegevens geregistreerd of gelogd.</b>
                             </div>
                         </div>
                         <UploadUi 
