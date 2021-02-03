@@ -12,7 +12,7 @@ const Review = () => <p>Review</p>
 const Admin = () => (
   <div>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Outil/Admin</a>
+        <a className="navbar-brand" href="#">Outil/Admin</a>
         <div className="">
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item"><Link className="nav-link" to="/admin">Home</Link></li>
