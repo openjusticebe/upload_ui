@@ -8,6 +8,9 @@ export const getUser = () =>
 const setUser = user =>
   window.localStorage.setItem("gatsbyUser", JSON.stringify(user))
 
+const setToken = token =>
+  window.localStorage.setItem("gatsbyToken", JSON.stringify(token))
+
 export const handleLogin = async ({ username, password }) => {
     const payload = new URLSearchParams({
                 grant_type: '',
@@ -17,7 +20,7 @@ export const handleLogin = async ({ username, password }) => {
                 client_id: '',
                 client_secret: '',
     })
-    let response = await fetch(`http://localhost:5005/token`, {
+    let resp = await fetch(`http://localhost:5005/token`, {
         method : `post`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -29,26 +32,23 @@ export const handleLogin = async ({ username, password }) => {
         if (resp.status === 200) {
             return resp.json()
         } else {
-            console.log("Status: " + resp.status)
             return Promise.reject("server")
         }
     })
-    .then(dataJson => JSON.parse(dataJson))
+    .then(token => {
+        setToken(token);
+        return fetch(`http://localhost:5005/users/me`, {
+            headers: {
+                "Authorization" : `${token.token_type} ${token.access_token}`
+            }
+        });
+    })
+    .then(resp => resp.json())
     .catch(err => {
-        console.log(err)
         return false
     });
 
-    console.log(`Received: ${response}`)      
-
-    if (username === `john` && password === `pass`) {
-      return setUser({
-        username: `john`,
-        name: `Johnny`,
-        email: `johnny@example.org`,
-      })
-    }
-  return false
+    return setUser(resp);
 }
 
 export const isLoggedIn = () => {
