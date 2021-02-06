@@ -37,7 +37,7 @@ export const handleLogin = async ({ username, password }) => {
     })
     .then(token => {
         setToken(token);
-        return fetch(`http://localhost:5005/users/me`, {
+        return fetch(`http://localhost:5005/u/me`, {
             headers: {
                 "Authorization" : `${token.token_type} ${token.access_token}`
             }

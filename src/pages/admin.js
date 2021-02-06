@@ -5,8 +5,25 @@ import Login from "../components/login";
 import PrivateRoute from "../components/privateRoute"
 import { getUser, isLoggedIn, logout } from "../services/auth"
 
-const Unsecure = () => <p>Not logged in</p>
-const Secure = () => <p>Logged in</p>
+const Unsecure = () => 
+    (<div className="container m-3">
+        Utilisateur deconnecté
+    </div>);
+
+const Secure = () =>  {
+    const usr = getUser();
+
+    return (<div className="container m-3">
+        Utilisateur connecté
+            <dl className="row border mt-3">
+                <dt className="col-3"> Utilisateur </dt>
+                <dd className="col-9"> { usr['username'] } </dd>
+                <dt className="col-3"> E-mail </dt>
+                <dd className="col-9"> { usr['email'] } </dd>
+            </dl>
+    </div>);
+}
+
 const Review = () => <p>Review</p>
 
 const Admin = () => (
