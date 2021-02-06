@@ -1,15 +1,23 @@
-export const isBrowser = () => typeof window !== "undefined"
+export const isBrowser = () => typeof window !== "undefined";
 
 export const getUser = () =>
   isBrowser() && window.localStorage.getItem("gatsbyUser")
     ? JSON.parse(window.localStorage.getItem("gatsbyUser"))
-    : {}
+    : {};
+
+export const getAuthHeader = () => {
+    if (isBrowser() && window.localStorage.getItem("gatsbyToken")) {
+        const token = JSON.parse(window.localStorage.getItem("gatsbyToken"));
+        return `${token.token_type} ${token.access_token}`;
+    }
+    return {};
+}
 
 const setUser = user =>
-  window.localStorage.setItem("gatsbyUser", JSON.stringify(user))
+    window.localStorage.setItem("gatsbyUser", JSON.stringify(user));
 
 const setToken = token =>
-  window.localStorage.setItem("gatsbyToken", JSON.stringify(token))
+    window.localStorage.setItem("gatsbyToken", JSON.stringify(token));
 
 export const handleLogin = async ({ username, password }) => {
     const payload = new URLSearchParams({

@@ -1,9 +1,9 @@
-import React from "react"
+import React, {useState, useEffect } from "react"
 import { Router } from "@reach/router"
 import { navigate, Link } from "gatsby"
 import Login from "../components/login";
 import PrivateRoute from "../components/privateRoute"
-import { getUser, isLoggedIn, logout } from "../services/auth"
+import { getUser, isLoggedIn, logout, getAuthHeader } from "../services/auth"
 
 const Unsecure = () => 
     (<div className="container m-3">
@@ -24,7 +24,37 @@ const Secure = () =>  {
     </div>);
 }
 
-const Review = () => <p>Review</p>
+const Review = () => {
+    // Client-side Runtime Data Fetching
+    const [reviewList, setReviewList] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:5005/c/review`, {
+            headers : {"Authorization" : getAuthHeader()}
+        })
+            .then(response => response.json()) // parse JSON from request
+            .then(resultData => {
+                console.log(resultData);
+                setReviewList(resultData);
+            }) // set data for the number of stars
+    }, [])
+    return (
+        <div className="container m-3">
+            <p>Review</p>
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Ecli</th>
+                </tr>
+                { reviewList.map((item) => (
+                    <tr key={ item.id }>
+                        <td>{ item.id }</td>
+                        <td>{ item.ecli }</td>
+                    </tr>
+                ))}
+            </table>
+        </div>
+    );
+}
 
 const Admin = () => (
   <div>
