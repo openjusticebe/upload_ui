@@ -14,7 +14,8 @@ const Review = () => {
                 console.log(resultData);
                 setReviewList(resultData);
             }) // set data for the number of stars
-    }, [])
+    }, []);
+
     return (
         <div className="container m-3">
             <p>Review</p>
