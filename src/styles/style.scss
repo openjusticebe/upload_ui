@@ -36,14 +36,14 @@ header a:hover {
     color:#566df2;
 }
 
-header .construction {
+.construction {
     clear:both;
     background-color:#111;
     margin-bottom: 1.45rem;
     box-shadow: 0px 3px 7px #aaa;
     }
 
-header .construction > div {
+.construction > div {
     margin: 0 auto;
     max-width:960px;
     padding: .45rem 1rem;
@@ -51,7 +51,7 @@ header .construction > div {
     background-color:$sec_color;
 }
 
-header .construction .content {
+.construction .content {
     margin: 0;
     font-size:.8em;
     transform: skewX(30deg);

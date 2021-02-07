@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 
 import OJLogo from "../images/openjustice.png"
+import Bar from "../components/version_bar"
 
 const Header = ({ siteTitle }) => (
     <header>
@@ -17,13 +18,7 @@ const Header = ({ siteTitle }) => (
           <li><a href="mailto:team@openjustice.be">Contact</a></li>
         </ul>
       </div>
-      <div className="construction" >
-        <div>
-          <div className="content">
-            <span><i className="icon-beaker" /> version 0.6.0 - early release</span>
-          </div>
-        </div>
-      </div>
+      <Bar />
     </header>
 )
 
