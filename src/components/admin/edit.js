@@ -1,9 +1,17 @@
 import React, {useState, useEffect } from "react"
+import { navigate } from "gatsby";
 import { getUser, isLoggedIn, logout, getAuthHeader } from "../../services/auth"
 import DocLinks from "../doclink";
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { Row, Col} from 'react-bootstrap';
 import {YEARS, COURTS} from '../../misc/data';
+import LoadGif from '../../images/hourglass.gif';
+import { useQueryParam, BoolParam } from "use-query-params";
+
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+
 
 const DefaultState = {
     'text': '',
@@ -17,8 +25,11 @@ const Edit = ({docid}) => {
     const [docData, setDocData] = useState({ ...DefaultState });
     const [docLinks, setDocLinks] = useState([]);
     const [docLabels, setDocLabels] = useState([]);
+    const [errors, setErrors] = useState(false);
+    const [validated, setValidated] = useState(false);
     const [labelSuggestions, setLabelSuggestions] = useState([]);
     const docLinkBlank = {kind:'eli', link:'', label:''};
+    const [saved, setSaved] = useQueryParam("saved", BoolParam);
     var labelInput = '';
     var labelController = false;
 
@@ -32,12 +43,12 @@ const Edit = ({docid}) => {
         })
             .then(response => response.json()) // parse JSON from request
             .then(rd => {
-                console.log(rd);
                 setDocLinks(rd.links);
                 setDocLabels(rd.labels);
                 setDocData({
                     'id': rd.id,
                     'country': rd.country,
+                    'lang': rd.lang,
                     'court': rd.court,
                     'year': rd.year,
                     'appeal': rd.appeal,
@@ -48,6 +59,12 @@ const Edit = ({docid}) => {
                 });
             }) // set data for the number of stars
     }, []);
+
+    useEffect(() => {
+        if (saved) {
+            NotificationManager.success('Modifications sauvegardées', 'Info');
+        }
+    }, [saved]);
 
     const docDel = (index) => {
         const newDocs = [ ...docLinks ];
@@ -132,10 +149,61 @@ const Edit = ({docid}) => {
         }
     };
 
+    const formSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            setValidated(true);
+            return;
+        }
+
+        setValidated(true);
+        event.preventDefault();
+
+        const query = {
+            '_v' : 1,
+            '_timestamp': Math.floor(Date.now() / 1000),
+            'country' : docData.country,
+            'court' : docData.court,
+            'ecli' : docData.ecli,
+            'year' : docData.year,
+            'identifier' : docData.identifier,
+            'text' : docData.text,
+            'lang' : docData.lang,
+            'labels' : docLabels,
+            'appeal' : docData.appeal, 
+            'doc_links' : docLinks,
+        }
+
+        // Get api response
+        // fetch(`https://anon-api.openjustice.be/run`, {
+        fetch(`${process.env.GATSBY_DATA_API}/d/update/${docData.id}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(query),
+            }).then(response => response.json())
+           .then(resultData => {
+                if (resultData.result === 'ok')
+                    navigate(`/admin/edit/${docData.id}?saved=true`)
+                else if (resultData.detail)
+                    setErrors({__html: resultData.detail});
+                else
+                    setErrors({__html: resultData});
+            }).catch(error => {
+                const msg = `Erreur de serveur, Server fout: ${error.toString()}`;
+                setErrors({__html: msg});
+            });
+    }
+
     return (
         <div className="container m-3">
+            <NotificationContainer/>
             Edition document <b>{ docid }</b>
-            <Form onChange= { formChange }>
+            <Form validated={ validated } onChange= { formChange } onSubmit={ formSubmit}>
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
                 <Form.Group controlId="myform.text">
                 <h2><i className="icon-eye" /> Texte transmis </h2>
@@ -264,11 +332,17 @@ const Edit = ({docid}) => {
                         </div>
                     </Form.Group>
                 </fieldset>
-
-                {/*
-                Further fields to edit:
-                - status
-                */}
+                { errors &&
+                    <div className="log col-10" dangerouslySetInnerHTML={ errors } />
+                }
+                <div className="row justify-content-center mt-4">
+                    <div>
+                        <Button variant="warning" type="submit" className="p-3">
+                        <i className="icon-paper-plane pr-2" />
+                            enregistrer
+                        </Button>
+                    </div>
+                </div>
             </div>
             </Form>
         </div>
