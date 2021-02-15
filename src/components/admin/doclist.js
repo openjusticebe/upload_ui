@@ -1,12 +1,22 @@
 import React from "react";
 import { Link } from "gatsby"
+const options = {year:'2-digit', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:undefined}
+const disp_date = (date) => {
+    if (date == undefined)
+        return '';
+    const r = new Date(date);
+    return r.toLocaleString('fr', options);
+
+};
 
 const DocList = ({list}) => (
     <table className="table table-bordered table-hover table-sm">
         <thead className="thead-dark">
         <tr>
-            <th className="col" style={{width:'20%'}}>Id</th>
-            <th className="col">Ecli</th>
+            <th className="col" style={{width:'10%'}}>Id</th>
+            <th className="col" style={{width:'50%'}}>Ecli</th>
+            <th className="col" style={{width:'20%'}}>Création</th>
+            <th className="col" style={{width:'20%'}}>Modification</th>
         </tr>
         </thead>
         <tbody>
@@ -19,6 +29,8 @@ const DocList = ({list}) => (
                     </Link>
                 </td>
                 <td>{ item.ecli }</td>
+                <td className="text-muted">{ disp_date(item.date_created) }</td>
+                <td className="text-muted">{ disp_date(item.date_updated) }</td>
             </tr>
         ))}
         </tbody>

@@ -5,7 +5,7 @@ import DocLinks from "../doclink";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col} from 'react-bootstrap';
-import {YEARS, COURTS} from '../../misc/data';
+import {YEARS, COURTS, STATUS} from '../../misc/data';
 import LoadGif from '../../images/hourglass.gif';
 import { useQueryParam, BoolParam } from "use-query-params";
 
@@ -61,9 +61,11 @@ const Edit = ({docid}) => {
     }, []);
 
     useEffect(() => {
-        if (saved) {
+        console.log(saved);
+        if (saved === 'true') {
             NotificationManager.success('Modifications sauvegardées', 'Info');
         }
+        setSaved('false');
     }, [saved]);
 
     const docDel = (index) => {
@@ -173,6 +175,7 @@ const Edit = ({docid}) => {
             'lang' : docData.lang,
             'labels' : docLabels,
             'appeal' : docData.appeal, 
+            'status': docData.status,
             'doc_links' : docLinks,
         }
 
@@ -189,10 +192,13 @@ const Edit = ({docid}) => {
            .then(resultData => {
                 if (resultData.result === 'ok')
                     navigate(`/admin/edit/${docData.id}?saved=true`)
-                else if (resultData.detail)
-                    setErrors({__html: resultData.detail});
-                else
+                else if (resultData.detail) {
+                    setErrors({__html: JSON.stringify(resultData.detail)});
+                    NotificationManager.error('Erreur de sauvegarde', 'Info');
+                } else {
                     setErrors({__html: resultData});
+                    NotificationManager.error('Erreur de sauvegarde', 'Info');
+                }
             }).catch(error => {
                 const msg = `Erreur de serveur, Server fout: ${error.toString()}`;
                 setErrors({__html: msg});
@@ -201,7 +207,6 @@ const Edit = ({docid}) => {
 
     return (
         <div className="container m-3">
-            <NotificationContainer/>
             Edition document <b>{ docid }</b>
             <Form validated={ validated } onChange= { formChange } onSubmit={ formSubmit}>
             <div className="col-12 mb-5 shadow rounded border py-3 my-3">
@@ -217,7 +222,12 @@ const Edit = ({docid}) => {
                 </div>
                 </Form.Group>
             </div>
-            <div className="col-12 mb-5 shadow rounded border py-3 my-3">
+            <div className="col-12 mb-5 shadow rounded border my-3">
+                <fieldset className="border border-secondary p-3 mt-4 mb-4">
+                <legend className="text-muted">
+                    <i className="icon-pencil pr-2" />
+                    Propriétés du document / document eigenschappen
+                </legend>
                 <Row>
                     <Col className="px-4">
                         <Form.Group controlId="myform.country">
@@ -274,7 +284,14 @@ const Edit = ({docid}) => {
                 <pre>
                   ECLI:{docData.country}:{docData.court}:{docData.year}:{docData.identifier}
                 </pre>
-
+                </fieldset>
+            </div>
+            <div className="col-12 mb-5 shadow rounded border my-3">
+                <fieldset className="border border-secondary p-3 mt-4 mb-4">
+                    <legend className="text-muted">
+                        <i className="icon-comment pr-2" />
+                        Autres méta-données
+                    </legend>
                 <Form.Group controlId="myform.appeal">
                     <Form.Label>Appel interjeté / Hoger beroep</Form.Label> 
                     <Form.Control name="appeal" as="select" value={ docData['appeal']} >
@@ -308,7 +325,9 @@ const Edit = ({docid}) => {
                       </li>
                     </ul>
                 </Form.Group>
-
+                </fieldset>
+            </div>
+            <div className="col-12 mb-5 shadow rounded border my-3">
                 <fieldset className="border border-secondary p-3 mt-4 mb-4">
                     <legend className="text-muted">
                         <i className="icon-attach pr-2" />
@@ -332,17 +351,34 @@ const Edit = ({docid}) => {
                         </div>
                     </Form.Group>
                 </fieldset>
-                { errors &&
-                    <div className="log col-10" dangerouslySetInnerHTML={ errors } />
-                }
-                <div className="row justify-content-center mt-4">
-                    <div>
-                        <Button variant="warning" type="submit" className="p-3">
-                        <i className="icon-paper-plane pr-2" />
-                            enregistrer
-                        </Button>
+            </div>
+            <div className="col-12 mb-5 shadow rounded border py-3 my-3">
+                <fieldset className="border border-secondary p-3 mt-4 mb-4">
+                    <legend className="text-muted">
+                        <i className="icon-database pr-2" />
+                        État et enregistrement
+                    </legend>
+                    <Form.Group controlId="myform.status">
+                        <Form.Label>État / Status</Form.Label> 
+                        <Form.Control name="status" as="select" value={ docData['status']} >
+                          { STATUS.map( stat => (<option key={ stat.id } value={ stat.id }>{ stat.name_fr }</option>) ) }
+                        </Form.Control>
+                    </Form.Group>
+                    { (docData['status'] == 'new') && <div className="bg-secondary text-white col-12 p-3">Nouveau : le document reste dans la collection des documents à traiter</div> }
+                    { (docData['status'] == 'public') && <div className="bg-success text-white col-12 p-3">Publié : Le document sera publiquement accessible et indexé</div> }
+                    { (docData['status'] == 'flagged') && <div className="bg-primary text-white col-12 p-3">Signalé : Le document ne sera plus publié, et repris dans la collection des documents signalés</div> }
+                    { (docData['status'] == 'hidden') && <div className="bg-dark text-white col-12 p-3">Caché : Le document ne sera plus publié, et repris dans la collection des documents cachés</div> }
+                    { (docData['status'] == 'deleted') && <div className="bg-danger text-white col-12 p-3">Retiré : Le document sera retiré et mis dans la corbeille, en attendant sa suppression</div> }
+                    { errors && <div className="log col-12 p-3" dangerouslySetInnerHTML={ errors } /> }
+                    <div className="row justify-content-center mt-4">
+                        <div>
+                            <Button variant="warning" type="submit" className="p-3">
+                            <i className="icon-paper-plane pr-2" />
+                                enregistrer
+                            </Button>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
             </Form>
         </div>

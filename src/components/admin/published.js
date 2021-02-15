@@ -1,4 +1,5 @@
 import React, {useState, useEffect } from "react"
+import { navigate } from "gatsby"
 import { getUser, isLoggedIn, logout, getAuthHeader } from "../../services/auth"
 import DocList from "./doclist"
 
@@ -9,16 +10,19 @@ const Published = () => {
         fetch(`http://localhost:5005/c/public`, {
             headers : {"Authorization" : getAuthHeader()}
         })
-            .then(response => response.json()) // parse JSON from request
+            .then(response => response.json())
             .then(resultData => {
-                console.log(resultData);
                 setReviewList(resultData);
-            }) // set data for the number of stars
+            })
+            .catch(error => {
+                navigate(`/admin?auth=reset`);
+            });
     }, []);
 
     return (
         <div className="container m-3">
-            <p>Publiés</p>
+            <h2 className="display-5 text-secondary">Documents Publiés</h2>
+            <p className="text-muted">Documents actuellement publiés par OpenJustice</p>
             <DocList list={ reviewList } />
         </div>
     );
