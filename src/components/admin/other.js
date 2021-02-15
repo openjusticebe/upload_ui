@@ -8,7 +8,7 @@ const Other = () => {
     const [hiddenList, setHiddenList] = useState([]);
     const [deletedList, setDeletedList] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5005/c/hidden`, {
+        fetch(`${process.env.GATSBY_DATA_API}/c/hidden`, {
             headers : {"Authorization" : getAuthHeader()}
         })
             .then(response => response.json())
@@ -21,7 +21,7 @@ const Other = () => {
     }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:5005/c/deleted`, {
+        fetch(`${process.env.GATSBY_DATA_API}/c/deleted`, {
             headers : {"Authorization" : getAuthHeader()}
         })
             .then(response => response.json())

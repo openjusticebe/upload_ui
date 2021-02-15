@@ -1,5 +1,8 @@
 import React from "react"
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { navigate } from "gatsby"
+import { Row, Col} from 'react-bootstrap';
 import { handleLogin, isLoggedIn } from "../services/auth"
 
 class Login extends React.Component {
@@ -26,30 +29,39 @@ class Login extends React.Component {
         };
 
         return (
-          <>
-            <h1>Log in</h1>
-            <form
-              method="post"
-              onSubmit={event => {
-                this.handleSubmit(event)
-                navigate(`/admin`)
-              }}
-            >
-              <label>
-                Username
-                <input type="text" name="username" onChange={this.handleUpdate} />
-              </label>
-              <label>
-                Password
-                <input
-                  type="password"
-                  name="password"
-                  onChange={this.handleUpdate}
-                />
-              </label>
-              <input type="submit" value="Log In" />
-            </form>
-          </>
+            <div className="container m-3 d-flex justify-content-center">
+                <div className="col-6 mt-5">
+                    <h2 className="display-5 text-secondary">Connexion utilisateur</h2>
+                    <Form
+                      method="post"
+                      onSubmit={event => {
+                        this.handleSubmit(event)
+                        navigate(`/admin`)
+                      }}
+                    >
+                        <Row>
+                            <Form.Label>
+                              Username
+                              <Form.Control name="username" type="text" onChange={this.handleUpdate} />
+                            </Form.Label>
+                        </Row>
+                        <Row>
+                            <Form.Label>
+                              Password
+                              <Form.Control name="password" type="password" onChange={this.handleUpdate} />
+                            </Form.Label>
+                        </Row>
+                        <Row>
+                            <div className="row d-flex justify-content-center mt-4">
+                                <Button variant="success" type="submit" className="p-1">
+                                    <i className="icon-user pr-2" />
+                                    Se connecter
+                                </Button>
+                            </div>
+                        </Row>
+                    </Form>
+                </div>
+            </div>
         );
   }
 }

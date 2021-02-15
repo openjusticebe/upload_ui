@@ -7,7 +7,7 @@ const Review = () => {
     // Client-side Runtime Data Fetching
     const [reviewList, setReviewList] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5005/c/review`, {
+        fetch(`${process.env.GATSBY_DATA_API}/c/review`, {
             headers : {"Authorization" : getAuthHeader()}
         })
             .then(response => response.json())

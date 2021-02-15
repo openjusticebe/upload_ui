@@ -7,7 +7,7 @@ const Published = () => {
     // Client-side Runtime Data Fetching
     const [reviewList, setReviewList] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5005/c/public`, {
+        fetch(`${process.env.GATSBY_DATA_API}/c/public`, {
             headers : {"Authorization" : getAuthHeader()}
         })
             .then(response => response.json())
@@ -15,6 +15,7 @@ const Published = () => {
                 setReviewList(resultData);
             })
             .catch(error => {
+                setReviewList([]);
                 navigate(`/admin?auth=reset`);
             });
     }, []);

@@ -7,7 +7,7 @@ const Flagged = () => {
     // Client-side Runtime Data Fetching
     const [flaggedList, setFlaggedList] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5005/c/flagged`, {
+        fetch(`${process.env.GATSBY_DATA_API}/c/flagged`, {
             headers : {"Authorization" : getAuthHeader()}
         })
             .then(response => response.json())

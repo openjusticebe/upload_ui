@@ -28,7 +28,7 @@ export const handleLogin = async ({ username, password }) => {
                 client_id: '',
                 client_secret: '',
     })
-    let resp = await fetch(`http://localhost:5005/token`, {
+    let resp = await fetch(`${process.env.GATSBY_DATA_API}/token`, {
         method : `post`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -45,7 +45,7 @@ export const handleLogin = async ({ username, password }) => {
     })
     .then(token => {
         setToken(token);
-        return fetch(`http://localhost:5005/u/me`, {
+        return fetch(`${process.env.GATSBY_DATA_API}/u/me`, {
             headers: {
                 "Authorization" : `${token.token_type} ${token.access_token}`
             }

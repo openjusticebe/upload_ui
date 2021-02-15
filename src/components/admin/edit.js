@@ -38,7 +38,7 @@ const Edit = ({docid}) => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:5005/d/read/${docid}`, {
+        fetch(`${process.env.GATSBY_DATA_API}/d/read/${docid}`, {
             headers : {"Authorization" : getAuthHeader()}
         })
             .then(response => response.json()) // parse JSON from request
@@ -55,6 +55,7 @@ const Edit = ({docid}) => {
                     'ecli': rd.ecli,
                     'identifier': rd.identifier,
                     'text': rd.text,
+                    'hash': rd.hash,
                     'status': rd.status,
                 });
             }) // set data for the number of stars
@@ -206,126 +207,129 @@ const Edit = ({docid}) => {
     }
 
     return (
-        <div className="container m-3">
-            Edition document <b>{ docid }</b>
-            <Form validated={ validated } onChange= { formChange } onSubmit={ formSubmit}>
-            <div className="col-12 mb-5 shadow rounded border py-3 my-3">
-                <Form.Group controlId="myform.text">
-                <h2><i className="icon-eye" /> Texte transmis </h2>
-                <div className="row justify-content-center p-3">
-                    <Form.Control
-                        name="text"
-                        as="textarea"
-                        rows={25}
-                        value ={ docData['text'] }
-                        />
+        <div id="edit" style={{maxWidth:"1500px", marginLeft:"auto", marginRight:"auto"}}>
+            <Form className="container-fluid" validated={ validated } onChange= { formChange } onSubmit={ formSubmit}>
+            <div className="row">
+                <div className="col-12 col-lg-7 mb-5 shadow rounded border my-3 p-3">
+                    <Form.Group controlId="myform.text">
+                    <h2><i className="icon-eye" />Edition document <b>{ docid }</b></h2>
+                    <div className="row justify-content-center p-3">
+                        <Form.Control
+                            id="main"
+                            name="text"
+                            as="textarea"
+                            rows={40}
+                            value ={ docData['text'] }
+                            />
+                    </div>
+                    </Form.Group>
                 </div>
-                </Form.Group>
-            </div>
-            <div className="col-12 mb-5 shadow rounded border my-3">
-                <fieldset className="border border-secondary p-3 mt-4 mb-4">
-                <legend className="text-muted">
-                    <i className="icon-pencil pr-2" />
-                    Propriétés du document / document eigenschappen
-                </legend>
-                <Row>
-                    <Col className="px-4">
-                        <Form.Group controlId="myform.country">
-                            <Form.Label>Pays / Land</Form.Label>
-                            <Form.Control name="country" as="select">
-                              <option>BE</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col className="px-4">
-                        <Form.Group controlId="myform.lang">
-                            <Form.Label>Langue / Taal</Form.Label>
-                            <Form.Control name="lang" as="select" value={ docData['lang']}>
-                              <option value="null">Non défini</option>
-                              <option value="NL">NL</option>
-                              <option value="FR">FR</option>
-                              <option value="DE">DE</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col className="px-4">
-                        <Form.Group controlId="myform.year">
-                            <Form.Label>Année / Jaar</Form.Label>
-                            <Form.Control name="year" as="select" value={ '' + docData['year'] }>
-                              { YEARS.map( year => (<option key={ year } value={ year }>{ year }</option>) ) }
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Form.Group controlId="myform.court">
-                    <Form.Label>Source / Bron</Form.Label>
-                    <Form.Control name="court" as="select" value={ docData['court']} >
-                      { COURTS.map( (group, i) => (
-                          <optgroup key={ i } label={ group.label_fr + " / " + group.label_nl }>
-                              { group.list.map((court, j) =>
-                                  <option key={ j } value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>)
-                              }
-                          </optgroup>
-                      ))}
-                    </Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId="myform.identifier">
-                  <Form.Label>Identifiant du document / Document Identificatie nummer</Form.Label>
-                  <div className="text-muted mb-1">
-                      ARR.20200912 , ... <br />
-                      (sera révisé lors de la validation / zal worden herzien tijdens validatie)
-                  </div>
-                  <Form.Control type="text" name="identifier" placeholder="ARR.XXXXXX"  value={ docData.identifier }/>
-                </Form.Group>
-
-                <Form.Label>Aperçu ECLI / ECLI voorbeeld</Form.Label>
-                <pre>
-                  ECLI:{docData.country}:{docData.court}:{docData.year}:{docData.identifier}
-                </pre>
-                </fieldset>
-            </div>
-            <div className="col-12 mb-5 shadow rounded border my-3">
-                <fieldset className="border border-secondary p-3 mt-4 mb-4">
+                <div className="col-12 col-lg-5 mb-5 shadow rounded border my-3">
+                    <fieldset className="border border-secondary p-3 mt-4 mb-4">
                     <legend className="text-muted">
-                        <i className="icon-comment pr-2" />
-                        Autres méta-données
+                        <i className="icon-pencil pr-2" />
+                        Propriétés du document / document eigenschappen
                     </legend>
-                <Form.Group controlId="myform.appeal">
-                    <Form.Label>Appel interjeté / Hoger beroep</Form.Label> 
-                    <Form.Control name="appeal" as="select" value={ docData['appeal']} >
-                      <option value="nodata" default="yes">Pas d'information / Geen informatie</option>
-                      <option value="yes">Oui / Ja</option>
-                      <option value="no">Non / Nee</option>
-                    </Form.Control>
-                </Form.Group>
+                    <Row>
+                        <Col className="px-4">
+                            <Form.Group controlId="myform.country">
+                                <Form.Label>Pays / Land</Form.Label>
+                                <Form.Control name="country" as="select">
+                                  <option>BE</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Col>
+                        <Col className="px-4">
+                            <Form.Group controlId="myform.lang">
+                                <Form.Label>Langue / Taal</Form.Label>
+                                <Form.Control name="lang" as="select" value={ docData['lang']}>
+                                  <option value="null">Non défini</option>
+                                  <option value="NL">NL</option>
+                                  <option value="FR">FR</option>
+                                  <option value="DE">DE</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Col>
+                        <Col className="px-4">
+                            <Form.Group controlId="myform.year">
+                                <Form.Label>Année / Jaar</Form.Label>
+                                <Form.Control name="year" as="select" value={ '' + docData['year'] }>
+                                  { YEARS.map( year => (<option key={ year } value={ year }>{ year }</option>) ) }
+                                </Form.Control>
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
-                <Form.Group controlId="myform.labels">
-                    <Form.Label>Labels / Etiketten (catégories / categorieën)</Form.Label>
-                    <div className="text-muted mb-1">COVID-19, anatocisme, ...</div>
-                    <ul className="labels-list">
-                      { docLabels.map((label, i) => (
-                          <li key={i} className="bg-dark text-white">
-                              #{label}
-                              <button type="button" onClick={ () => { labelRemove(i);} }>+</button>
+                    <Form.Group controlId="myform.court">
+                        <Form.Label>Source / Bron</Form.Label>
+                        <Form.Control name="court" as="select" value={ docData['court']} >
+                          { COURTS.map( (group, i) => (
+                              <optgroup key={ i } label={ group.label_fr + " / " + group.label_nl }>
+                                  { group.list.map((court, j) =>
+                                      <option key={ j } value={ court.id }>{ court.id } / {court.name_fr} - {court.name_nl}</option>)
+                                  }
+                              </optgroup>
+                          ))}
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId="myform.identifier">
+                      <Form.Label>Identifiant du document / Document Identificatie nummer</Form.Label>
+                      <div className="text-muted mb-1">
+                          ARR.20200912 , ... <br />
+                          (sera révisé lors de la validation / zal worden herzien tijdens validatie)
+                      </div>
+                      <Form.Control type="text" name="identifier" placeholder="ARR.XXXXXX"  value={ docData.identifier }/>
+                    </Form.Group>
+
+                    <Form.Label>Aperçu ECLI / ECLI voorbeeld</Form.Label>
+                    <pre>
+                      ECLI:{docData.country}:{docData.court}:{docData.year}:{docData.identifier}
+                    </pre>
+                    </fieldset>
+                    <fieldset className="border border-secondary p-3 mt-4 mb-4">
+                        <legend className="text-muted">
+                            <i className="icon-comment pr-2" />
+                            Autres méta-données
+                        </legend>
+                    <Form.Group controlId="myform.appeal">
+                        <Form.Label>Appel interjeté / Hoger beroep</Form.Label> 
+                        <Form.Control name="appeal" as="select" value={ docData['appeal']} >
+                          <option value="nodata" default="yes">Pas d'information / Geen informatie</option>
+                          <option value="yes">Oui / Ja</option>
+                          <option value="no">Non / Nee</option>
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId="myform.labels">
+                        <Form.Label>Labels / Etiketten (catégories / categorieën)</Form.Label>
+                        <div className="text-muted mb-1">COVID-19, anatocisme, ...</div>
+                        <ul className="labels-list">
+                          { docLabels.map((label, i) => (
+                              <li key={i} className="bg-dark text-white">
+                                  #{label}
+                                  <button type="button" onClick={ () => { labelRemove(i);} }>+</button>
+                              </li>
+                          ))}
+                          <li className="labels-input">
+                              <input type="text" onKeyDown={ labelsKeyDown } ref={c => { labelInput = c; }} />
+                              { labelSuggestions.length > 0 &&
+                              <ul className="sublabels">
+                                  { labelSuggestions.map((label, i) => (
+                                      <li key={i} className="bg-light" onClick={ labelSelect }>
+                                          {label}
+                                      </li>
+                                  ))}
+                              </ul>
+                              }
                           </li>
-                      ))}
-                      <li className="labels-input">
-                          <input type="text" onKeyDown={ labelsKeyDown } ref={c => { labelInput = c; }} />
-                          { labelSuggestions.length > 0 &&
-                          <ul className="sublabels">
-                              { labelSuggestions.map((label, i) => (
-                                  <li key={i} className="bg-light" onClick={ labelSelect }>
-                                      {label}
-                                  </li>
-                              ))}
-                          </ul>
-                          }
-                      </li>
-                    </ul>
-                </Form.Group>
-                </fieldset>
+                        </ul>
+                    </Form.Group>
+                    </fieldset>
+                    <a href={ `${process.env.GATSBY_DATA_API}/hash/${docData.hash}` } className="btn btn-secondary" target="_blank">
+                        Visualiser le document dans sont état actuel
+                    </a>
+                </div>
             </div>
             <div className="col-12 mb-5 shadow rounded border my-3">
                 <fieldset className="border border-secondary p-3 mt-4 mb-4">

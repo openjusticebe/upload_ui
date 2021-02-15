@@ -1,4 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1280px
+) !default;
 
 $main_color: #2D4059;
 $sec_color : #ffb400;
@@ -161,11 +167,14 @@ h3 {
     font-size:0.8em;
 }
 
-textarea {
-    width:80%;
+textarea#main {
     min-height:40rem;
     padding:1rem;
+    font-size:.75rem;
 }
+
+#edit .form-control { font-size:.8rem; }
+#edit legend { font-size:1rem; }
 
 #anonOpts input {
     width: 100%;
