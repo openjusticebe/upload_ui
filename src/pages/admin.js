@@ -5,6 +5,7 @@ import Login from "../components/login";
 import PrivateRoute from "../components/privateRoute"
 import { getUser, isLoggedIn, logout, getAuthHeader } from "../services/auth"
 import Review from "../components/admin/review"
+import Published from "../components/admin/published"
 import Edit from "../components/admin/edit"
 import Bar from "../components/version_bar"
 
@@ -38,8 +39,8 @@ const Admin = () => (
                 <li className="nav-item"><Link className="nav-link" to="/admin">Home</Link></li>
                 { isLoggedIn() ? (
                     <>
-                        <li className="nav-item"><Link className="nav-link" to="/admin/review">Review</Link></li>
-                        <li className="nav-item"><Link className="nav-link" to="/admin/edit">Edit</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/admin/review">Nouveaux</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/admin/published">Publiés</Link></li>
                     </>
                     ) : (
                     <li className="nav-item"><Link className="nav-link" to="/admin/login">Login</Link></li>
@@ -61,6 +62,7 @@ const Admin = () => (
     <Router>
         { isLoggedIn() ? (<Secure path="/admin" />) : ( <Unsecure path="/admin" /> )}
         <PrivateRoute path="/admin/review" component={Review} />
+        <PrivateRoute path="/admin/published" component={Published} />
         <PrivateRoute path="/admin/edit/:docid" component={Edit} />
         { isLoggedIn() ? null : (<Login path="/admin/login" />) }
     </Router>
