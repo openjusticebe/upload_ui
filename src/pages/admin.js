@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from "react"
 import { Router } from "@reach/router"
 import { navigate, Link } from "gatsby"
-import Login from "../components/login";
+import Login from "../components/admin/login";
 import PrivateRoute from "../components/privateRoute"
 import { getUser, isLoggedIn, logout, getAuthHeader } from "../services/auth"
 import Review from "../components/admin/review"
@@ -60,7 +60,8 @@ const Admin = () => {
               <a className="navbar-brand" href="#">Outil/Admin</a>
               <div className="">
                   <ul className="navbar-nav mr-auto">
-                      <li className="nav-item"><Link className="nav-link" to="/admin">Home</Link></li>
+                      <li className="nav-item"><Link className="nav-link" to="/">Accueil</Link></li>
+                      <li className="nav-item"><Link className="nav-link" to="/admin">Admin</Link></li>
                       { isLoggedIn() ? (
                           <>
                               <li className="nav-item"><Link className="nav-link" to="/admin/review">Nouveaux</Link></li>

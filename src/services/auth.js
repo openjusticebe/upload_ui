@@ -19,7 +19,7 @@ const setUser = user =>
 const setToken = token =>
     window.localStorage.setItem("gatsbyToken", JSON.stringify(token));
 
-export const handleLogin = async ({ username, password }) => {
+export const handleLogin = async ({ username, password }, callback) => {
     const payload = new URLSearchParams({
                 grant_type: '',
                 username: username,
@@ -28,7 +28,7 @@ export const handleLogin = async ({ username, password }) => {
                 client_id: '',
                 client_secret: '',
     })
-    let resp = await fetch(`${process.env.GATSBY_DATA_API}/token`, {
+    return fetch(`${process.env.GATSBY_DATA_API}/token`, {
         method : `post`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -52,11 +52,13 @@ export const handleLogin = async ({ username, password }) => {
         });
     })
     .then(resp => resp.json())
+    .then(data => {
+        setUser(data);
+        callback();
+    })
     .catch(err => {
         return false
     });
-
-    return setUser(resp);
 }
 
 export const isLoggedIn = () => {

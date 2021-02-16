@@ -16,6 +16,7 @@ const Header = ({ siteTitle }) => (
           <li><Link to="https://airtable.com/shrLQOPwbu7IclErU">Participate</Link></li>
           <li><Link to="http://openjustice.be/wp-content/uploads/2020/11/pilot1.pdf">Guide</Link></li>
           <li><a href="mailto:team@openjustice.be">Contact</a></li>
+          <li><Link to="/admin" className="text-muted">Admin</Link></li>
         </ul>
       </div>
       <Bar />
