@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 
 import OJLogo from "../images/openjustice.png"
+import Bar from "../components/version_bar"
 
 const Header = ({ siteTitle }) => (
     <header>
@@ -15,15 +16,10 @@ const Header = ({ siteTitle }) => (
           <li><Link to="https://airtable.com/shrLQOPwbu7IclErU">Participate</Link></li>
           <li><Link to="http://openjustice.be/wp-content/uploads/2020/11/pilot1.pdf">Guide</Link></li>
           <li><a href="mailto:team@openjustice.be">Contact</a></li>
+          <li><Link to="/admin" className="text-muted">Admin</Link></li>
         </ul>
       </div>
-      <div className="construction" >
-        <div>
-          <div className="content">
-            <span><i className="icon-beaker" /> version 0.5.4 - early release</span>
-          </div>
-        </div>
-      </div>
+      <Bar />
     </header>
 )
 

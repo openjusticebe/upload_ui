@@ -21,7 +21,7 @@ const DocLinks = ( { docs, docDel } ) => {
                 <Col className="col-4">
                     <Form.Group controlId={ typeCtrl }>
                         <Form.Label>Type :</Form.Label>
-                        <Form.Control name={ typeId } data-id={ idx } as="select" className="kind">
+                        <Form.Control name={ typeId } data-id={ idx } as="select" className="kind" value={ doc.kind }>
                             <option value="eli" default>ELI (legislation)</option>
                             <option value="ecli">ECLI (jurisprudence)</option>
                         </Form.Control>
@@ -36,6 +36,7 @@ const DocLinks = ( { docs, docDel } ) => {
                             data-id={ idx }
                             className="link"
                             placeholder="ECLI:2012:(...)"
+                            value={ doc.link }
                         />
                     </Form.Group>
                 </Col>
@@ -50,6 +51,7 @@ const DocLinks = ( { docs, docDel } ) => {
                             data-id={ idx }
                             className="label"
                             placeholder="Décision du 31 février (...)"
+                            value={ doc.label }
                         />
                     </Form.Group>
                 </Col>

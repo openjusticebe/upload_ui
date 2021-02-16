@@ -2,7 +2,16 @@ export const CATEGORIES = [
     {'id':'other', name_fr:'Autre',name_nl:'Overige'},
     {'id':'covid', name_fr:'Covid-19',name_nl:'Covid-19'},
     {'id':'anatocism', name_fr:'Anatocisme',name_nl:'Anatocisme'},
-]
+];
+
+export const STATUS = [
+    {'id': 'new', name_fr:'Nouveau', name_nl:'Nieuw'},
+    {'id': 'public', name_fr:'Publié', name_nl:'Bepubliceerd'},
+    {'id': 'hidden', name_fr:'Caché', name_nl:'Onzicthbaar'},
+    {'id': 'flagged', name_fr:'Signalé', name_nl:'Flagged'},
+    {'id': 'deleted', name_fr:'Retiré', name_nl:'Verwijderd'},
+    {'id': 'boosted', name_fr:'Boosté', name_nl:'Boosted'},
+];
 
 export const YEARS = [
     2021,
@@ -157,4 +166,4 @@ export const COURTS = [
             {"id": "?????", "name_fr": "Ne sait pas", "name_nl": "Weet het niet"},
         ]
     },
-]
+];

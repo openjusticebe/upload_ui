@@ -1,4 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1280px
+) !default;
 
 $main_color: #2D4059;
 $sec_color : #ffb400;
@@ -36,14 +42,14 @@ header a:hover {
     color:#566df2;
 }
 
-header .construction {
+.construction {
     clear:both;
     background-color:#111;
     margin-bottom: 1.45rem;
     box-shadow: 0px 3px 7px #aaa;
     }
 
-header .construction > div {
+.construction > div {
     margin: 0 auto;
     max-width:960px;
     padding: .45rem 1rem;
@@ -51,7 +57,7 @@ header .construction > div {
     background-color:$sec_color;
 }
 
-header .construction .content {
+.construction .content {
     margin: 0;
     font-size:.8em;
     transform: skewX(30deg);
@@ -160,12 +166,20 @@ h2 {
 h3 {
     font-size:0.8em;
 }
-
 textarea {
     width:80%;
     min-height:40rem;
     padding:1rem;
 }
+
+textarea#main {
+    min-height:40rem;
+    padding:1rem;
+    font-size:.75rem;
+}
+
+#edit .form-control { font-size:.8rem; }
+#edit legend { font-size:1rem; }
 
 #anonOpts input {
     width: 100%;
