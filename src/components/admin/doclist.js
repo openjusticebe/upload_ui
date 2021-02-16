@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "gatsby"
+import LoadGif from '../../images/hourglass.gif';
+
 const options = {year:'2-digit', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:undefined}
 const disp_date = (date) => {
     if (date == undefined)
@@ -34,6 +36,13 @@ const DocList = ({list}) => (
             </tr>
         ))}
         </tbody>
+        { list.length == 0 &&
+        <tr>
+            <td colspan="4" className="bg-secondary">
+                <center><img className="loadgif" src={LoadGif} alt="loading" /></center>
+            </td>
+        </tr>
+        }
     </table>
 )
 
