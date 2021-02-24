@@ -1,4 +1,9 @@
 const placeholders = {
+    'email': [],
+    'RN': [],
+    'IBAN': [],
+    'company': [],
+    'phonenumber': [],
     'organization' : [
         'Acme Inc.',
         'Camion Int.',

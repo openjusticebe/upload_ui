@@ -191,7 +191,7 @@ class UploadUi extends React.Component {
         const query = {
             '_v' : 1,
             '_timestamp': Math.floor(Date.now() / 1000),
-            'algo_list' : [{'id':'anon_trazor', 'params':"{}"}],
+            'algo_list' : [{'id':'anon_trazor', 'params':"{}"}, {'id': 'anon_mask', 'params': "{}"}],
             'format': 'text',
             'encoding': 'utf8',
             'text': this.state.text,

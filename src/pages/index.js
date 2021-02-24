@@ -123,8 +123,10 @@ class IndexPage extends React.Component {
         if (id in newEntities)
             delete newEntities[id]
 
+        const parsed = parseText(newEntities, this.state.text_raw)
         this.setState({
-            entities : newEntities
+            entities : newEntities,
+            text_parsed : parsed
         });
     }
 
