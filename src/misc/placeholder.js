@@ -153,7 +153,6 @@ const PlaceholderManager = {
     store: {},
     list: {},
     get: function(type, id) {
-        console.log(type, id);
         if (id in this.store)
             return this.store[id];
 
