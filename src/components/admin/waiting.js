@@ -3,11 +3,11 @@ import { navigate } from "gatsby"
 import { getUser, isLoggedIn, logout, getAuthHeader } from "../../services/auth"
 import DocList from "./doclist"
 
-const Flagged = () => {
+const Waiting = () => {
     // Client-side Runtime Data Fetching
-    const [flaggedList, setFlaggedList] = useState(false);
+    const [hiddenList, setHiddenList] = useState(false);
     useEffect(() => {
-        fetch(`${process.env.GATSBY_DATA_API}/c/flagged`, {
+        fetch(`${process.env.GATSBY_DATA_API}/c/hidden`, {
             headers : {"Authorization" : getAuthHeader()}
         })
         .then(resp => { 
@@ -18,20 +18,23 @@ const Flagged = () => {
             }
         })
         .then(resultData => {
-            setFlaggedList(resultData);
+            setHiddenList(resultData);
         })
         .catch(error => {
             navigate(`/admin?auth=reset`);
         });
     }, []);
 
+
     return (
-        <div className="container m-3">
-            <h2 className="display-5 text-secondary">Documents Signalés</h2>
-            <p className="text-muted">Documents que les utilisateurs ont signalés pour diverses raisons</p>
-            <DocList list={ flaggedList } />
-        </div>
+        <>
+            <div className="container m-3">
+                <h2 className="display-5 text-secondary">Documents Cachés</h2>
+                <p className="text-muted">Documents qui sont inaccessibles en attente de traitement</p>
+                <DocList list={ hiddenList } />
+            </div>
+        </>
     );
 }
 
-export default Flagged;
+export default Waiting;

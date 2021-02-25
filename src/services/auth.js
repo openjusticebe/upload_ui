@@ -19,7 +19,7 @@ const setUser = user =>
 const setToken = token =>
     window.localStorage.setItem("gatsbyToken", JSON.stringify(token));
 
-export const handleLogin = async ({ username, password }, callback) => {
+export const handleLogin = async ({ username, password }, callback, error_callback) => {
     const payload = new URLSearchParams({
                 grant_type: '',
                 username: username,
@@ -38,9 +38,9 @@ export const handleLogin = async ({ username, password }, callback) => {
     })
     .then(resp => {
         if (resp.status === 200) {
-            return resp.json()
+            return resp.json();
         } else {
-            return Promise.reject("server")
+            error_callback();
         }
     })
     .then(token => {
@@ -57,7 +57,7 @@ export const handleLogin = async ({ username, password }, callback) => {
         callback();
     })
     .catch(err => {
-        return false
+        error_callback();
     });
 }
 
