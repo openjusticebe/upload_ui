@@ -11,20 +11,32 @@ class Login extends React.Component {
         username: ``,
         password: ``,
         waiting: false,
+        error: false,
     };
 
     handleUpdate = event => {
         this.setState({
           [event.target.name]: event.target.value,
+          error: false,
         });
     };
 
     handleSubmit = async event => {
         event.preventDefault();
         this.setState({ waiting: true });
-        handleLogin(this.state, () => {navigate(`/admin`)});
-    }
-    ;
+        handleLogin(
+            this.state,
+            () => {navigate(`/admin`)},
+            () => {this.handleError()}
+        );
+    };
+
+    handleError = () => {
+        this.setState({
+            error: true,
+            waiting: false,
+        })
+    };
 
     render() {
         if (isLoggedIn()) {
@@ -43,19 +55,27 @@ class Login extends React.Component {
                     >
                         <Row>
                             <Form.Label>
-                              Username
+                              Nom d'utilisateur
                               <Form.Control name="username" type="text" onChange={this.handleUpdate} />
                             </Form.Label>
                         </Row>
                         <Row>
                             <Form.Label>
-                              Password
+                              Mot de passe
                               <Form.Control name="password" type="password" onChange={this.handleUpdate} />
                             </Form.Label>
                         </Row>
                         <Row>
+                            { this.state.error ?
+                                <div className="bg-warning text-dark p-3">
+                                    Erreur de connexion
+                                </div>
+                                : null
+                            }
+                        </Row>
+                        <Row>
                             <div className="row d-flex justify-content-center mt-4">
-                                <Button variant="success" type="submit" className="p-1">
+                                <Button variant="success" type="submit" className="p-2">
                                     <i className="icon-user pr-2" />
                                     Se connecter
                                     {this.state.waiting && <img className="loadgif" src={LoadGif} alt="loading" />}

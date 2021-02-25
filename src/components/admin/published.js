@@ -5,19 +5,24 @@ import DocList from "./doclist"
 
 const Published = () => {
     // Client-side Runtime Data Fetching
-    const [reviewList, setReviewList] = useState([]);
+    const [reviewList, setReviewList] = useState(false);
     useEffect(() => {
         fetch(`${process.env.GATSBY_DATA_API}/c/public`, {
             headers : {"Authorization" : getAuthHeader()}
         })
-            .then(response => response.json())
-            .then(resultData => {
-                setReviewList(resultData);
-            })
-            .catch(error => {
-                setReviewList([]);
-                navigate(`/admin?auth=reset`);
-            });
+        .then(resp => { 
+            if (resp.status === 200) {
+                return resp.json();
+            } else {
+                throw new Error('Bad Return Status')
+            }
+        })
+        .then(resultData => {
+            setReviewList(resultData);
+        })
+        .catch(error => {
+            navigate(`/admin?auth=reset`);
+        });
     }, []);
 
     return (

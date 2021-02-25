@@ -62,7 +62,6 @@ const Edit = ({docid}) => {
     }, []);
 
     useEffect(() => {
-        console.log(saved);
         if (saved === 'true') {
             NotificationManager.success('Modifications sauvegardées', 'Info');
         }

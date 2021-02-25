@@ -22,7 +22,7 @@ const DocList = ({list}) => (
         </tr>
         </thead>
         <tbody>
-        { list.map((item) => (
+        { list && list.map((item) => (
             <tr key={ item.id }>
                 <td>
                     <Link to={"/admin/edit/" + item.id}>
@@ -35,14 +35,14 @@ const DocList = ({list}) => (
                 <td className="text-muted">{ disp_date(item.date_updated) }</td>
             </tr>
         ))}
-        </tbody>
-        { list.length == 0 &&
+        { list === false &&
         <tr>
-            <td colspan="4" className="bg-secondary">
+            <td colSpan="4" className="bg-secondary">
                 <center><img className="loadgif" src={LoadGif} alt="loading" /></center>
             </td>
         </tr>
         }
+        </tbody>
     </table>
 )
 
