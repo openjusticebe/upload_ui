@@ -13,6 +13,14 @@ export const getAuthHeader = () => {
     return {};
 }
 
+export const getToken = () => {
+    if (isBrowser() && window.localStorage.getItem("gatsbyToken")) {
+        const token = JSON.parse(window.localStorage.getItem("gatsbyToken"));
+        return token.access_token;
+    }
+    return '';
+}
+
 const setUser = user =>
     window.localStorage.setItem("gatsbyUser", JSON.stringify(user));
 
