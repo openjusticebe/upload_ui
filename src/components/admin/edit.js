@@ -28,6 +28,7 @@ const Edit = ({docid}) => {
     const [errors, setErrors] = useState(false);
     const [validated, setValidated] = useState(false);
     const [labelSuggestions, setLabelSuggestions] = useState([]);
+    const [userData, setUserData] = useState([]);
     const docLinkBlank = {kind:'eli', link:'', label:''};
     const [saved, setSaved] = useQueryParam("saved", BoolParam);
     var labelInput = '';
@@ -58,6 +59,10 @@ const Edit = ({docid}) => {
                     'hash': rd.hash,
                     'status': rd.status,
                 });
+                setUserData({
+                    'mail': rd.usermail,
+                    'name': rd.username,
+                })
             }) // set data for the number of stars
     }, []);
 
@@ -212,6 +217,9 @@ const Edit = ({docid}) => {
                 <div className="col-12 col-lg-7 mb-5 shadow rounded border my-3 p-3">
                     <Form.Group controlId="myform.text">
                     <h2><i className="icon-eye" />Edition document <b>{ docid }</b></h2>
+                    <div className="text-muted">
+                        Dépositaire: { userData.name } - <a href={ "mailto:" + userData.mail }>{ userData.mail }</a>
+                    </div>
                     <div className="row justify-content-center p-3">
                         <Form.Control
                             id="main"
@@ -221,6 +229,9 @@ const Edit = ({docid}) => {
                             value ={ docData['text'] }
                             />
                     </div>
+                    <a href={ `${process.env.GATSBY_DATA_API}/hash/${docData.hash}` } className="btn btn-secondary" target="_blank">
+                        Visualiser le document dans sont état actuel
+                    </a>
                     </Form.Group>
                 </div>
                 <div className="col-12 col-lg-5 mb-5 shadow rounded border my-3">
@@ -325,9 +336,6 @@ const Edit = ({docid}) => {
                         </ul>
                     </Form.Group>
                     </fieldset>
-                    <a href={ `${process.env.GATSBY_DATA_API}/hash/${docData.hash}` } className="btn btn-secondary" target="_blank">
-                        Visualiser le document dans sont état actuel
-                    </a>
                 </div>
             </div>
             <div className="col-12 mb-5 shadow rounded border my-3">

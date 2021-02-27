@@ -179,6 +179,8 @@ class IndexPage extends React.Component {
                                 <br/><a href="https://airtable.com/shrLQOPwbu7IclErU"><i className="icon-user" />Inscription au projet pilote</a>
                                 </p>
                                 <h2><i className="icon-database" />Chargement</h2>
+                                <i className="icon-wallet" />
+                                <a href="https://pad.openjustice.be/s/kwZheAXhI#" target="_blank">Manuel d'utilisation</a><br />
                                 Une fois envoyé, vous recevez immédiatement un lien personnel permettant le partage
                                 du document.
                                 <br/>Après validation par OpenJustice.be, le document sera accessible publiquement.
@@ -196,6 +198,8 @@ class IndexPage extends React.Component {
                                 <br/><a href="https://airtable.com/shrLQOPwbu7IclErU"><i className="icon-user" />Proefproject inschrijving</a>
                                 </p>
                                 <h2><i className="icon-database" />Upload</h2>
+                                <i className="icon-wallet" />
+                                <a href="https://pad.openjustice.be/s/wQQ_aoyUQ#" target="_blank">Gebruikersaanwijzing</a><br />
                                 Na verzending ontvang je direct een persoonlijke link om het document te delen.
                                 <br/>Na validatie door OpenJustice.be zal het document openbaar toegankelijk zijn.
                                 <br/><b>Voor het verzenden worden er geen gegevens geregistreerd of gelogd.</b>
