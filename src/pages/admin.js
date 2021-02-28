@@ -1,5 +1,6 @@
 import React, {useState, useEffect } from "react"
 import { Router } from "@reach/router"
+import Layout from "../components/admin/layout";
 import { navigate, Link } from "gatsby"
 import Login from "../components/admin/login";
 import PrivateRoute from "../components/privateRoute"
@@ -14,7 +15,6 @@ import Bar from "../components/version_bar"
 import { useQueryParam, StringParam } from "use-query-params";
 import 'react-notifications/lib/notifications.css';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-
 const Unsecure = () => 
     (<div className="container m-3">
         <h2>Utilisateur deconnecté</h2>
@@ -67,38 +67,7 @@ const Admin = () => {
     }, [isLoggedIn()]);
 
     return (
-        <div>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <a className="navbar-brand" href="#">Outil/Admin</a>
-              <div className="">
-                  <ul className="navbar-nav mr-auto">
-                      <li className="nav-item"><Link className="nav-link" to="/">Accueil</Link></li>
-                      <li className="nav-item"><Link className="nav-link" to="/admin">Admin</Link></li>
-                      { isLoggedIn() ? (
-                          <>
-                              <li className="nav-item"><Link className="nav-link" to="/admin/review">Nouveaux</Link></li>
-                              <li className="nav-item"><Link className="nav-link" to="/admin/waiting">En attente</Link></li>
-                              <li className="nav-item"><Link className="nav-link" to="/admin/published">Publiés</Link></li>
-                              <li className="nav-item"><Link className="nav-link" to="/admin/flagged">Signalés</Link></li>
-                              <li className="nav-item"><Link className="nav-link" to="/admin/deleted">Corbeille</Link></li>
-                          </>
-                          ) : (
-                          <li className="nav-item"><Link className="nav-link" to="/admin/login">Login</Link></li>
-                          )
-                      }
-                      {isLoggedIn() ? (
-                        <a href="/" className="nav-link" onClick={event => {
-                            event.preventDefault()
-                            logout(() => navigate(`/admin?auth=logout`))
-                          }}
-                        >
-                          Logout
-                        </a>
-                      ) : null}
-                  </ul>
-              </div>
-          </nav>
-          <Bar />
+        <Layout>
           <Router>
               { isLoggedIn() ? (<Secure path="/admin" />) : ( <Unsecure path="/admin" /> )}
               <PrivateRoute path="/admin/review" component={Review} />
@@ -110,7 +79,7 @@ const Admin = () => {
               { isLoggedIn() ? null : (<Login path="/admin/login" />) }
           </Router>
           <NotificationContainer/>
-        </div>
+        </Layout>
 )};
 
 export default Admin
