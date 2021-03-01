@@ -53,6 +53,11 @@ const AnonymiseUi = (props) => {
     return (
         <div className="col-12 mb-5 shadow rounded border py-3 my-3">
             <h2><i className="icon-eye" /> Vérifier anonimisation / Anonimisatie nakijken</h2>
+            <div className="mb-3 mb-3">
+                Lien vers la documentation, Link naar de documentatie :<br/>
+                <a className="ml-4" href="https://pad.openjustice.be/s/kwZheAXhI#Quelles-sont-les-donn%C3%A9%C3%A9s-%C3%A0-occulter-" target="_blank">Quelles sont les donnéés à occulter ?</a><br/>
+                <a className="ml-4" href="https://pad.openjustice.be/s/wQQ_aoyUQ#Welke-gegevens-moeten-worden-verborgen-" target="_blank">Welke gegevens moeten worden verborgen ?</a><br/>
+            </div>
             <div className="row justify-content-center">
                 <EntityForm
                     entities={ props.entities }

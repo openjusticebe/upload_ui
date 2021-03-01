@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from "react"
 import { navigate } from "gatsby";
-import { getUser, isLoggedIn, logout, getAuthHeader } from "../../services/auth"
+import { getUser, isLoggedIn, logout, getAuthHeader, getToken } from "../../services/auth"
 import DocLinks from "../doclink";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -28,6 +28,8 @@ const Edit = ({docid}) => {
     const [errors, setErrors] = useState(false);
     const [validated, setValidated] = useState(false);
     const [labelSuggestions, setLabelSuggestions] = useState([]);
+    const [userData, setUserData] = useState([]);
+    const [viewData, setViewData] = useState([]);
     const docLinkBlank = {kind:'eli', link:'', label:''};
     const [saved, setSaved] = useQueryParam("saved", BoolParam);
     var labelInput = '';
@@ -58,6 +60,14 @@ const Edit = ({docid}) => {
                     'hash': rd.hash,
                     'status': rd.status,
                 });
+                setUserData({
+                    'mail': rd.usermail,
+                    'name': rd.username,
+                })
+                setViewData({
+                    'hash': rd.vhash,
+                    'public': rd.vpublic,
+                })
             }) // set data for the number of stars
     }, []);
 
@@ -212,6 +222,12 @@ const Edit = ({docid}) => {
                 <div className="col-12 col-lg-7 mb-5 shadow rounded border my-3 p-3">
                     <Form.Group controlId="myform.text">
                     <h2><i className="icon-eye" />Edition document <b>{ docid }</b></h2>
+                    <div className="text-muted">
+                        Dépositaire: { userData.name } - <a href={ "mailto:" + userData.mail }>{ userData.mail }</a>
+                    </div>
+                    <div className="text-muted">
+                        Vues lien privé : { viewData.hash } - publication : { viewData.public }
+                    </div>
                     <div className="row justify-content-center p-3">
                         <Form.Control
                             id="main"
@@ -221,6 +237,9 @@ const Edit = ({docid}) => {
                             value ={ docData['text'] }
                             />
                     </div>
+                    <a href={ `${process.env.GATSBY_DATA_API}/hash/${docData.hash}?t=${getToken()}` } className="btn btn-secondary" target="_blank">
+                        Visualiser le document dans sont état actuel
+                    </a>
                     </Form.Group>
                 </div>
                 <div className="col-12 col-lg-5 mb-5 shadow rounded border my-3">
@@ -325,9 +344,6 @@ const Edit = ({docid}) => {
                         </ul>
                     </Form.Group>
                     </fieldset>
-                    <a href={ `${process.env.GATSBY_DATA_API}/hash/${docData.hash}` } className="btn btn-secondary" target="_blank">
-                        Visualiser le document dans sont état actuel
-                    </a>
                 </div>
             </div>
             <div className="col-12 mb-5 shadow rounded border my-3">
@@ -367,11 +383,11 @@ const Edit = ({docid}) => {
                           { STATUS.map( stat => (<option key={ stat.id } value={ stat.id }>{ stat.name_fr }</option>) ) }
                         </Form.Control>
                     </Form.Group>
-                    { (docData['status'] == 'new') && <div className="bg-secondary text-white col-12 p-3">Nouveau : le document reste dans la collection des documents à traiter</div> }
-                    { (docData['status'] == 'public') && <div className="bg-success text-white col-12 p-3">Publié : Le document sera publiquement accessible et indexé</div> }
-                    { (docData['status'] == 'flagged') && <div className="bg-primary text-white col-12 p-3">Signalé : Le document ne sera plus publié, et repris dans la collection des documents signalés</div> }
-                    { (docData['status'] == 'hidden') && <div className="bg-dark text-white col-12 p-3">Caché : Le document ne sera plus publié, et repris dans la collection des documents cachés</div> }
-                    { (docData['status'] == 'deleted') && <div className="bg-danger text-white col-12 p-3">Retiré : Le document sera retiré et mis dans la corbeille, en attendant sa suppression</div> }
+                    { (docData['status'] === 'new') && <div className="bg-secondary text-white col-12 p-3">Nouveau : le document reste dans la collection des documents à traiter</div> }
+                    { (docData['status'] === 'public') && <div className="bg-success text-white col-12 p-3">Publié : Le document sera publiquement accessible et indexé</div> }
+                    { (docData['status'] === 'flagged') && <div className="bg-primary text-white col-12 p-3">Signalé : Le document ne sera plus publié, et repris dans la collection des documents signalés</div> }
+                    { (docData['status'] === 'hidden') && <div className="bg-dark text-white col-12 p-3">Caché : Le document ne sera plus publié, et repris dans la collection des documents cachés</div> }
+                    { (docData['status'] === 'deleted') && <div className="bg-danger text-white col-12 p-3">Retiré : Le document sera retiré et mis dans la corbeille, en attendant sa suppression</div> }
                     { errors && <div className="log col-12 p-3" dangerouslySetInnerHTML={ errors } /> }
                     <div className="row justify-content-center mt-4">
                         <div>
