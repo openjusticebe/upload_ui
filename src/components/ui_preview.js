@@ -21,6 +21,11 @@ const PreviewUi = ()  => {
             <a href={ `${process.env.GATSBY_DATA_API}/hash/${hash}` } rel="no-follow">
                 { `${process.env.GATSBY_DATA_API}/hash/${hash}` }
             </a>
+
+            <p>Fichier PDF / PDF Bestand</p>
+            <a href={ `${process.env.GATSBY_DATA_API}/d/pdf/${hash}` } rel="no-follow">
+                { `${process.env.GATSBY_DATA_API}/d/pdf/${hash}` }
+            </a>
         </div>
     )
 }
