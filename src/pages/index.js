@@ -174,7 +174,7 @@ class IndexPage extends React.Component {
                                 <h2><i className="icon-key" />Inscription</h2>
                                 <p>
                                 Le dépôt de documents ne peut se faire qu'après inscription et réception
-                                d'une clé personelle, sous réserve d'acceptation par l'ASBL et en fonction
+                                d'une clé personnelle, sous réserve d'acceptation par l'ASBL et en fonction
                                 de l'avancement de l'expérimentation.
                                 <br/><a href="https://airtable.com/shrLQOPwbu7IclErU"><i className="icon-user" />Inscription au projet pilote</a>
                                 </p>
