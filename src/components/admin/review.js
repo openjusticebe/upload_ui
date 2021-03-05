@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from "react"
-import { getUser, isLoggedIn, logout, getAuthHeader } from "../../services/auth"
+import { getAuthHeader } from "../../services/auth"
 import DocList from "./doclist"
 import { navigate } from "gatsby"
 

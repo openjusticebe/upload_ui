@@ -2,7 +2,7 @@ import React from "react"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { navigate } from "gatsby"
-import { Row, Col} from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { handleLogin, isLoggedIn } from "../../services/auth"
 import LoadGif from '../../images/hourglass.gif';
 

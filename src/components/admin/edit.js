@@ -1,16 +1,15 @@
 import React, {useState, useEffect } from "react"
 import { navigate } from "gatsby";
-import { getUser, isLoggedIn, logout, getAuthHeader, getToken } from "../../services/auth"
+import { getAuthHeader, getToken } from "../../services/auth"
 import DocLinks from "../doclink";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col} from 'react-bootstrap';
 import {YEARS, COURTS, STATUS} from '../../misc/data';
-import LoadGif from '../../images/hourglass.gif';
 import { useQueryParam, BoolParam } from "use-query-params";
 
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationManager} from 'react-notifications';
 
 
 const DefaultState = {

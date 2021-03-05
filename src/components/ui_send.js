@@ -121,7 +121,7 @@ class SendUi extends React.Component {
     labelsKeyDown(event) {
         // Abort running query, if any
 
-        if (this.labelController != false)
+        if (this.labelController !== false)
             this.labelController.abort();
         this.labelController = new AbortController();
         const val = event.target.value;

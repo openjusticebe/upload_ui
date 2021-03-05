@@ -1,17 +1,16 @@
-import React, {useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/admin/layout";
 import { navigate, Link } from "gatsby"
 import Login from "../components/admin/login";
 import PrivateRoute from "../components/privateRoute"
-import { getUser, isLoggedIn, logout, getAuthHeader } from "../services/auth"
+import { getUser, isLoggedIn, logout } from "../services/auth"
 import Review from "../components/admin/review"
 import Published from "../components/admin/published"
 import Flagged from "../components/admin/flagged"
 import Deleted from "../components/admin/deleted"
 import Waiting from "../components/admin/waiting"
 import Edit from "../components/admin/edit"
-import Bar from "../components/version_bar"
 import { useQueryParam, StringParam } from "use-query-params";
 import 'react-notifications/lib/notifications.css';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -39,8 +38,8 @@ const Secure = () =>  {
         <div className="container pt-3">
             <h2>Documentation et aides</h2>
             <ul className="list-group">
-                <li><a href="https://pad.openjustice.be/s/Y05nO9Ifq#" target="_blank">Documentation administration & modération</a></li>
-                <li><a href="https://docs.google.com/document/d/1AHMyNr3Pu-4q4cLn4ZDxsL-GJi_hJWmcUdVBnMoVme0/edit?usp=sharing" target="_blank">Document google notes webinaire</a></li>
+                <li><a rel="noreferrer" href="https://pad.openjustice.be/s/Y05nO9Ifq#" target="_blank">Documentation administration & modération</a></li>
+                <li><a rel="noreferrer" href="https://docs.google.com/document/d/1AHMyNr3Pu-4q4cLn4ZDxsL-GJi_hJWmcUdVBnMoVme0/edit?usp=sharing" target="_blank">Document google notes webinaire</a></li>
             </ul>
         </div>
     </div>);
@@ -54,6 +53,8 @@ const Admin = () => {
         switch(auth) {
             case 'reset':
                 logout(() => navigate(`/admin?auth=logout`));
+                break;
+            default:
                 break;
         }
         setAuth('ok');

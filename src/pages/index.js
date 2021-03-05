@@ -2,18 +2,13 @@ import React from "react";
 import { graphql } from "gatsby";
 
 import Layout from "../components/layout";
-import Editor from "../components/editor";
 // import Image from "../components/image";
 import SEO from "../components/seo";
 import "../styles/style.scss";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import StepWizard from 'react-step-wizard';
 
 import UploadUi from "../components/ui_upload";
 import AnonymiseUi from "../components/ui_anonymise";
 import SendUi from "../components/ui_send";
-import NavSteps from "../components/nav_steps";
 
 import PlaceholderManager from "../misc/placeholder.js";
 import parseText from "../misc/parser.js";
@@ -40,7 +35,6 @@ class IndexPage extends React.Component {
         super(props);
         this.state = {
             uploaded:  'Copier-coller / Copy-Paste',
-            entities : {},
             text_raw:  '(Zone résultat)',
             text_parsed: '',
             entities: {},
@@ -137,7 +131,7 @@ class IndexPage extends React.Component {
         let newEntities = this.state.entities;
         let field = event.target.name;
         if (id in newEntities) {
-            if (field == 'text')
+            if (field === 'text')
                 newEntities[id][field] = event.target.value.split('; ');
             else {
                 newEntities[id][field] = event.target.value;
@@ -180,7 +174,7 @@ class IndexPage extends React.Component {
                                 </p>
                                 <h2><i className="icon-database" />Chargement</h2>
                                 <i className="icon-wallet" />
-                                <a href="https://pad.openjustice.be/s/kwZheAXhI#" target="_blank">Manuel d'utilisation</a><br />
+                                <a href="https://pad.openjustice.be/s/kwZheAXhI#" target="_blank" rel="noreferrer">Manuel d'utilisation</a><br />
                                 Une fois envoyé, vous recevez immédiatement un lien personnel permettant le partage
                                 du document.
                                 <br/>Après validation par OpenJustice.be, le document sera accessible publiquement.
@@ -199,7 +193,7 @@ class IndexPage extends React.Component {
                                 </p>
                                 <h2><i className="icon-database" />Upload</h2>
                                 <i className="icon-wallet" />
-                                <a href="https://pad.openjustice.be/s/wQQ_aoyUQ#" target="_blank">Gebruikersaanwijzing</a><br />
+                                <a href="https://pad.openjustice.be/s/wQQ_aoyUQ#" target="_blank" rel="noreferrer">Gebruikersaanwijzing</a><br />
                                 Na verzending ontvang je direct een persoonlijke link om het document te delen.
                                 <br/>Na validatie door OpenJustice.be zal het document openbaar toegankelijk zijn.
                                 <br/><b>Voor het verzenden worden er geen gegevens geregistreerd of gelogd.</b>
