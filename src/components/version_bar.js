@@ -1,6 +1,6 @@
 import React  from "react"
 
-const Version = "0.7.4"
+const Version = "0.7.5"
 
 const Bar = () =>
     <div className="construction" >
