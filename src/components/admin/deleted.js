@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from "react"
 import { navigate } from "gatsby"
-import { getUser, isLoggedIn, logout, getAuthHeader } from "../../services/auth"
+import { getAuthHeader } from "../../services/auth"
 import DocList from "./doclist"
 
 const Deleted = () => {

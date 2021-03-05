@@ -9,7 +9,7 @@ const Header = ({ siteTitle }) => (
     <header>
       <div className="hero">
         <Link to="https://openjustice.be">
-          <img src={ OJLogo } style={{ "width": 190, "height": 'auto' }}/>
+          <img src={ OJLogo } style={{ "width": 190, "height": 'auto' }} alt="OpenJustice.be"/>
         </Link>
         <ul className="navbar-nav mr-auto" style={{ "width" : "auto", "justifyContent": "start"}}>
           <li className="nav-item mx-3"><Link className="nav-link" to="https://openjustice.be">Information</Link></li>

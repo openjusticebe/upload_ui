@@ -1,10 +1,7 @@
-import React, { useState, useEffect} from "react";
+import React  from "react";
 import {
   useQueryParams,
   StringParam,
-  NumberParam,
-  ArrayParam,
-  withDefault,
 } from 'use-query-params';
 
 const PreviewUi = ()  => {

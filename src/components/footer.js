@@ -1,5 +1,3 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
 import React from "react"
 
 const Footer = ({ siteTitle }) => (
@@ -16,7 +14,6 @@ const Footer = ({ siteTitle }) => (
              <br />
             Source code available at <a
                 href="https://github.com/openjusticebe/"
-                target="_blank"
             >GitHub</a>
             — 
             Licensed with <a

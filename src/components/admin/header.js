@@ -1,7 +1,7 @@
 import { navigate, Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
-import { getUser, isLoggedIn, logout, getAuthHeader } from "../../services/auth"
+import { isLoggedIn, logout } from "../../services/auth"
 
 import OJLogo from "../../images/openjustice_bw.png"
 import Bar from "../version_bar"
@@ -10,7 +10,7 @@ const Header = ({ siteTitle }) => (
     <header>
       <div className="hero">
         <Link to="/admin">
-          <img src={ OJLogo } style={{ "width": 190, "height": 'auto' }}/>
+          <img src={ OJLogo } style={{ "width": 190, "height": 'auto' }} alt="OpenJustice.be Admin"/>
         </Link>
         <ul className="navbar-nav mr-auto" style={{ "width" : "auto", "justifyContent": "start"}}>
           { isLoggedIn() ? (

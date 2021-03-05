@@ -1,18 +1,13 @@
-import React, { useState, useEffect} from "react";
-import { graphql, Link } from "gatsby";
+import React  from "react";
+import { Link } from "gatsby";
 
 import Layout from "../components/layout";
-import Editor from "../components/editor";
 import clapgif from "../images/clapclap.gif";
 import SEO from "../components/seo";
 import "../styles/style.scss";
 import PreviewUi from "../components/ui_preview";
 
 class SuccessPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Layout>
@@ -24,7 +19,7 @@ class SuccessPage extends React.Component {
                             Votre document attend désormais vérification et validation avant d'être intégré dans la banque de données publique.
                         </div>
                         <div className="col-2">
-                            <img src={ clapgif} />
+                            <img src={ clapgif} alt="bravo !"/>
                         </div>
                         <div className="col-5">
                             <h2>Super !</h2>

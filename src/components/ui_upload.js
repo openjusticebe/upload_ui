@@ -136,7 +136,7 @@ class UploadUi extends React.Component {
     handleTextPage(page, content) {
         const curPage = this.state.page_current;
         const pstate = [...this.state.parse_state, `Page ${page} reçue / Pagina ${page} ontvangen`]
-        if (page == curPage + 1) {
+        if (page === curPage + 1) {
             // All good, this is the next page
             let newTextArray = [this.state.text, content];
             let newPage = page;
@@ -146,7 +146,7 @@ class UploadUi extends React.Component {
             if (buffer.length > 0) {
                 buffer.sort((a, b) => a.p - b.p);
                 buffer.forEach(el => {
-                    if (el.p == newPage + 1) {
+                    if (el.p === newPage + 1) {
                         newTextArray.push(el.t);
                         newPage = el.p;
                     } else {
