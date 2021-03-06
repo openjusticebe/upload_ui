@@ -36,7 +36,7 @@ export const handleLogin = async ({ username, password }, callback, error_callba
                 client_id: '',
                 client_secret: '',
     })
-    return fetch(`${process.env.GATSBY_AUTH_API}/token`, {
+    return fetch(`${process.env.GATSBY_USER_API}/token`, {
         method : `post`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -53,7 +53,7 @@ export const handleLogin = async ({ username, password }, callback, error_callba
     })
     .then(token => {
         setToken(token);
-        return fetch(`${process.env.GATSBY_DATA_API}/u/me`, {
+        return fetch(`${process.env.GATSBY_USER_API}/u/me`, {
             headers: {
                 "Authorization" : `${token.token_type} ${token.access_token}`
             }
