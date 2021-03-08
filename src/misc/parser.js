@@ -17,7 +17,7 @@ const parseText = (entities, raw) => {
     }
 
     // Add new page indicator
-    raw = raw.replace(/\f([^\n]+)/, '--- $1 ---');
+    raw = raw.replace(/\f([^\n]*)/, '--- $1 ---');
     return raw;
 }
 
