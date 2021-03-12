@@ -79,3 +79,19 @@ export const logout = callback => {
   setUser({})
   callback()
 }
+
+export const logcheck = callback => {
+    fetch(`${process.env.GATSBY_USER_API}/u/me`, {
+        headers: {
+            "Authorization" : getAuthHeader()
+        }
+    }).then(resp => {
+        if (resp.status === 200) {
+            return;
+        } else {
+            logout(callback);
+        }
+    }).catch(err => {
+        logout(callback);
+    });
+}

@@ -1,8 +1,10 @@
 const parseText = (entities, raw) => {
+    const wh = new RegExp(/\s+/, "gi");
     for (let e_key in entities) {
         let e = entities[e_key];
         for (let index = 0; index < e.text.length; index++) {
-            let re = new RegExp(e.text[index], "gi");
+            let txt  = e.text[index].replace(wh, '\\s+');
+            let re = new RegExp(txt, "gi");
             raw = raw
                 // .replaceAll(/`qu'(?=${w})`/g, 'que ')
                 // .replaceAll(`d'(?=${w})`, 'de ')

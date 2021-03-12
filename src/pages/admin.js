@@ -4,7 +4,7 @@ import Layout from "../components/admin/layout";
 import { navigate, Link } from "gatsby"
 import Login from "../components/admin/login";
 import PrivateRoute from "../components/privateRoute"
-import { getUser, isLoggedIn, logout } from "../services/auth"
+import { getUser, isLoggedIn, logout, logcheck } from "../services/auth"
 import Review from "../components/admin/review"
 import Published from "../components/admin/published"
 import Flagged from "../components/admin/flagged"
@@ -17,7 +17,7 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 const Unsecure = () => 
     (<div className="container m-3">
         <h2>Utilisateur deconnecté</h2>
-        <Link className="btn btn-primary" to="/admin/login">Se connecter</Link>
+        <Link className="btn btn-primary" to="/admin/login?auth=login">Se connecter</Link>
     </div>);
 
 
@@ -55,6 +55,10 @@ const Admin = () => {
                 logout(() => navigate(`/admin?auth=logout`));
                 break;
             default:
+                if (isLoggedIn())
+                    {
+                    logcheck(() => navigate(`/admin?auth=reset`));
+                    }
                 break;
         }
         setAuth('ok');
