@@ -28,6 +28,7 @@ const setToken = token =>
     window.localStorage.setItem("gatsbyToken", JSON.stringify(token));
 
 export const handleLogin = async ({ username, password }, callback, error_callback) => {
+    // comment
     const payload = new URLSearchParams({
                 grant_type: '',
                 username: username,
