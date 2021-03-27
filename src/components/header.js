@@ -9,7 +9,7 @@ import UserMenu from "../components/nav_profile"
 const Header = ({ siteTitle }) => (
     <header>
       <div className="hero">
-        <Link to="https://openjustice.be">
+        <Link to="/">
           <img src={ OJLogo } style={{ "width": 190, "height": 'auto' }} alt="OpenJustice.be"/>
         </Link>
         <nav class="navbar navbar-expand-lg">

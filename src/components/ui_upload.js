@@ -272,7 +272,7 @@ class UploadUi extends React.Component {
                         update={ this.state.uploaded }
                         onChange={ this.handleTextChange }
                         value ={ this.state.text }
-                        className="col-10"
+                        className="col-10 bigtext"
                         />
                 </div>
                 <div className="row justify-content-center mt-3">
