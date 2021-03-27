@@ -29,17 +29,13 @@ header .hero img {
 header .hero ul {
     list-style-type:none;
     display:flex;
-    flex-direction:row;
-    justify-content:space-around;
     width:30rem;
 }
 
 header a {
-    color:#000;
 }
 
 header a:hover {
-    color:#566df2;
 }
 
 .construction {
@@ -88,6 +84,12 @@ body {
 
 .border {
     background-color: $blank;
+}
+
+#username {
+    position:absolute;
+    top:3px;
+    right:2px;
 }
 
 .info {
