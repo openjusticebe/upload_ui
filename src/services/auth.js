@@ -102,24 +102,16 @@ export const handleSubscribe = async ({
         if (resp.status === 200) {
             return resp.json();
         } else {
-            error_callback();
+            error_callback('Bad account creation response');
         }
     })
-    .then(token => {
-        setToken(token);
-        return fetch(`${process.env.GATSBY_USER_API}/u/me`, {
-            headers: {
-                "Authorization" : `${token.token_type} ${token.access_token}`
-            }
-        });
-    })
-    .then(resp => resp.json())
     .then(data => {
-        setUser(data);
-        callback();
+        console.log(data);
+        return handleLogin({username: email, password: password}, callback, error_callback);
     })
     .catch(err => {
-        error_callback();
+        console.log(err);
+        error_callback('Catched error');
     });
 }
 

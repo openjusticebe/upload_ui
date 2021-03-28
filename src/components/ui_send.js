@@ -6,6 +6,7 @@ import { Row, Col} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../images/hourglass.gif';
 import {YEARS, COURTS} from '../misc/data';
+import { isLoggedIn, getAuthHeader } from "../services/auth"
 
 class SendUi extends React.Component {
 
@@ -93,15 +94,20 @@ class SendUi extends React.Component {
             'user_key' : this.state.userkey,
             'doc_links' : this.state.docLinks,
         }
+        const headers_obj =  {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+        }
+
+        if (isLoggedIn()) {
+            headers_obj["Authorization"] = getAuthHeader()
+        }
 
         // Get api response
         // fetch(`https://anon-api.openjustice.be/run`, {
         fetch(`${process.env.GATSBY_DATA_API}/create`, {
             method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: headers_obj,
             body: JSON.stringify(query),
             }).then(response => response.json())
            .then(resultData => {
@@ -303,6 +309,7 @@ class SendUi extends React.Component {
                             </Form.Group>
                         </fieldset>
 
+                        { isLoggedIn() ? null : ( 
                         <fieldset className="border border-secondary p-3 mt-4 mb-4">
                             <legend className="text-muted">
                                 <i className="icon-cog pr-2" />
@@ -340,9 +347,8 @@ class SendUi extends React.Component {
                                     Voer uw persoonlijke sleutel in
                                 </Form.Control.Feedback>
                             </Form.Group>
-
-
                         </fieldset>
+                        )}
                         { !this.state.error &&
                         <p>La dernière étape / de laatste stap : </p>
                         }

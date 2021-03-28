@@ -21,26 +21,37 @@ const EmptyForm = {
 const SubscribeForm = () => {
 
     const [validated, setValidated] = useState(false);
+    const [waiting, setWaiting] = useState(false);
     const [formData, setFormData] = useState(EmptyForm);
 
     const handleSubmit = async event => {
+        setWaiting(true);
         event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
             setValidated(true);
+            setWaiting(false);
             return;
         }
         handleSubscribe(
             formData,
-            () => {navigate(`/`)},
-            () => {handleError()}
+            () => {
+                navigate(`/?auth=subscribed`);
+                NotificationManager.info('User created', 'Info');
+            },
+            (msg=false) => {handleError(msg)}
         )
     };
 
-    const handleError = () => {
-        NotificationManager.error('Subscription error', 'Error');
+    const handleError = (msg) => {
+        setWaiting(false);
+        if (msg) {
+            NotificationManager.error(`Subscription error ${msg}`, 'Error');
+        } else {
+            NotificationManager.error('Subscription error', 'Error');
+        }
     }
 
     const handleChange = async event => {
@@ -132,6 +143,7 @@ const SubscribeForm = () => {
 
                 <Button variant="primary" type="submit">
                     Envoyer / Verzenden
+                    {waiting && <img className="loadgif" src={LoadGif} alt="loading" />}
                 </Button>
             </Form>
         </div>
