@@ -5,6 +5,7 @@ import { Row, Col} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../../images/hourglass.gif';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { handleSubscribe } from "../../services/auth"
 
 const EmptyForm = {
     'fname': null,
@@ -31,8 +32,17 @@ const SubscribeForm = () => {
             setValidated(true);
             return;
         }
-        NotificationManager.info('Nice button init ?', 'Info');
+        handleSubscribe(
+            formData,
+            () => {navigate(`/`)},
+            () => {handleError()}
+        )
     };
+
+    const handleError = () => {
+        NotificationManager.error('Subscription error', 'Error');
+    }
+
     const handleChange = async event => {
         const name = event.target.id;
         let fdata = formData;
@@ -43,7 +53,6 @@ const SubscribeForm = () => {
             fdata[name] = event.target.value;
         }
         setFormData(fdata);
-        console.log(fdata);
     }
 
     return (

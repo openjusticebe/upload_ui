@@ -36,7 +36,7 @@ export const handleLogin = async ({ username, password }, callback, error_callba
                 scope: '',
                 client_id: '',
                 client_secret: '',
-    })
+    });
     return fetch(`${process.env.GATSBY_USER_API}/token`, {
         method : `post`,
         headers: {
@@ -69,6 +69,60 @@ export const handleLogin = async ({ username, password }, callback, error_callba
         error_callback();
     });
 }
+
+export const handleSubscribe = async ({
+    fname,
+    lname,
+    email,
+    password,
+    interest,
+    profession,
+    description,
+}, callback, error_callback) => {
+
+    const payload = new URLSearchParams({
+        fname: fname,
+        lname: lname,
+        email: email,
+        password: password,
+        interest: interest,
+        profession: profession,
+        description: description
+    });
+
+    return fetch(`${process.env.GATSBY_USER_API}/f/new_user`, {
+        method: `post`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        body : payload
+    })
+    .then(resp => {
+        if (resp.status === 200) {
+            return resp.json();
+        } else {
+            error_callback();
+        }
+    })
+    .then(token => {
+        setToken(token);
+        return fetch(`${process.env.GATSBY_USER_API}/u/me`, {
+            headers: {
+                "Authorization" : `${token.token_type} ${token.access_token}`
+            }
+        });
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        setUser(data);
+        callback();
+    })
+    .catch(err => {
+        error_callback();
+    });
+}
+
 
 export const isLoggedIn = () => {
   const user = getUser()
