@@ -55,7 +55,7 @@ class Login extends React.Component {
                     >
                         <Row>
                             <Form.Label>
-                              Nom d'utilisateur
+                                Email
                               <Form.Control name="username" type="text" onChange={this.handleUpdate} />
                             </Form.Label>
                         </Row>
