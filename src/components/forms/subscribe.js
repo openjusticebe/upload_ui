@@ -29,8 +29,6 @@ const SubscribeForm = () => {
         event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
             setValidated(true);
             setWaiting(false);
             return;
@@ -52,7 +50,7 @@ const SubscribeForm = () => {
         } else {
             NotificationManager.error('Subscription error', 'Error');
         }
-    }
+    };
 
     const handleChange = async event => {
         const name = event.target.id;
@@ -64,7 +62,7 @@ const SubscribeForm = () => {
             fdata[name] = event.target.value;
         }
         setFormData(fdata);
-    }
+    };
 
     return (
         <div>

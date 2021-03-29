@@ -74,6 +74,9 @@ class Login extends React.Component {
                             }
                         </Row>
                         <Row>
+                            <a href="#" className=""><small>Mot de passe oublié / wachtwoord vergeten</small></a>
+                        </Row>
+                        <Row>
                             <div className="row d-flex justify-content-center mt-4">
                                 <Button variant="success" type="submit" className="p-2">
                                     <i className="icon-user pr-2" />
