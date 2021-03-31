@@ -13,7 +13,7 @@ import Waiting from "../components/admin/waiting"
 import Edit from "../components/admin/edit"
 import { useQueryParam, StringParam } from "use-query-params";
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationManager} from 'react-notifications';
 const Unsecure = () => 
     (<div className="container m-3">
         <h2>Utilisateur deconnecté</h2>
@@ -83,7 +83,6 @@ const Admin = () => {
               <PrivateRoute path="/admin/edit/:docid" component={Edit} />
               { isLoggedIn() ? null : (<Login path="/admin/login" />) }
           </Router>
-          <NotificationContainer/>
         </Layout>
 )};
 

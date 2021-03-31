@@ -36,7 +36,7 @@ export const handleLogin = async ({ username, password }, callback, error_callba
                 scope: '',
                 client_id: '',
                 client_secret: '',
-    })
+    });
     return fetch(`${process.env.GATSBY_USER_API}/token`, {
         method : `post`,
         headers: {
@@ -69,6 +69,120 @@ export const handleLogin = async ({ username, password }, callback, error_callba
         error_callback();
     });
 }
+
+export const handleSubscribe = async ({
+    fname,
+    lname,
+    email,
+    password,
+    interest,
+    profession,
+    description,
+}, callback, error_callback) => {
+
+    const payload = new URLSearchParams({
+        fname: fname,
+        lname: lname,
+        email: email,
+        password: password,
+        interest: interest,
+        profession: profession,
+        description: description
+    });
+
+    return fetch(`${process.env.GATSBY_USER_API}/f/new_user`, {
+        method: `post`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        body : payload
+    })
+    .then(resp => {
+        if (resp.status === 200) {
+            return resp.json();
+        } else {
+            error_callback('Bad account creation response');
+        }
+    })
+    .then(data => {
+        return handleLogin({username: email, password: password}, callback, error_callback);
+    })
+    .catch(err => {
+        error_callback('Catched error');
+    });
+}
+
+export const handleLostPassword = async ({
+    email
+    }, callback, error_callback) => {
+
+    const payload = new URLSearchParams({
+        email: email
+    });
+
+    return fetch(`${process.env.GATSBY_USER_API}/f/lost_password`, {
+        method: `post`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        body : payload
+    })
+    .then(resp => {
+        if (resp.status === 200) {
+            return resp.json();
+        } else {
+            error_callback('Unexpected response from service');
+        }
+    })
+    .then(data => {
+        if (data.result === true) {
+            callback();
+        } else {
+        error_callback('Query failed');
+        }
+        return
+    })
+    .catch(err => {
+        error_callback('Catched error');
+    });
+}
+
+
+export const handlePasswordReset = async ({
+    token,
+    password,
+}, callback, error_callback) => {
+
+    const payload = new URLSearchParams({
+        token: token,
+        password: password,
+    });
+
+    return fetch(`${process.env.GATSBY_USER_API}/f/reset_password`, {
+        method: `post`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        body : payload
+    })
+    .then(resp => {
+        if (resp.status === 200) {
+            return resp.json();
+        } else {
+            error_callback('Bad password reset response');
+        }
+    })
+    .then(data => {
+        return handleLogin({username: data.username, password: password}, callback, error_callback);
+    })
+    .catch(err => {
+        error_callback('Catched error');
+    });
+}
+
 
 export const isLoggedIn = () => {
   const user = getUser()

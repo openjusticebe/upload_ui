@@ -29,17 +29,13 @@ header .hero img {
 header .hero ul {
     list-style-type:none;
     display:flex;
-    flex-direction:row;
-    justify-content:space-around;
     width:30rem;
 }
 
 header a {
-    color:#000;
 }
 
 header a:hover {
-    color:#566df2;
 }
 
 .construction {
@@ -55,6 +51,10 @@ header a:hover {
     padding: .45rem 1rem;
     transform: skewX(-30deg);
     background-color:$sec_color;
+}
+
+.provile-nav {
+    
 }
 
 .construction .content {
@@ -88,6 +88,12 @@ body {
 
 .border {
     background-color: $blank;
+}
+
+#username {
+    position:absolute;
+    top:3px;
+    right:2px;
 }
 
 .info {
@@ -166,7 +172,7 @@ h2 {
 h3 {
     font-size:0.8em;
 }
-textarea {
+textarea.bigtext {
     width:80%;
     min-height:40rem;
     padding:1rem;
