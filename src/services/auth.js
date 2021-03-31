@@ -138,9 +138,11 @@ export const handleLostPassword = async ({
     })
     .then(data => {
         if (data.result === true) {
-            callback()
-        }
+            callback();
+        } else {
         error_callback('Query failed');
+        }
+        return
     })
     .catch(err => {
         error_callback('Catched error');
