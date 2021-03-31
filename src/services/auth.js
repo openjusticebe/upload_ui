@@ -106,11 +106,77 @@ export const handleSubscribe = async ({
         }
     })
     .then(data => {
-        console.log(data);
         return handleLogin({username: email, password: password}, callback, error_callback);
     })
     .catch(err => {
-        console.log(err);
+        error_callback('Catched error');
+    });
+}
+
+export const handleLostPassword = async ({
+    email
+    }, callback, error_callback) => {
+
+    const payload = new URLSearchParams({
+        email: email
+    });
+
+    return fetch(`${process.env.GATSBY_USER_API}/f/lost_password`, {
+        method: `post`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        body : payload
+    })
+    .then(resp => {
+        if (resp.status === 200) {
+            return resp.json();
+        } else {
+            error_callback('Unexpected response from service');
+        }
+    })
+    .then(data => {
+        if (data.result === true) {
+            callback()
+        }
+        error_callback('Query failed');
+    })
+    .catch(err => {
+        error_callback('Catched error');
+    });
+}
+
+
+export const handlePasswordReset = async ({
+    token,
+    password,
+}, callback, error_callback) => {
+
+    const payload = new URLSearchParams({
+        token: token,
+        password: password,
+    });
+
+    return fetch(`${process.env.GATSBY_USER_API}/f/reset_password`, {
+        method: `post`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        body : payload
+    })
+    .then(resp => {
+        if (resp.status === 200) {
+            return resp.json();
+        } else {
+            error_callback('Bad password reset response');
+        }
+    })
+    .then(data => {
+        return handleLogin({username: data.username, password: password}, callback, error_callback);
+    })
+    .catch(err => {
         error_callback('Catched error');
     });
 }

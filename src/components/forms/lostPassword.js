@@ -5,7 +5,7 @@ import { Row, Col} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../../images/hourglass.gif';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-import { handleLogin, isLoggedIn } from "../../services/auth"
+import { handleLostPassword } from "../../services/auth"
 
 
 const LostPasswordForm = () => {
@@ -13,6 +13,8 @@ const LostPasswordForm = () => {
     const [waiting, setWaiting] = useState(false);
     const [error, setError] = useState(false);
     const [validated, setValidated] = useState(false);
+    const [showText, setShowText] = useState(false);
+
 
     const handleUpdate = event => {
         let fdata = formData;
@@ -31,11 +33,19 @@ const LostPasswordForm = () => {
             return;
         }
         setWaiting(true);
-        // handleLogin(
-        //     this.state,
-        //     () => {navigate(`/`)},
-        //     () => {handleError()}
-        // );
+        handleLostPassword(
+            formData,
+            () => {
+                NotificationManager.info('Password reset sent', 'Info');
+                setShowText(true);
+            },
+            (msg=false) => {
+                NotificationManager.error('Reset query failed', 'Error');
+                if (msg) {
+                NotificationManager.error(msg, 'Error');
+                }
+            }
+        );
     };
 
 
@@ -68,14 +78,25 @@ const LostPasswordForm = () => {
                         </Form.Label>
                     </Row>
                     <Row>
-                        { error ?
+                        { error && (
                             <div className="bg-warning text-dark p-3">
                                 Erreur de connexion
                             </div>
-                            : null
-                        }
+                        )}
                     </Row>
-                    <Row>
+                    { showText ?
+                    (<Row>
+                            <div className="bg-success text-white p-3">
+                                <p>
+                                    Lien de réinitialisation envoyé par email.
+                                </p>
+                                <p>
+                                    Reset link doorgestuurd per email.
+                                </p>
+                            </div>
+                    </Row>)
+                    :
+                    (<Row>
                         <div className="row d-flex justify-content-center mt-4">
                             <Button variant="success" type="submit" className="p-2">
                                 <i className="icon-user pr-2" />
@@ -83,7 +104,8 @@ const LostPasswordForm = () => {
                                 { waiting && <img className="loadgif" src={LoadGif} alt="loading" /> }
                             </Button>
                         </div>
-                    </Row>
+                    </Row>)
+                    }
                 </Form>
             </div>
         </div>

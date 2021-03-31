@@ -5,11 +5,13 @@ import { Row, Col} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import LoadGif from '../../images/hourglass.gif';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-import { handleLogin, isLoggedIn } from "../../services/auth"
+import { handlePasswordReset, isLoggedIn } from "../../services/auth"
+import { useQueryParam, StringParam } from "use-query-params";
 
 const EmptyForm = {
     'password': null,
     'passwordbis': null,
+    'token': null,
 }
 
 const PasswordResetForm = ({ lostPasswordClick }) => {
@@ -19,6 +21,11 @@ const PasswordResetForm = ({ lostPasswordClick }) => {
     const [waiting, setWaiting] = useState(false);
     const [error, setError] = useState(false);
     const [validated, setValidated] = useState(false);
+    const [token, setToken] = useQueryParam("token", StringParam)
+
+    useEffect( () => {
+        setFormData({...formData, token: token});
+    }, [token])
 
     const handleUpdate = event => {
         let fdata = formData;
@@ -28,7 +35,6 @@ const PasswordResetForm = ({ lostPasswordClick }) => {
         }
         setError(false);
         setFormData(fdata);
-        console.log(fdata);
     };
 
     const handleSubmit = async event => {
@@ -42,11 +48,19 @@ const PasswordResetForm = ({ lostPasswordClick }) => {
         }
 
         setWaiting(true);
-        // handleLogin(
-        //     this.state,
-        //     () => {navigate(`/`)},
-        //     () => {handleError()}
-        // );
+        handlePasswordReset(
+            formData,
+            () => {
+                navigate(`/?auth=subscribed`);
+                NotificationManager.info('Password Updated', 'Info');
+            },
+            (msg=false) => {
+                NotificationManager.error('Reset query failed', 'Error');
+                if (msg) {
+                NotificationManager.error(msg, 'Error');
+                }
+            }
+        );
     };
 
     const handleError = () => {
