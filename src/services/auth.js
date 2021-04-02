@@ -29,11 +29,13 @@ const setToken = token =>
 
 export const handleLogin = async ({ username, password }, callback, error_callback) => {
     // comment
+
+    const host = typeof window !== 'undefined' ? window.location.hostname : '';
     const payload = new URLSearchParams({
-                grant_type: '',
+                grant_type: 'password',
                 username: username,
                 password: password,
-                scope: '',
+                scope: `host:${host}`,
                 client_id: '',
                 client_secret: '',
     });

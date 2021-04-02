@@ -73,14 +73,9 @@ const AnonymiseUi = (props) => {
                 </div>
             </div>
             <div className="row justify-content-center">
-                <textarea
-                    id="content_raw"
-                    className="bigtext"
-                    // update={ this.state.uploaded }
-                    onChange={ props.textChange }
-                    value ={ props.preparedText }
-                    disabled = { true } 
-                    />
+                <div id="content_raw">
+                    { props.preparedText }
+                </div>
             </div>
         </div>
     );
