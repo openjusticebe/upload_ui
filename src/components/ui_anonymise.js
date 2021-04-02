@@ -36,7 +36,7 @@ const EntityForm = ({entities, onRemove, onChange}) => (
                     <EntityRow
                         key={ id }
                         id={ id }
-                        words={ entities[id]['text'].join('; ') }
+                        words={ entities[id]['text'] }
                         type={ entities[id]['type'] }
                         placeholder={ entities[id]['placeholder'] } 
                         onRemove={ onRemove }
