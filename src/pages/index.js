@@ -69,12 +69,13 @@ class IndexPage extends React.Component {
                 placeholder: PlaceholderManager.get(e.type, key)
             };
         });
-        const parsed = parseText(entities, text)
+        const newEntities = {...this.state.entities, ...entities}
+        const parsed = parseText(newEntities, text)
 
         if (text) {
             this.setState({
                 text_raw: text,
-                entities: entities,
+                entities: newEntities,
                 text_parsed : parsed,
                 counts: this.state.counts + 1
             })
@@ -132,7 +133,7 @@ class IndexPage extends React.Component {
         let field = event.target.name;
         if (id in newEntities) {
             if (field === 'text')
-                newEntities[id][field] = event.target.value.split('; ');
+                newEntities[id][field] = event.target.value;
             else {
                 newEntities[id][field] = event.target.value;
             }

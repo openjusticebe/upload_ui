@@ -11,11 +11,8 @@ const UserMenu = ({ isAdmin }) => {
               { isLoggedIn() ? (
                   <>
                   <li className="nav-item"> { usr['username'] } </li>
-                  { isAdmin ?
-                      <li className="nav-item mx-2"><Link to="/" className="nav-link btn btn-outline-dark">Outil</Link></li>
-                      :
-                      <li className="nav-item mx-2"><Link to="/admin" className="nav-link btn btn-outline-dark">Admin</Link></li>
-                  }
+                  { usr.admin && isAdmin && <li className="nav-item mx-2"><Link to="/" className="nav-link btn btn-outline-dark">Outil</Link></li>}
+                  { usr.admin && ! isAdmin && <li className="nav-item mx-2"><Link to="/admin" className="nav-link btn btn-outline-dark">Admin</Link></li> }
                   <li className="nav-item mx-2"><a href="/" className="nav-link btn btn-dark" onClick={event => {
                         event.preventDefault()
                         logout(() => navigate(`/`))

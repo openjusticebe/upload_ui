@@ -48,6 +48,11 @@ const Secure = () =>  {
 
 const Admin = () => {
     const [auth, setAuth] = useQueryParam("auth", StringParam);
+    const usr = getUser();
+
+    if (usr.admin ===  false) {
+        navigate(`/`);
+    }
 
     useEffect(() => {
         switch(auth) {

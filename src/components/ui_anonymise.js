@@ -36,7 +36,7 @@ const EntityForm = ({entities, onRemove, onChange}) => (
                     <EntityRow
                         key={ id }
                         id={ id }
-                        words={ entities[id]['text'].join('; ') }
+                        words={ entities[id]['text'] }
                         type={ entities[id]['type'] }
                         placeholder={ entities[id]['placeholder'] } 
                         onRemove={ onRemove }
@@ -46,6 +46,11 @@ const EntityForm = ({entities, onRemove, onChange}) => (
             )}
         </div>
 );
+
+const prep_text = (text) => {
+    let prep_text = text.replace(/(\[ [^ \]]+ \])/g,'<span class="anon">$1</span>', text);
+    return prep_text;
+}
 
 
 const AnonymiseUi = (props) => {
@@ -73,14 +78,7 @@ const AnonymiseUi = (props) => {
                 </div>
             </div>
             <div className="row justify-content-center">
-                <textarea
-                    id="content_raw"
-                    className="bigtext"
-                    // update={ this.state.uploaded }
-                    onChange={ props.textChange }
-                    value ={ props.preparedText }
-                    disabled = { true } 
-                    />
+                <div id="content_raw" dangerouslySetInnerHTML={{__html: prep_text(props.preparedText) }} />
             </div>
         </div>
     );
