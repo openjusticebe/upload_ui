@@ -47,6 +47,11 @@ const EntityForm = ({entities, onRemove, onChange}) => (
         </div>
 );
 
+const prep_text = (text) => {
+    let prep_text = text.replace(/(\[ [^ \]]+ \])/g,'<span class="anon">$1</span>', text);
+    return prep_text;
+}
+
 
 const AnonymiseUi = (props) => {
     return (
@@ -73,9 +78,7 @@ const AnonymiseUi = (props) => {
                 </div>
             </div>
             <div className="row justify-content-center">
-                <div id="content_raw">
-                    { props.preparedText }
-                </div>
+                <div id="content_raw" dangerouslySetInnerHTML={{__html: prep_text(props.preparedText) }} />
             </div>
         </div>
     );
